@@ -1,0 +1,3 @@
+Hola, yo inscribi 21 créditos y pedí 2 sobrecupos creyendo que en el remoto caso que me los dieran, me notificarán, y me los darían temprano y podría cancelar materias para reacomodar mi carga académica, me dieron un sobrecupo hace poco a pesar de ya tener 21 créditos y quede con 24 créditos. Tener 24 créditos se me hace pesado y me quitaría la oportunidad de postularme Kospie, así que me gustaría cancelar la materia Optimizacion(la que pedi como sobrecupo) o Lenguajes de programacion, una materia para quedar con una carga mas normal y poder postularme a la beca.
+
+debo explicar que planeabas cancelar otras naterias pero ya tienes todo programado así
