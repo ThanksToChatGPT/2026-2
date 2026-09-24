@@ -1,23 +1,116 @@
+let player;
+let asteroids = [];
+let score = 0;
+let bullets = [];
+let marciano;
+
+
 function setup() {
   createCanvas(500, 500);
   player = new Player();
+
+  // Initial wave of asteroids
+  for (let i = 0; i < 5; i++) {
+    asteroids.push(new Asteroid());
+  }
+
 }
 
 function draw() {
+  background(0, 0, 0);
+
+  // HUD: Draw score in standard screen coordinates
+  fill(255);
+  noStroke();
+  textSize(16);
+  text("Score: " + floor(score), 15, 25);
+
   // Classic cartesian order
+  push();
   translate(width/2, height/2);
   scale(1, -1);
 
-  background(0, 0, 0);
   player.update();
   player.draw();
+
+  // Update, draw and handle collisions for asteroids
+  for (let i = asteroids.length - 1; i >= 0; i--) {
+    asteroids[i].update();
+    asteroids[i].draw();
+
+    // Check collision with player ship
+    if (asteroids[i].hits(player.pos, 10)) {
+      // Crash: reset player to origin
+      player.pos = createVector(0, 0);
+      player.angle = PI/2;
+      player.vel = createVector(0, 0);
+      score = 0;
+      // asteroids = []; // Clear asteroids on crash
+      // bullets = []; // Clear bullets on crash
+      // break;
+    }
+
+    // Check collision with bullets
+    for (let j = 0; j < bullets.length; j++) {
+      if (asteroids[i].hits(bullets[j].pos, 2)) {
+        score += floor(asteroids[i].r); // Increase score based on asteroid size
+        // Asteroid splits into smaller pieces
+        let newPieces = asteroids[i].break();
+        if (newPieces.length > 0) {
+          asteroids.push(newPieces[0]);
+          asteroids.push(newPieces[1]);
+        }
+
+        // Remove bullet and destroyed asteroid
+        asteroids.splice(i, 1);
+        bullets.splice(j, 1);
+        // Each original size asteroid generates 6 more asteroids
+        // So generate a new asteroid each 6 destroyed ones
+        if(random(1) <= 1/6){
+          asteroids.push(new Asteroid());
+        }
+        break; // Stop checking bullets for this destroyed asteroid
+      }
+    }
+  }
+  // Update, draw and handle collisions for marciano
+  if (marciano) {
+    marciano.update();
+    marciano.draw();
+
+    // Check collision with player ship
+    if (marciano.hits(player.pos, 10)) {
+      player.pos = createVector(0, 0);
+      player.angle = PI/2;
+      player.vel = createVector(0, 0);
+      score = 0;
+    }
+
+    // Check collision with bullets
+    for (let j = bullets.length - 1; j >= 0; j--) {
+      if (marciano.hits(bullets[j].pos, 2)) {
+        score += 200; // Bonus score for shooting marciano
+        bullets.splice(j, 1);
+        marciano = null;
+        break;
+      }
+    }
+    if (marciano.pos.x < -width/2 - 50 || marciano.pos.x > width/2 - 50) {
+      marciano = null; // Remove marciano if it goes off screen
+    }  
+  } else if (frameCount % 600 === 0) {
+    // Periodically spawn a new marciano
+    marciano = new Marciano(20);
+  } 
+  
+  pop();
 }
 
 // Only a bullet per press, not every frame.
 // (keyIsDown inside draw checks every frame) 
 function keyPressed(){
   if (keyCode === 32) {
-    player.bullets.push(new Bullet(player.pos, player.angle));
+    bullets.push(new Bullet(player.pos, player.angle));
   }
 }
 
@@ -38,9 +131,8 @@ class Player{
     this.vel = createVector(0, 0);
 
     this.color = color(255, 255, 255);
-    // The angle is the x axis
+    // The angle is the x axis or the front of the ship
     this.angle = PI/2;
-    this.bullets = [];
   }
 
   draw(){
@@ -49,15 +141,14 @@ class Player{
     rotate(this.angle);
     stroke(this.color);
     noFill();
-    // The ship points to the angle
     triangle(15, 0, -10, -5, -10, 5);
     pop();
-
-    for (let i = 0; i < this.bullets.length; i++){
-      this.bullets[i].update();
-      this.bullets[i].draw();
-      if (this.bullets[i].outOfBounds()){
-        this.bullets.splice(i, 1);
+    // All the bullets are updated, drawed and removed if dead
+    for (let i = bullets.length - 1; i >= 0; i--){
+      bullets[i].update();
+      bullets[i].draw();
+      if (bullets[i].isDead()){
+        bullets.splice(i, 1);
         
       }
 
@@ -81,37 +172,203 @@ class Player{
 class Bullet{
 
   constructor(pos, angle){
-    // Angle = x axis
+    // angle = front of the ship
     this.angle = angle;
-    // The origin is the position of the player when the bullet is created
-    this.origin = createVector(pos.x, pos.y);
-    // The position is relative to the origin, so it starts at the origin
-    this.pos = createVector(15, 0);
-    this.vel = createVector(7, 0);
+    // position = front of the ship
+    this.pos = createVector(pos.x, pos.y);
+    this.pos.add(p5.Vector.fromAngle(this.angle).mult(15));
+    // inicial velocity
+    this.vel = p5.Vector.fromAngle(this.angle).mult(8);
   }
 
   draw(){
     push();
-    translate(this.origin.x, this.origin.y);
-    rotate(this.angle);
     fill(255);
     ellipse(this.pos.x, this.pos.y, 5, 5);
     pop();
   }
 
   update(){
+    // move and slow down the bullet
     this.pos.add(this.vel);
-    this.vel.mult(0.99999);
-    
+    this.vel.mult(0.99);
+    wrap(this.pos, 5);
   }
 
-  outOfBounds(){
-    if (this.pos.x > width || this.pos.x < -width || this.pos.y > height || this.pos.y < -height){
+  isDead(){
+    //if the bullet is slow enough, it is dead
+    if (this.vel.mag() < 4){
       return true;
-    }else{
-      return false;
     }
   }
 }
 
+class Asteroid{
+  constructor(pos, r){
+    // Default radius for large asteroid is 40
+    this.r = r || random(30, 50);
+
+    // Spawn at a given position, or randomly away from origin (player)
+    if (pos) {
+      this.pos = pos.copy();
+    } else {
+      let angle = random(TWO_PI);
+      let distFromCenter = random(120, width / 2);
+      this.pos = createVector(cos(angle) * distFromCenter, sin(angle) * distFromCenter);
+    }
+
+    // Kinematics and rotation
+    this.vel = p5.Vector.fromAngle(random(TWO_PI)).mult(random(0.5, 1.5));
+    this.angle = random(TWO_PI);
+    // Some rotate clockwise, some counterclockwise
+    this.rotSpeed = random(-0.02, 0.02);
+    this.color = color(255);
+
+    // Irregular rocky shape (offsets per vertex)
+    this.total = floor(random(10, 20));
+    this.offsets = [];
+    for (let i = 0; i < floor(random(10, 20)); i++) {
+      this.offsets.push(random(-this.r * 0.4, this.r * 0.4));
+    }
+  }
+
+  draw(){
+    push();
+    translate(this.pos.x, this.pos.y);
+    rotate(this.angle);
+    stroke(this.color);
+    noFill();
+    beginShape();
+    for (let i = 0; i < this.offsets.length; i++) {
+      let a = map(i, 0, this.offsets.length, 0, TWO_PI);
+      let rad = this.r + this.offsets[i];
+      let x = rad * cos(a);
+      let y = rad * sin(a);
+      vertex(x, y);
+    }
+    endShape(CLOSE);
+    pop();
+  }
+
+  update(){
+    // move
+    this.pos.add(this.vel);
+    // rotate
+    this.angle += this.rotSpeed;
+    wrap(this.pos, this.r);
+  }
+
+  // Splits into two smaller asteroids if large enough
+  break(){
+    let pieces = [];
+    if (this.r > 15) {
+      pieces.push(new Asteroid(this.pos, this.r / 2));
+      pieces.push(new Asteroid(this.pos, this.r / 2));
+    }
+    return pieces;
+  }
+
+  // Distance check between centers against combined radii
+  hits(targetPos, targetRadius = 0){
+    let d = dist(this.pos.x, this.pos.y, targetPos.x, targetPos.y);
+    return d < this.r + targetRadius;
+  }
+}
+
+class Marciano{
+  constructor(r){
+    // Radius can be 20 for large or 10 for small)
+    this.r = r;
+
+    // Direction: enters from left (-1) or right (1)
+    let side = random() < 0.5 ? -1 : 1;
+    this.dir = -side; // Moves across to the opposite side
+
+    let halfW = width / 2;
+    let halfH = height / 2;
+
+
+    this.pos = createVector(side * (halfW + this.r), random(-halfH * 0.7, halfH * 0.7));
+
+    // Horizontal speed and velocity
+    this.vel = createVector(this.dir * random(1, 2), 0);
+
+    this.color = color(255);
+
+    // Timers for classic zig-zag vertical movement
+    this.timer = 0;
+    this.changeInterval = floor(random(30, 60));
+
+    // Shoot cooldown timer
+    this.shootTimer = 0;
+    this.shootInterval = floor(random(70, 150));
+  }
+
+  draw(){
+    push();
+    translate(this.pos.x, this.pos.y);
+    stroke(this.color);
+    noFill();
+
+    // Classic vector saucer shape (Atari Asteroids style)
+    // Outer perimeter
+    beginShape();
+    vertex(-this.r * 0.4, -this.r * 0.4); // bottom-left base
+    vertex(this.r * 0.4, -this.r * 0.4);  // bottom-right base
+    vertex(this.r, 0);                    // right middle point
+    vertex(this.r * 0.5, this.r * 0.25);  // right dome base
+    vertex(this.r * 0.25, this.r * 0.55); // right dome top
+    vertex(-this.r * 0.25, this.r * 0.55);// left dome top
+    vertex(-this.r * 0.5, this.r * 0.25); // left dome base
+    vertex(-this.r, 0);                   // left middle point
+    endShape(CLOSE);
+
+    // Internal structural lines of the saucer
+    line(-this.r, 0, this.r, 0);
+    line(-this.r * 0.5, this.r * 0.25, this.r * 0.5, this.r * 0.25);
+    pop();
+  }
+
+  update(){
+    // Periodic vertical zig-zag change
+    this.timer++;
+    if (this.timer % this.changeInterval === 0) {
+      this.vel.y = random([-1, 0, 1]) * random(0.5, 1.5);
+      this.timer = 0;
+    }
+
+    // Move
+    this.pos.add(this.vel);
+
+  }
+
+  // Check if it's ready to shoot
+  canShoot(){
+    this.shootTimer++;
+    if (this.shootTimer % this.shootInterval === 0) {
+      this.shootTimer = 0;
+      return true;
+    }
+    return false;
+  }
+
+  // Spawns a bullet aimed at target (e.g. player.pos) or random direction
+  shoot(targetPos){
+    let angle;
+    if (targetPos) {
+      let desired = p5.Vector.sub(targetPos, this.pos);
+      // Slight aim error for gameplay balance
+      angle = desired.heading();
+    } else { 
+      angle = random(TWO_PI);
+    }
+    return new Bullet(this.pos, angle);
+  }
+
+  // Distance check between centers against combined radii
+  hits(targetPos, targetRadius = 0){
+    let d = dist(this.pos.x, this.pos.y, targetPos.x, targetPos.y);
+    return d < this.r + targetRadius;
+  }
+}
 
