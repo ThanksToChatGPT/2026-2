@@ -2,7 +2,8 @@ let player;
 let asteroids = [];
 let score = 0;
 let bullets = [];
-let marciano;
+let saucer;
+let lives = 3;
 
 
 function setup() {
@@ -25,6 +26,11 @@ function draw() {
   textSize(16);
   text("Score: " + floor(score), 15, 25);
 
+  // HUD: Draw lives as hearts in the top-left corner
+  for (let i = 0; i < lives; i++) {
+    drawHeart(22 + i * 22, 45, 12);
+  }
+
   // Classic cartesian order
   push();
   translate(width/2, height/2);
@@ -44,16 +50,21 @@ function draw() {
       player.pos = createVector(0, 0);
       player.angle = PI/2;
       player.vel = createVector(0, 0);
-      score = 0;
-      // asteroids = []; // Clear asteroids on crash
-      // bullets = []; // Clear bullets on crash
-      // break;
+      if (lives > 0) lives--;
     }
 
     // Check collision with bullets
     for (let j = 0; j < bullets.length; j++) {
       if (asteroids[i].hits(bullets[j].pos, 2)) {
-        score += floor(asteroids[i].r); // Increase score based on asteroid size
+        // Large Asteroid (>13): 20 pts, Medium Asteroid (>7): 50 pts, Small Asteroid: 100 pts
+        if (asteroids[i].r > 13) {
+          score += 20;
+        } else if (asteroids[i].r > 7) {
+          score += 50;
+        } else {
+          score += 100;
+        }
+
         // Asteroid splits into smaller pieces
         let newPieces = asteroids[i].break();
         if (newPieces.length > 0) {
@@ -73,34 +84,38 @@ function draw() {
       }
     }
   }
-  // Update, draw and handle collisions for marciano
-  if (marciano) {
-    marciano.update();
-    marciano.draw();
+  // Update, draw and handle collisions for saucer
+  if (saucer) {
+    saucer.update();
+    saucer.draw();
 
     // Check collision with player ship
-    if (marciano.hits(player.pos, 10)) {
+    if (saucer.hits(player.pos, 10)) {
       player.pos = createVector(0, 0);
       player.angle = PI/2;
       player.vel = createVector(0, 0);
-      score = 0;
+      if (lives > 0) lives--;
     }
-
+    if (saucer.pos.x < -width/2 - 50 || saucer.pos.x > width/2 - 50) {
+      saucer = null; // Remove saucer if it goes off screen
+    }else {   
     // Check collision with bullets
-    for (let j = bullets.length - 1; j >= 0; j--) {
-      if (marciano.hits(bullets[j].pos, 2)) {
-        score += 200; // Bonus score for shooting marciano
-        bullets.splice(j, 1);
-        marciano = null;
-        break;
+      for (let j = bullets.length - 1; j >= 0; j--) {
+        if (saucer.hits(bullets[j].pos, 2)) {
+          // Large Saucer (r > 15): 200 pts, Small Saucer (r <= 15): 1000 pts
+          score += (saucer.r <= 15) ? 1000 : 200;
+          bullets.splice(j, 1);
+          saucer = null;  
+          break;
+        }
       }
     }
-    if (marciano.pos.x < -width/2 - 50 || marciano.pos.x > width/2 - 50) {
-      marciano = null; // Remove marciano if it goes off screen
-    }  
-  } else if (frameCount % 600 === 0) {
-    // Periodically spawn a new marciano
-    marciano = new Marciano(20);
+  
+  } else if (frameCount % (60 * 15) === 0) {
+    // Under 10,000 points: Large Saucer
+    // 10,000 points and above: Small Saucer
+    let saucerRadius = (score >= 10000) ? 10 : 20;
+    saucer = new Saucer(saucerRadius);
   } 
   
   pop();
@@ -125,6 +140,20 @@ function wrap(pos, r = 0) {
   else if (pos.y < -halfH - r) pos.y = halfH + r;
 }
 
+function drawHeart(x, y, size) {
+  push();
+  translate(x, y);
+  fill(255, 40, 60);
+  stroke(255);
+  strokeWeight(1);
+  beginShape();
+  vertex(0, -size * 0.2);
+  bezierVertex(-size * 0.5, -size * 0.8, -size, -size * 0.1, 0, size * 0.8);
+  bezierVertex(size, -size * 0.1, size * 0.5, -size * 0.8, 0, -size * 0.2);
+  endShape(CLOSE);
+  pop();
+}
+
 class Player{
   constructor(){
     this.pos = createVector(0, 0);
@@ -133,16 +162,33 @@ class Player{
     this.color = color(255, 255, 255);
     // The angle is the x axis or the front of the ship
     this.angle = PI/2;
+    this.invulnerableTimer = 0; // Frames of invulnerability after respawn
+  }
+
+  respawn(){
+    this.pos = createVector(0, 0);
+    this.vel = createVector(0, 0);
+    this.angle = PI/2;
+    this.invulnerableTimer = 120; // 2 seconds of grace period at 60 fps
+  }
+
+  isInvulnerable(){
+    return this.invulnerableTimer > 0;
   }
 
   draw(){
-    push();
-    translate(this.pos.x, this.pos.y);
-    rotate(this.angle);
-    stroke(this.color);
-    noFill();
-    triangle(15, 0, -10, -5, -10, 5);
-    pop();
+    // Invulnerability visual indicator (blinking effect)
+    if (this.invulnerableTimer > 0 && floor(frameCount / 6) % 2 === 0) {
+      // Blink: skip drawing ship body on alternating frames
+    } else {
+      push();
+      translate(this.pos.x, this.pos.y);
+      rotate(this.angle);
+      stroke(this.color);
+      noFill();
+      triangle(15, 0, -10, -5, -10, 5);
+      pop();
+    }
     // All the bullets are updated, drawed and removed if dead
     for (let i = bullets.length - 1; i >= 0; i--){
       bullets[i].update();
@@ -156,6 +202,9 @@ class Player{
   }
 
   update(){
+    if (this.invulnerableTimer > 0) {
+      this.invulnerableTimer--;
+    }
     if (keyIsDown(LEFT_ARROW)) {
       this.angle += 0.05;
     }else if (keyIsDown(RIGHT_ARROW)) {
@@ -205,8 +254,8 @@ class Bullet{
 
 class Asteroid{
   constructor(pos, r){
-    // Default radius for large asteroid is 40
-    this.r = r || random(30, 50);
+    // Default radius for large asteroid is around 20
+    this.r = r || random(16, 24);
 
     // Spawn at a given position, or randomly away from origin (player)
     if (pos) {
@@ -261,7 +310,7 @@ class Asteroid{
   // Splits into two smaller asteroids if large enough
   break(){
     let pieces = [];
-    if (this.r > 15) {
+    if (this.r > 7) {
       pieces.push(new Asteroid(this.pos, this.r / 2));
       pieces.push(new Asteroid(this.pos, this.r / 2));
     }
@@ -275,7 +324,7 @@ class Asteroid{
   }
 }
 
-class Marciano{
+class Saucer{
   constructor(r){
     // Radius can be 20 for large or 10 for small)
     this.r = r;
