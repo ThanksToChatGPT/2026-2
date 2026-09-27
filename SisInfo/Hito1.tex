@@ -1,0 +1,100 @@
+\documentclass[12pt,letterpaper]{article}
+
+% --- Paquetes Principales ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[hidelinks,pdfencoding=auto,psdextra]{hyperref}
+
+% --- Colores ---
+\definecolor{primary}{RGB}{20, 50, 90}
+\definecolor{secondary}{RGB}{70, 110, 150}
+
+% --- Configuración de Encabezados y Pies de Página ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\scshape Sistemas de Información}
+\fancyhead[R]{\small\scshape [Título del Documento]}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.2pt}
+
+% --- Formato de Secciones y Subtítulos ---
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{primary}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{secondary}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+% ==============================================================================
+% PORTADA
+% ==============================================================================
+\begin{titlepage}
+    \centering
+    
+    % Logo Institucional
+    \includegraphics[width=0.3\textwidth]{unal_logo.png}\par
+    \vspace{0.8cm}
+    
+    % Materia e Institución
+    {\scshape\Large Universidad Nacional de Colombia\par}
+    {\scshape\large Facultad de Ingeniería\par}
+    {\scshape\normalsize Departamento de Ingeniería de Sistemas e Industrial\par}
+    \vspace{0.5cm}
+    {\Large\textbf{Sistemas de Información}\par}
+    
+ 
+    
+    % Título y Subtítulo
+    {\huge\bfseries\color{primary} [Título]\par}
+    \vspace{0.4cm}
+    
+
+    
+    % Integrantes (7 miembros)
+    {\large
+    Nombre Completo Integrante 1\par
+    Nombre Completo Integrante 2\par
+    Nombre Completo Integrante 3\par
+    Nombre Completo Integrante 4\par
+    Nombre Completo Integrante 5\par
+    Nombre Completo Integrante 6\par
+    Nombre Completo Integrante 7\par
+    }
+    
+    \vfill
+    
+    % Docente y Fecha
+    {\normalsize\textbf{Docente:} [Nombre del Profesor / Docente]}\par
+    \vspace{0.4cm}
+    {\normalsize Bogotá D.C., Colombia\par}
+    {\normalsize 2026}
+\end{titlepage}
+
+% ==============================================================================
+% TABLA DE CONTENIDO
+% ==============================================================================
+\newpage
+\tableofcontents
+\newpage
+
+% ==============================================================================
+% CUERPO DEL DOCUMENTO (TÍTULOS Y SUBTÍTULOS)
+% ==============================================================================
+
+
+
+\end{document}
