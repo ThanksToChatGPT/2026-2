@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1790473445.19013 "c:/Users/Computador/2026-2/SisInfo/Hito1.tex" "Hito1.pdf" "Hito1" 1790473446.04008 0
-  "C:/Users/Computador/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1790449904 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
-  "C:/Users/Computador/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1790449830 13335907 155b0eed57a6830356075338b84b9b5a ""
+["pdflatex"] 1790711193.18923 "c:/Users/Computador/2026-2/SisInfo/Hito1.tex" "Hito1.pdf" "Hito1" 1790711196.09234 0
+  "C:/Users/Computador/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1790711189 82507 a9eef8696c92627b87e9975edea03b2a ""
+  "C:/Users/Computador/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1790710504 13335907 1af0154f43826c543ac8a23a2dfd7862 ""
   "C:/Users/Computador/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmbx12.tfm" 1136765053 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "C:/Users/Computador/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmcsc10.tfm" 1136765053 1300 63a6111ee6274895728663cf4b4e7e81 ""
   "C:/Users/Computador/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmr10.tfm" 1136765053 1296 45809c5a464d5f32c8f98ba97c1bb47f ""
@@ -75,12 +75,12 @@
   "C:/Users/Computador/AppData/Local/Programs/MiKTeX/tex/latex/titlesec/titlesec.sty" 1736608268 48766 87a17a4ef312a39cd43896e34a679a56 ""
   "C:/Users/Computador/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/Computador/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
-  "Hito1.aux" 1790473445 362 fb9ef3066c03621f25b72007a52bd41a "pdflatex"
-  "Hito1.out" 1790473445 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "Hito1.tex" 1790473443 2889 88940649fa8454d165cb0f20a65baad9 ""
-  "Hito1.toc" 1790473445 30 1bb04962d39b6bda471ac6c46ce13f85 "pdflatex"
-  "c:/Users/Computador/2026-2/SisInfo/Hito1.tex" 1790473443 2889 88940649fa8454d165cb0f20a65baad9 ""
-  "unal_logo.png" 1790468216 297782 3146ec01322e9ef1137bf536d0c923a9 ""
+  "Hito1.aux" 1790711195 362 fb9ef3066c03621f25b72007a52bd41a "pdflatex"
+  "Hito1.out" 1790711195 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "Hito1.tex" 1790605607 2989 88940649fa8454d165cb0f20a65baad9 ""
+  "Hito1.toc" 1790711195 30 1bb04962d39b6bda471ac6c46ce13f85 "pdflatex"
+  "c:/Users/Computador/2026-2/SisInfo/Hito1.tex" 1790605607 2989 88940649fa8454d165cb0f20a65baad9 ""
+  "unal_logo.png" 1790605607 297782 3146ec01322e9ef1137bf536d0c923a9 ""
   (generated)
   "Hito1.aux"
   "Hito1.log"

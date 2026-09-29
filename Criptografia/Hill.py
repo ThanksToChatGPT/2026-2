@@ -7,14 +7,10 @@ def number_to_letter(number):
 
 def cipher(plaintext, k, t):
     plaintext = plaintext.upper().replace(" ", "")
-    k = k.upper().replace(" ", "")
     ciphertext = ""
-    for i in range(len(plaintext)):
-        c = letter_to_number(plaintext[i]) + letter_to_number(k[i % len(k)])
-        ciphertext += number_to_letter(c % 26)
-        if (i + 1) % t == 0:
-            ciphertext += " "
-    return ciphertext
+    for i in range(0, len(plaintext), 2):
+        a = 
+        
 
 
 def uncipher(ciphertext, k_inv):
