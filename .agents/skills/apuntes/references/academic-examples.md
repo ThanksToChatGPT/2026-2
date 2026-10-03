@@ -1,59 +1,72 @@
-# Ejemplo de Apunte Académico de Alta Densidad
+# Plantilla y Ejemplo de Ficha Tecnica (Cheat Sheet)
 
-A continuación se muestra un ejemplo real de cómo debe estructurarse un apunte dentro de una carpeta de `2026-2` (ej. `Paralela y distribuida`).
+Guia de referencia que muestra la anatomia exacta de un apunte de alta densidad para las materias de `2026-2`.
+
+Reglas visuales obligatorias:
+- Cero tablas de contenidos (TOC).
+- Enlace de retorno siempre normalizado a `[← Volver a Curso.md](../Curso.md)`.
+- Uso de viñetas telegraficas, formulas KaTeX, tablas compactas y diagramas Mermaid.
 
 ---
+
+## Ejemplo Completo de Ficha Tecnica
 
 ```markdown
-# 📌 Framework Fork-Join y Concurrencia de Tareas
+[← Volver a Curso.md](../Curso.md)
 
-> **Materia**: Paralela y Distribuida | **Fuente**: [Capitulo2_Concurrencia.pdf](./Capitulo2_Concurrencia.pdf)  
-> **Conceptos Core**: `ForkJoinPool` `RecursiveTask` `RecursiveAction` `Work-Stealing`  
-> 🔗 [← Volver a Curso.md](./Curso.md)
+# Framework Fork-Join y Concurrencia de Tareas
 
----
-
-## 📑 Tabla de Contenidos
-- [1. Arquitectura del Modelo Fork-Join](#1-arquitectura-del-modelo-fork-join)
-- [2. RecursiveAction vs. RecursiveTask](#2-recursiveaction-vs-recursivetask)
-- [3. Algoritmo Work-Stealing](#3-algoritmo-work-stealing)
-- [4. Preguntas Típicas de Sustentación](#4-preguntas-típicas-de-sustentación)
+> **Materia**: Paralela y Distribuida | **Fuente**: [Capitulo2_Concurrencia.pdf](../Documentos/Capitulo2_Concurrencia.pdf)  
+> **Terminos Core**: `ForkJoinPool`, `RecursiveTask<V>`, `RecursiveAction`, `Work-Stealing`, `Threshold`
 
 ---
 
-## 1. Arquitectura del Modelo Fork-Join
+## 1. Modelo Computacional y Primitivas
 
-### Conceptos Clave & Definiciones
-- **Fork**: Operación asíncrona que divide una tarea grande en subtareas independientes (`async`).
-- **Join**: Barrera de sincronización que bloquea hasta que una subtarea finaliza y retorna su resultado.
-- **Umbral Secuencial (Threshold)**: Tamaño mínimo de problema donde ya no conviene dividir sino ejecutar secuencialmente.
+- **Fork**: Bifurcacion asincrona que despacha una subtarea independiente al pool (`async`).
+- **Join**: Barrera de sincronizacion que bloquea el hilo invocador hasta obtener el resultado de la subtarea.
+- **Umbral Secuencial (Threshold)**: Tamaño critico de grano por debajo del cual no se divide; se resuelve secuencialmente.
+  - Regla practica: 10.000 a 100.000 operaciones basicas por tarea hoja para amortizar el sobrecosto de gestion.
+  - Riesgo: Umbrales demasiado pequeños ($< 100$) degradan el rendimiento por saturacion del scheduler.
 
-### Puntos y Métricas
-- **Sobrecarga de paralelismo**: Crear demasiadas subtareas añade coste en memoria y scheduler.
-  * 📊 **Regla empírica**: Cada tarea hoja debe realizar entre 10.000 y 100.000 operaciones básicas para amortizar el coste de fork.
-  * ⚠️ **Peligro**: Si el umbral es muy bajo ($<100$), el tiempo de gestión supera al tiempo de cómputo.
+```mermaid
+graph TD
+    Parent["Tarea Padre: compute()"] --> Check{"¿Problema <= Threshold?"}
+    Check -- "Si" --> Base["Resolver Secuencial"]
+    Check -- "No" --> Split["Dividir en Subtareas"]
+    Split --> F1["sub1.fork() (async)"]
+    Split --> C2["sub2.compute() (hilo actual)"]
+    F1 --> J1["sub1.join()"]
+    C2 --> J1
+    J1 --> Merge["Combinar Resultados"]
+```
 
 ---
 
-## 2. RecursiveAction vs. RecursiveTask
+## 2. Tipos de Tarea: RecursiveAction vs. RecursiveTask
 
-| Característica | `RecursiveAction` | `RecursiveTask<V>` |
+| Propiedad | `RecursiveAction` | `RecursiveTask<V>` |
 | :--- | :--- | :--- |
-| **Retorno de valor** | `void` (no retorna nada). | Retorna objeto de tipo `V`. |
-| **Método abstracto** | `protected void compute()` | `protected V compute()` |
-| **Caso de uso típico** | Modificaciones in-place (ej. ordenamiento de arreglo). | Reducciones (ej. suma de elementos, búsqueda). |
+| **Tipo de Retorno** | `void` (sin valor devuelto) | Objeto generico parametrizado `V` |
+| **Metodo de Computo** | `protected void compute()` | `protected V compute()` |
+| **Patron de Uso** | Modificaciones in-place (ej. ordenamiento de arreglos) | Reducciones matematicas, conteo y busqueda |
 
 ---
 
-## 3. Algoritmo Work-Stealing
-- **Estructura base**: Cada hilo trabajador (*worker thread*) posee una cola de doble extremo (**Deque**).
-- **Mecanismo de robo**:
-  * El hilo dueño toma tareas de la **cabeza (LIFO)** -> maximiza localidad temporal y de caché.
-  * Un hilo ocioso roba tareas de la **cola (FIFO)** de otro hilo ocupado -> minimiza contención de bloqueos.
+## 3. Mecanismo de Work-Stealing
+
+- **Estructura Interna**: Cada hilo de trabajo (*worker thread*) posee una cola de doble extremo (**Deque**).
+- **Politica de Acceso**:
+  - **Cabeza (LIFO)**: El hilo propietario extrae tareas de la cabeza; maximiza localidad temporal y reduce fallos de cache L1/L2.
+  - **Cola (FIFO)**: Hilos ociosos roban tareas del fondo de colas ajenas; reduce la contencion de cerrojos y balancea la carga global.
 
 ---
 
-## 4. Preguntas Típicas de Sustentación
-- **¿Por qué `compute()` de la segunda subtarea se debe llamar directamente y no hacer `fork()` a ambas?**:
-  * Hacer `subtask1.fork()` y luego `subtask2.compute()` reutiliza el hilo actual para la segunda tarea, ahorrando la sobrecarga de despachar un hilo extra del pool.
+## 4. Puntos Criticos de Examen y Trampas Frecuentes
+
+- **Optimizacion de Hilos en Bifurcacion**:
+  - Error tipico: Invocar `sub1.fork()` y `sub2.fork()`.
+  - Patron correcto: Invocar `sub1.fork()` y luego `sub2.compute()` directamente en el hilo actual. Ahorra la creacion y asignacion de un hilo extra en el pool.
+- **Intercepcion de Excepciones**:
+  - `compute()` no puede lanzar excepciones chequeadas directamente; se envuelven en `RuntimeException` o se recuperan en el punto de `join()`.
 ```
