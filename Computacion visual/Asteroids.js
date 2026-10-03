@@ -3,60 +3,111 @@ let asteroids = [];
 let score = 0;
 let bullets = [];
 let saucer;
+let saucerBullets = [];
 let lives = 3;
-
+let wave = 1;
+let gameOver = false;
+let nextExtraLifeScore = 10000; // Extra life every 10,000 points
 
 function setup() {
   createCanvas(500, 500);
-  player = new Player();
+  resetGame();
+}
 
-  // Initial wave of asteroids
-  for (let i = 0; i < 5; i++) {
+function resetGame() {
+  score = 0;
+  lives = 3;
+  wave = 1;
+  gameOver = false;
+  nextExtraLifeScore = 10000;
+  bullets = [];
+  saucerBullets = [];
+  saucer = null;
+  player = new Player();
+  player.respawn();
+  startWave(wave);
+}
+
+// Starts a wave with progressive number of asteroids (4 in wave 1, +2 per wave)
+function startWave(w) {
+  asteroids = [];
+  saucerBullets = [];
+  let numAsteroids = 4 + min(w - 1, 4) * 2;
+  for (let i = 0; i < numAsteroids; i++) {
     asteroids.push(new Asteroid());
   }
+}
 
+function playerHit() {
+  if (player.isInvulnerable() || gameOver) return;
+  lives--;
+  if (lives <= 0) {
+    gameOver = true;
+  } else {
+    player.respawn();
+  }
 }
 
 function draw() {
-  background(0, 0, 0);
+  background(0);
 
-  // HUD: Draw score in standard screen coordinates
+  // HUD: Classic score and lives in standard screen coordinates
   fill(255);
   noStroke();
-  textSize(16);
-  text("Score: " + floor(score), 15, 25);
+  textSize(18);
+  textAlign(LEFT, TOP);
+  text(nf(floor(score), 2), 20, 20);
 
-  // HUD: Draw lives as hearts in the top-left corner
-  for (let i = 0; i < lives; i++) {
-    drawHeart(22 + i * 22, 45, 12);
+  // Extra life bonus every 10,000 points
+  if (score >= nextExtraLifeScore) {
+    lives++;
+    nextExtraLifeScore += 10000;
   }
 
-  // Classic cartesian order
+  // HUD: Draw lives as miniature vector ships
+  for (let i = 0; i < lives; i++) {
+    drawShipIcon(440 + i * 18, 30);
+  }
+
+  // Game Over state
+  if (gameOver) {
+    textAlign(CENTER, CENTER);
+    fill(255);
+    textSize(28);
+    text("GAME OVER", width / 2, height / 2 - 20);
+    textSize(14);
+    text("PRESIONA 'r' PARA REINICIAR", width / 2, height / 2 + 25);
+    return;
+  }
+
+  // Next wave when all asteroids are destroyed
+  if (asteroids.length === 0) {
+    wave++;
+    startWave(wave);
+  }
+
+  // Classic Asteroids centered Cartesian coordinates
   push();
-  translate(width/2, height/2);
+  translate(width / 2, height / 2);
   scale(1, -1);
 
   player.update();
   player.draw();
 
-  // Update, draw and handle collisions for asteroids
+  // Update, draw, and handle collisions for asteroids
   for (let i = asteroids.length - 1; i >= 0; i--) {
     asteroids[i].update();
     asteroids[i].draw();
 
     // Check collision with player ship
     if (asteroids[i].hits(player.pos, 10)) {
-      // Crash: reset player to origin
-      player.pos = createVector(0, 0);
-      player.angle = PI/2;
-      player.vel = createVector(0, 0);
-      if (lives > 0) lives--;
+      playerHit();
     }
 
-    // Check collision with bullets
-    for (let j = 0; j < bullets.length; j++) {
+    // Check collision with player bullets
+    for (let j = bullets.length - 1; j >= 0; j--) {
       if (asteroids[i].hits(bullets[j].pos, 2)) {
-        // Large Asteroid (>13): 20 pts, Medium Asteroid (>7): 50 pts, Small Asteroid: 100 pts
+        // Atari scoring: Large: 20 pts, Medium: 50 pts, Small: 100 pts
         if (asteroids[i].r > 13) {
           score += 20;
         } else if (asteroids[i].r > 7) {
@@ -65,7 +116,7 @@ function draw() {
           score += 100;
         }
 
-        // Asteroid splits into smaller pieces
+        // Asteroid splits into 2 smaller pieces
         let newPieces = asteroids[i].break();
         if (newPieces.length > 0) {
           asteroids.push(newPieces[0]);
@@ -75,57 +126,87 @@ function draw() {
         // Remove bullet and destroyed asteroid
         asteroids.splice(i, 1);
         bullets.splice(j, 1);
-        // Each original size asteroid generates 6 more asteroids
-        // So generate a new asteroid each 6 destroyed ones
-        if(random(1) <= 1/6){
-          asteroids.push(new Asteroid());
-        }
         break; // Stop checking bullets for this destroyed asteroid
       }
     }
   }
-  // Update, draw and handle collisions for saucer
+
+  // Update, draw, and handle collisions for saucer
   if (saucer) {
     saucer.update();
     saucer.draw();
 
-    // Check collision with player ship
-    if (saucer.hits(player.pos, 10)) {
-      player.pos = createVector(0, 0);
-      player.angle = PI/2;
-      player.vel = createVector(0, 0);
-      if (lives > 0) lives--;
+    // Saucer shooting
+    if (saucer.canShoot()) {
+      // Small saucer (r <= 15) aims at player; large saucer shoots randomly
+      let target = (saucer.r <= 15) ? player.pos : null;
+      saucerBullets.push(saucer.shoot(target));
     }
-    if (saucer.pos.x < -width/2 - 50 || saucer.pos.x > width/2 - 50) {
-      saucer = null; // Remove saucer if it goes off screen
-    }else {   
-    // Check collision with bullets
+
+    // Check collision with player ship
+    if (saucer.hits(player.pos, 12)) {
+      playerHit();
+    }
+
+    // Remove saucer if it goes off screen (width/2 + 50)
+    if (saucer.pos.x < -width / 2 - 50 || saucer.pos.x > width / 2 + 50) {
+      saucer = null;
+    } else {
+      // Check collision with bullets
       for (let j = bullets.length - 1; j >= 0; j--) {
         if (saucer.hits(bullets[j].pos, 2)) {
-          // Large Saucer (r > 15): 200 pts, Small Saucer (r <= 15): 1000 pts
+          // Scoring: Large saucer: 200 pts, Small saucer: 1000 pts
           score += (saucer.r <= 15) ? 1000 : 200;
           bullets.splice(j, 1);
-          saucer = null;  
+          saucer = null;
           break;
         }
       }
     }
-  
-  } else if (frameCount % (60 * 15) === 0) {
-    // Under 10,000 points: Large Saucer
-    // 10,000 points and above: Small Saucer
+  } else if (frameCount > 0 && frameCount % (60 * 18) === 0) {
+    // Under 10,000 points: Large Saucer (r=20). 10,000 points and above: Small Saucer (r=10)
     let saucerRadius = (score >= 10000) ? 10 : 20;
     saucer = new Saucer(saucerRadius);
-  } 
-  
+  }
+
+  // Update, draw, and check collisions for saucer bullets
+  for (let k = saucerBullets.length - 1; k >= 0; k--) {
+    saucerBullets[k].update();
+    saucerBullets[k].draw();
+
+    if (dist(saucerBullets[k].pos.x, saucerBullets[k].pos.y, player.pos.x, player.pos.y) < 10) {
+      saucerBullets.splice(k, 1);
+      playerHit();
+      continue;
+    }
+
+    if (saucerBullets[k].isDead()) {
+      saucerBullets.splice(k, 1);
+    }
+  }
+
   pop();
 }
 
-// Only a bullet per press, not every frame.
-// (keyIsDown inside draw checks every frame) 
-function keyPressed(){
+// Game controls
+function keyPressed() {
+  if (gameOver) {
+    if (key === 'r') {
+      resetGame();
+    }
+    return;
+  }
+
+  // Spacebar: Shoot
   if (keyCode === 32) {
     bullets.push(new Bullet(player.pos, player.angle));
+    return;
+  }
+
+  // Down arrow / KeyCode 40: Hyperspace
+  if (keyCode === 40 || key === 's') {
+    player.hyperspace();
+    return;
   }
 }
 
@@ -133,24 +214,39 @@ function wrap(pos, r = 0) {
   let halfW = width / 2;
   let halfH = height / 2;
 
-  if (pos.x > halfW + r)  pos.x = -halfW - r;
+  if (pos.x > halfW + r) pos.x = -halfW - r;
   else if (pos.x < -halfW - r) pos.x = halfW + r;
 
-  if (pos.y > halfH + r)  pos.y = -halfH - r;
+  if (pos.y > halfH + r) pos.y = -halfH - r;
   else if (pos.y < -halfH - r) pos.y = halfH + r;
 }
 
-function drawHeart(x, y, size) {
+// Vector ship drawing function for HUD and Player (scalable size)
+function drawShipIcon(x, y, size = 10, angle = -PI / 2, thrusting = false) {
   push();
   translate(x, y);
-  fill(255, 40, 60);
+  rotate(angle);
   stroke(255);
-  strokeWeight(1);
+  strokeWeight(1.5);
+  noFill();
+
+  // Classic vector ship shape (triangle with rear notch)
   beginShape();
-  vertex(0, -size * 0.2);
-  bezierVertex(-size * 0.5, -size * 0.8, -size, -size * 0.1, 0, size * 0.8);
-  bezierVertex(size, -size * 0.1, size * 0.5, -size * 0.8, 0, -size * 0.2);
+  vertex(size, 0);                  // Front nose
+  vertex(-size * 0.7, -size * 0.5); // Back-left wing
+  vertex(-size * 0.4, 0);           // Rear-center notch
+  vertex(-size * 0.7, size * 0.5);  // Back-right wing
   endShape(CLOSE);
+
+  // Flickering thrust flame when accelerating (Atari arcade style)
+  if (thrusting) {
+    beginShape();
+    vertex(-size * 0.4, -size * 0.22);
+    vertex(-size * (0.8 + random(0.25)), 0);
+    vertex(-size * 0.4, size * 0.22);
+    endShape();
+  }
+
   pop();
 }
 
@@ -163,6 +259,7 @@ class Player{
     // The angle is the x axis or the front of the ship
     this.angle = PI/2;
     this.invulnerableTimer = 0; // Frames of invulnerability after respawn
+    this.isThrusting = false;
   }
 
   respawn(){
@@ -170,10 +267,20 @@ class Player{
     this.vel = createVector(0, 0);
     this.angle = PI/2;
     this.invulnerableTimer = 120; // 2 seconds of grace period at 60 fps
+    this.isThrusting = false;
   }
 
   isInvulnerable(){
     return this.invulnerableTimer > 0;
+  }
+
+  // Hyperspace jump to random coordinates
+  hyperspace(){
+    let halfW = width / 2 - 30;
+    let halfH = height / 2 - 30;
+    this.pos = createVector(random(-halfW, halfW), random(-halfH, halfH));
+    this.vel = createVector(0, 0);
+    this.invulnerableTimer = 30; // 0.5s of invulnerability after jump
   }
 
   draw(){
@@ -181,23 +288,17 @@ class Player{
     if (this.invulnerableTimer > 0 && floor(frameCount / 6) % 2 === 0) {
       // Blink: skip drawing ship body on alternating frames
     } else {
-      push();
-      translate(this.pos.x, this.pos.y);
-      rotate(this.angle);
-      stroke(this.color);
-      noFill();
-      triangle(15, 0, -10, -5, -10, 5);
-      pop();
+      // Draw player ship using drawShipIcon with size 15
+      drawShipIcon(this.pos.x, this.pos.y, 15, this.angle, this.isThrusting);
     }
+
     // All the bullets are updated, drawed and removed if dead
     for (let i = bullets.length - 1; i >= 0; i--){
       bullets[i].update();
       bullets[i].draw();
       if (bullets[i].isDead()){
         bullets.splice(i, 1);
-        
       }
-
     }
   }
 
@@ -205,13 +306,17 @@ class Player{
     if (this.invulnerableTimer > 0) {
       this.invulnerableTimer--;
     }
-    if (keyIsDown(LEFT_ARROW)) {
+    if (keyIsDown(LEFT_ARROW) || keyIsDown("a")) {
       this.angle += 0.05;
-    }else if (keyIsDown(RIGHT_ARROW)) {
+    } else if (keyIsDown(RIGHT_ARROW) || keyIsDown("d")) { 
       this.angle -= 0.05;
-    }else if (keyIsDown(UP_ARROW)) {
+    }
+    
+    this.isThrusting = keyIsDown(UP_ARROW) || keyIsDown("w");
+    if (this.isThrusting) {
       this.vel.add(p5.Vector.fromAngle(this.angle).mult(0.1));
     }
+
     this.pos.add(this.vel);
     this.vel.mult(0.98); // Friction
     wrap(this.pos, 15);
@@ -219,14 +324,13 @@ class Player{
 }
 
 class Bullet{
-
   constructor(pos, angle){
     // angle = front of the ship
     this.angle = angle;
     // position = front of the ship
     this.pos = createVector(pos.x, pos.y);
     this.pos.add(p5.Vector.fromAngle(this.angle).mult(15));
-    // inicial velocity
+    // initial velocity
     this.vel = p5.Vector.fromAngle(this.angle).mult(8);
   }
 
@@ -245,10 +349,8 @@ class Bullet{
   }
 
   isDead(){
-    //if the bullet is slow enough, it is dead
-    if (this.vel.mag() < 4){
-      return true;
-    }
+    // if the bullet is slow enough, it is dead
+    return this.vel.mag() < 4;
   }
 }
 
@@ -276,7 +378,7 @@ class Asteroid{
     // Irregular rocky shape (offsets per vertex)
     this.total = floor(random(10, 20));
     this.offsets = [];
-    for (let i = 0; i < floor(random(10, 20)); i++) {
+    for (let i = 0; i < this.total; i++) {
       this.offsets.push(random(-this.r * 0.4, this.r * 0.4));
     }
   }
@@ -326,7 +428,7 @@ class Asteroid{
 
 class Saucer{
   constructor(r){
-    // Radius can be 20 for large or 10 for small)
+    // Radius can be 20 for large or 10 for small
     this.r = r;
 
     // Direction: enters from left (-1) or right (1)
@@ -335,7 +437,6 @@ class Saucer{
 
     let halfW = width / 2;
     let halfH = height / 2;
-
 
     this.pos = createVector(side * (halfW + this.r), random(-halfH * 0.7, halfH * 0.7));
 
@@ -388,7 +489,6 @@ class Saucer{
 
     // Move
     this.pos.add(this.vel);
-
   }
 
   // Check if it's ready to shoot
@@ -401,7 +501,7 @@ class Saucer{
     return false;
   }
 
-  // Spawns a bullet aimed at target (e.g. player.pos) or random direction
+  // Spawns a bullet 
   shoot(targetPos){
     let angle;
     if (targetPos) {
