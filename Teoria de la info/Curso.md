@@ -30,3 +30,6 @@
   $$f_0 = \text{MCD}(f_1, f_2, \dots, f_N)$$
 - **Periodo fundamental ($T_0$)**: **MCM** (Mínimo Común Múltiplo) de los periodos individuales:
   $$T_0 = \text{MCM}(T_1, T_2, \dots, T_N)$$
+- **Cálculo con fracciones**:
+  - $\text{MCD}\left(\frac{a}{b}, \frac{c}{d}\right) = \frac{\text{MCD}(a, c)}{\text{MCM}(b, d)}$
+  - $\text{MCM}\left(\frac{a}{b}, \frac{c}{d}\right) = \frac{\text{MCM}(a, c)}{\text{MCD}(b, d)}$
