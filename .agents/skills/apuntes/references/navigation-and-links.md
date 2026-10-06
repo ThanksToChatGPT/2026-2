@@ -18,7 +18,7 @@ El archivo `Curso.md` en la raiz de cada materia centraliza el indice operativo 
 
 ### Reglas de indexacion:
 - Cada apunte ocupa una unica viñeta en la seccion `## Apuntes del Curso`.
-- La etiqueta `Terminos clave:` debe listar de forma exhaustiva los conceptos, teoremas, algoritmos y formulas principales tratados en la ficha, formateados en codigo en linea (`` `termino` ``).
+- Debe listar de forma exhaustiva los conceptos, teoremas, algoritmos y formulas principales tratados en la ficha, formateados en codigo en linea (`` `termino` ``).
 
 ---
 
@@ -35,7 +35,7 @@ Inmediatamente debajo se define la cabecera tecnica:
 # Titulo del Tema
 
 > **Materia**: Nombre de la Materia | **Fuente**: [Documento.pdf](../Documentos/Documento.pdf)  
-> **Terminos Core**: `TerminoA`, `TerminoB`, `TerminoC`
+>`TerminoA`, `TerminoB`, `TerminoC`
 ```
 
 ---

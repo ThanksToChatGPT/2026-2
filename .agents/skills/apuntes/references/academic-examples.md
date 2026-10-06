@@ -17,7 +17,7 @@ Reglas visuales obligatorias:
 # Framework Fork-Join y Concurrencia de Tareas
 
 > **Materia**: Paralela y Distribuida | **Fuente**: [Capitulo2_Concurrencia.pdf](../Documentos/Capitulo2_Concurrencia.pdf)  
-> **Terminos Core**: `ForkJoinPool`, `RecursiveTask<V>`, `RecursiveAction`, `Work-Stealing`, `Threshold`
+> `ForkJoinPool`, `RecursiveTask<V>`, `RecursiveAction`, `Work-Stealing`, `Threshold`
 
 ---
 

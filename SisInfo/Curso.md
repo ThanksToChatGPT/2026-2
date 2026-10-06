@@ -1,5 +1,25 @@
-# Notas
-Hitos 15%*2
-Proyecto 40%
-Evaluacion por pares 15%
-Asistencia 15%
+# Sistemas de Información
+
+> **Docente**: PhD Jhon Alexander Garcia Camargo  
+> **Documentos Fuente**: [Carpeta Documentos](./Documentos/)
+
+---
+
+## Evaluación
+
+- **Hitos de Proyecto**: 2x15% 
+- **Proyecto Final**: 40%
+- **Evaluación por Pares**: 15%
+- **Asistencia**: 15%
+
+---
+
+## Apuntes del Curso
+
+- [01. Introducción a los Sistemas de Información](./Apuntes/01_Intro_Information_Systems.md): `Information System`, `IT`, `ERP`, `DSS`, `TPS`, `ESS`, `Expert System`, `KMS`, `Process`, `Project`, `Supply Curve`, `COGS`, `SCM`, `CRM`.
+- [02. Estrategia TI y Ventaja Competitiva](./Apuntes/02_Estrategia_TI_y_Ventaja_Competitiva.md): `5 fuerzas de porter`, `barreras liquidas`, `switching costs`, `asimetria de informacion`, `convergencia digital`, `complementadores`, `coopeticion`, `cadena de valor`, `actividades primarias`, `actividades de apoyo`, `margen`, `modelo de alineacion estrategica`, `SAM`, `paradoja de la productividad`, `estrategia digital de negocio`, `rol del CIO`.
+- [03. Alineación Estratégica y Ciclos de Desarrollo de Software](./Apuntes/03_Alineacion_Estrategica_y_SDLC.md): `business capability map`, `TOGAF ADM`, `capacidad vs proceso`, `KPI`, `KRI`, `KCI`, `balanced scorecard`, `BSC`, `4 perspectivas de kaplan y norton`, `SDLC`, `royce`, `mantenimiento 60-80%`, `SWEBOK`, `modelo cascada`, `modelo en v`, `modelo espiral`, `boehm`, `desarrollo incremental`, `scrum`, `kanban`, `WIP limit`, `ley de little`, `marcos mixtos`, `design thinking`, `lean startup`, `lean UX`, `pivot or persevere`, `problem space`, `solution space`.
+- [04. Agilismo y Gestión de Equipos](./Apuntes/04_Agilismo_y_Gestion_de_Equipos.md): `cultura organizacional`, `niveles de schein`, `artefactos`, `valores adoptados`, `presunciones basicas`, `cultura participativa`, `jerarquias vs redes`, `manifiesto agil`, `4 valores agiles`, `triangulo de hierro`, `cono de la incertidumbre`, `variabilidad 16x`, `boehm`, `mcconnell`, `being agile vs doing agile`, `teatro agil`, `scrum`, `product owner`, `scrum master`, `developers`, `sprint`, `sprint planning`, `daily scrum 15 min`, `sprint review`, `sprint retrospective`, `product backlog`, `product goal`, `sprint backlog`, `sprint goal`, `incremento`, `DoD`, `definition of done`, `product owner toolkit`, `impact mapping`, `user story mapping`, `EBM`, `evidence-based management`, `modern agile`, `joshua kerievsky`, `make people awesome`, `make safety a prerequisite`, `seguridad psicologica`, `blameless retrospectives`, `experiment and learn rapidly`, `deliver value continuously`, `matriz de eisenhower`, `urgente vs importante`, `cuadrante II`, `kudos`, `management 3.0`, `anti-patrones agiles`, `the expert 7 red lines`.
+- [05. Ingeniería de Requerimientos y Descubrimiento de Producto](./Apuntes/05_Ingenieria_de_Requerimientos.md): `product discovery`, `product delivery`, `dual-track agile`, `problem space`, `solution space`, `4 riesgos de producto`, `expensive prototype trap`, `product quartet`, `opportunity solution tree`, `OST`, `requisitos funcionales`, `requisitos no funcionales`, `RNF`, `ISO 25010`, `GORE`, `KAOS`, `i*`, `Tropos`, `SIG`, `softgoals`, `FastText`, `Story Points Predictor`, `SPP`, `boundary objects`, `connextra`, `INVEST`, `Gherkin`, `BDD`, `criterios de aceptacion`, `priority poker`, `MoSCoW`, `RICE`, `WSJF`, `customer journey map`, `pain points`, `BPMN As-Is`, `BPMN To-Be`, `service tasks`.
+- [06. Modelado de Procesos con BPMN 2.0 y Design Thinking](./Apuntes/06_BPMN_y_Design_Thinking.md): `BPMN 2.0`, `proceso de negocio`, `eventos`, `start event`, `intermediate event`, `end event`, `catching vs throwing`, `timer event`, `signal event`, `message event`, `error event`, `terminate end event`, `tasks`, `user task`, `service task`, `gateways`, `compuerta exclusiva`, `XOR`, `compuerta paralela`, `AND`, `deadlock`, `pools`, `piscinas`, `lanes`, `carriles`, `flujo de secuencia`, `flujo de mensaje`, `draw.io`, `bpmn.io`, `processmaker`, `plantuml`, `diagram as code`, `design thinking`, `deseabilidad`, `factibilidad`, `viabilidad`, `empatizar`, `shadowing`, `mapa de empatia`, `definir`, `problem framing`, `how might we`, `HMW`, `idear`, `brainstorming`, `crazy eights`, `prototipar`, `low-fi`, `mago de oz`, `wizard of oz`, `concierge`, `evaluar`, `testear`, `proceso iterativo`, `BPMN As-Is`, `BPMN To-Be`.
+- [07. Arquitectura de Datos, Modelado Relacional y Requerimientos No Funcionales](./Apuntes/07_Arquitectura_de_Datos.md): `arquitectura de datos`, `BPMN to SQL`, `objetos de datos`, `data store`, `entidades`, `atributos`, `modelo entidad-relacion`, `MER`, `DER`, `cardinalidad`, `1:1`, `1:N`, `N:M`, `tabla intermedia`, `restricciones de integridad`, `integridad de entidad`, `clave primaria`, `PK`, `integridad referencial`, `clave foranea`, `FK`, `registros huerfanos`, `ON DELETE CASCADE`, `ON DELETE RESTRICT`, `ON DELETE SET NULL`, `integridad de dominio`, `CHECK constraints`, `NOT NULL`, `modern data architecture`, `AWS data architecture`, `OLTP`, `OLAP`, `data lake`, `data warehouse`, `data lakehouse`, `analytics`, `machine learning`, `data governance`, `data catalog`, `linaje de datos`, `RNF`, `ISO 25010`, `disponibilidad`, `balanceadores de carga`, `load balancer`, `multi-AZ`, `failover`, `seguridad`, `encriptacion en reposo`, `AES-256`, `encriptacion en transito`, `TLS 1.3`, `RBAC`, `audit trail`, `escalabilidad`, `escalamiento vertical`, `escalamiento horizontal`, `read replicas`, `caching`, `redis`, `sharding`, `diagrama de secuencia UML`, `lineas de vida`, `mensajes sincronicos`, `alt else`, `modelado de comportamiento`, `hito 2`.

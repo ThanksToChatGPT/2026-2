@@ -59,7 +59,7 @@ Ubicado siempre en la **raiz de la materia**. Funciona como mapa operativo e ind
 - **Cabecera minima**: Materia, docente, y enlace a los documentos fuente.
 - **Evaluacion**: Porcentajes de corte, criterios de calificacion y fechas de parciales.
 - **Indice de Apuntes con Etiquetas de Busqueda**:
-  Lista de enlaces a cada apunte acompañada de una sintesis de una linea y un listado exhaustivo de **Terminos clave** en codigo en linea. Esto permite buscar con `Ctrl+F` o busqueda textual cualquier concepto sin tener que recordar en que clase se vio ni abrir cada archivo:
+  Lista de enlaces a cada apunte acompañada deun listado exhaustivo de **Terminos clave** en codigo en linea. Esto permite buscar con `Ctrl+F` o busqueda textual cualquier concepto sin tener que recordar en que clase se vio ni abrir cada archivo:
   ```markdown
   ## Apuntes del Curso
   - [04. Paralelismo a Nivel de Tarea](./Apuntes/04_Paralelismo_a_Nivel_de_Tarea.md): `work`, `span`, `speedup`, `costo`, `slackness`, `ley de amdahl`, `ley de gustafson-barsis`, `deadlock`, `data race`.
@@ -89,7 +89,7 @@ Cuando el usuario solicite tomar o complementar apuntes:
    - Modelar diagramas en Mermaid o guardar capturas en `./img/` segun corresponda.
    - Asegurar el enlace `[← Volver a Curso.md](../Curso.md)`.
 3. **Actualizar el Indice en `Curso.md`**:
-   - Agregar o actualizar la entrada del apunte en la seccion `## Apuntes del Curso` con su ruta relativa, sintesis breve y el bloque `Terminos clave: ...` con todas las palabras clave relevantes.
+   - Agregar o actualizar la entrada del apunte en la seccion `## Apuntes del Curso` con su ruta relativa y el bloque con todas las palabras clave relevantes.
 
 ---
 
