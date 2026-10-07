@@ -16,6 +16,26 @@
 \usepackage{microtype}
 \usepackage{xcolor}
 \usepackage[hidelinks,pdfencoding=auto,psdextra]{hyperref}
+% --- Paquete de Dibujo TikZ y sus Librerías ---
+\usepackage{tikz}
+\usepackage{soul}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, backgrounds, babel}
+% --- Colores del Diagrama BPMN ---
+\definecolor{bpmnBlue}{HTML}{EBF3FA}
+\definecolor{bpmnBlueBorder}{HTML}{2B6CB0}
+\definecolor{bpmnTeal}{HTML}{E6FFFA}
+\definecolor{bpmnTealBorder}{HTML}{234E52}
+\definecolor{bpmnGreen}{HTML}{E6F4EA}
+\definecolor{bpmnGreenBorder}{HTML}{137333}
+\definecolor{bpmnRed}{HTML}{FCE8E6}
+\definecolor{bpmnRedBorder}{HTML}{C5221F}
+\definecolor{bpmnOrange}{HTML}{FEF3C7}
+\definecolor{bpmnOrangeBorder}{HTML}{D97706}
+
+% --- Ayudas para la sección 1.3 (necesidades) ---
+\newcommand{\nec}[1]{\mbox{NEC-#1}}                       % evita partir "NEC-01" en dos renglones
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}  % columna de ancho fijo alineada a la izquierda
+\setlength{\LTcapwidth}{\textwidth}                        % títulos de longtable a todo el ancho
 
 % --- Colores ---
 \definecolor{primary}{RGB}{20, 50, 90}
@@ -72,9 +92,9 @@
     {\large
     Sebastian Fernando Gutiérrez Rojas\par
     Ronald Arturo Chávez Cabrera\par
-    Nombre Completo Integrante 3\par
-    Nombre Completo Integrante 4\par
-    Nombre Completo Integrante 5\par
+    Camilo Andres Rojas Silva \par
+    Angel Inyena Pasuy\par
+    Jonathan Felipe López Núñez\par
     Nombre Completo Integrante 6\par
     Nombre Completo Integrante 7\par
     }
@@ -98,196 +118,413 @@
 \subsection{Análisis de las 5 Fuerzas de Porter}
 \subsection{Mapeo de la Cadena de Valor identificando puntos de dolor tecnológicos.}
 \subsection{Definición inicial del problema bajo el estándar de Diseño de Ingeniería.}
-\subsubsection{Identificación de necesidades}
+Esta sección define el problema siguiendo el estándar de Diseño en Ingeniería del resultado de aprendizaje~2 de ABET (\emph{Outcome 2}): aplicar el diseño de ingeniería para producir soluciones que respondan a necesidades especificadas, considerando la salud pública, la seguridad y el bienestar, así como factores globales, culturales, sociales, ambientales y económicos. Por eso avanza en dos pasos: primero se identifican las necesidades de la organización y después se formula el problema con sus restricciones y consideraciones de diseño. Todo el apartado se mantiene en el \emph{espacio del problema} (qué necesita la empresa); el espacio de la solución se trabaja en el Discovery de producto y en la ingeniería de procesos.
 
-La definición de necesidades se aborda siguiendo las fases clásicas de la ingeniería de requerimientos (ISO/IEC/IEEE 29148): \textbf{elicitación}, \textbf{análisis y negociación}, \textbf{especificación} y \textbf{validación}. Este apartado cubre las dos primeras y deja preparada la trazabilidad hacia la especificación formal de requerimientos funcionales y no funcionales.
+% ------------------------------------------------------------------------------
+\subsubsection{Identificación de necesidades}
+\label{sec:necesidades}
+% ------------------------------------------------------------------------------
 
 \paragraph{Enfoque y metodología.}
+Las necesidades se levantan con las actividades del área de requisitos del SWEBOK~v3: elicitación, análisis (que incluye la negociación), especificación y validación. La Tabla~\ref{tab:nec-fases} muestra qué cubre este documento y qué queda para las secciones siguientes.
 
-\begin{table}[H]
-\centering
-\small
-\caption{Fases de ingeniería de requerimientos aplicadas.}
-\begin{tabularx}{\textwidth}{@{}l X X@{}}
+% REVISAR (equipo): si hubo entrevista o visita a la empresa, agregarla en la fila
+% de Elicitación con su fecha; hoy solo figura el análisis documental.
+{\small
+\begin{longtable}{@{}l L{6.0cm} L{3.7cm} l@{}}
+\caption{Actividades de ingeniería de requerimientos y su estado.}\label{tab:nec-fases}\\
 \toprule
-\textbf{Fase} & \textbf{Actividad realizada} & \textbf{Producto} \\
+\textbf{Actividad} & \textbf{Qué se hizo o se hará} & \textbf{Producto} & \textbf{Estado} \\
 \midrule
-Elicitación & Análisis documental del repositorio actual (Dropbox, más de 23.000 archivos), análisis de las 5 Fuerzas de Porter y mapeo de la cadena de valor con sus puntos de dolor. & Lista bruta de problemas y evidencias. \\
-Análisis & Agrupación por dominio, identificación de interesados, formulación de necesidades y priorización. & Catálogo de necesidades \texttt{NEC-xx}. \\
-Negociación & Delimitación del alcance (área financiera excluida) y definición de restricciones y supuestos. & Alcance acordado y lista de preguntas por validar. \\
-Especificación & Derivar requerimientos funcionales (\texttt{RF}) y no funcionales (\texttt{RNF}) verificables desde cada necesidad. & Trazabilidad NEC $\rightarrow$ RF/RNF. \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
- Una \emph{necesidad} describe qué requiere la organización para resolver un problema, sin prescribir la solución. Un \emph{requerimiento} es la traducción verificable de esa necesidad en una capacidad del sistema. 
-
-\paragraph{Formalización del problema de ingeniería.}
-
-Aplicando el estándar de Diseño en Ingeniería, el problema se formaliza en la siguiente tabla:
-
-\begin{table}[H]
-\centering
-\small
-\caption{Formalización del problema bajo el estándar de Diseño en Ingeniería.}
-\begin{tabularx}{\textwidth}{@{}l X@{}}
+\endfirsthead
 \toprule
-\textbf{Elemento} & \textbf{Enunciado} \\
+\textbf{Actividad} & \textbf{Qué se hizo o se hará} & \textbf{Producto} & \textbf{Estado} \\
 \midrule
-\textbf{Situación actual} & Loard Construcciones opera con Dropbox como gestor documental \emph{de facto}: más de 23.000 archivos en estructura jerárquica, sin metadatos, con versionado manual (\texttt{v1}, \texttt{v6}), copias en conflicto y sin \emph{audit trail}. La operación de campo reporta por WhatsApp y la consolidación físico-financiera se realiza al cierre del proyecto. \\
-\textbf{Problema} & La arquitectura de información actual \textbf{no permite} trazabilidad en tiempo real, ni control de versiones confiable, ni explotación analítica de datos históricos (APU, rendimientos, consumibles), lo que se traduce en: (i) erosión del margen por desviaciones detectadas tardíamente, (ii) riesgo legal y contractual por vencimientos no controlados, (iii) reprocesos administrativos en la consolidación del dossier de calidad. \\
-\textbf{Necesidad} & La organización requiere un \textbf{ERP complementario} que digitalice la gestión operativa de campo y taller, la gestión comercial (APU y cotizaciones) y el control documental del SIG, integrando captura móvil, control de versiones, metadatos y flujos de aprobación con firma digital. \\
-\textbf{Restricción} & El área financiera y contable queda explícitamente \textbf{fuera del alcance}. Se debe cumplir con ISO 9001:2015, SG-SST (Decreto 1072 de 2015), RUC y protección de datos (Ley 1581 de 2012). \\
-\textbf{Criterio de éxito} & Reducción \(\geq 50\%\) del tiempo administrativo de consolidación documental; \(\geq 95\%\) de los reportes diarios capturados digitalmente; cero no conformidades por uso de versiones obsoletas en auditoría externa; 100\% de los vencimientos SST con alerta anticipada \(\geq 30\) días. \\
+\endhead
 \bottomrule
-\end{tabularx}
-\end{table}
+\endfoot
+Elicitación & Revisión del diagnóstico (5 Fuerzas de Porter y cadena de valor con sus puntos de dolor) y análisis documental del repositorio actual en Dropbox (más de 23.000 archivos). & Lista de síntomas y evidencias. & Hecho \\
+\addlinespace
+Análisis y negociación & Agrupación por dominio, identificación de interesados, redacción de cada necesidad, priorización y delimitación del alcance. & Catálogo \nec{01} a \nec{19} priorizado (primera versión). & Hecho \\
+\addlinespace
+Especificación & Traducir cada necesidad en historias de usuario y requerimientos no funcionales verificables (Especificación de requerimientos). & Trazabilidad NEC $\rightarrow$ HU/RNF. & Pendiente \\
+\addlinespace
+Validación & Revisar el catálogo, las prioridades y las metas con la empresa. & Catálogo validado. & Pendiente \\
+\end{longtable}
+}
 
-\begin{table}[H]
-\centering
-\small
-\caption{Relación causa--efecto del diagnóstico.}
-\begin{tabularx}{\textwidth}{@{}l X X@{}}
+Una \emph{necesidad} describe qué requiere la organización para resolver un problema, sin prescribir la solución. Un \emph{requerimiento} es la traducción verificable de esa necesidad en una capacidad del sistema (ISO/IEC/IEEE 29148). Por eso cada necesidad se redacta como una \emph{capacidad de negocio}: lo que la empresa debe poder hacer, no cómo lo hará.
+
+\paragraph{Del síntoma a la necesidad.}
+Los puntos de dolor del diagnóstico son síntomas. Para llegar a la necesidad se identifica primero la causa raíz de cada uno y su efecto en el negocio (Tabla~\ref{tab:nec-causa-efecto}).
+
+{\small
+\begin{longtable}{@{}L{3.4cm} L{4.9cm} L{4.9cm} L{2.0cm}@{}}
+\caption{Relación síntoma, causa raíz, efecto y necesidad.}\label{tab:nec-causa-efecto}\\
 \toprule
-\textbf{Síntoma observable} & \textbf{Causa raíz} & \textbf{Efecto en el negocio} \\
+\textbf{Síntoma observable} & \textbf{Causa raíz} & \textbf{Efecto en el negocio} & \textbf{Necesidad} \\
 \midrule
-``Falta dinero'' al cierre del proyecto & Sin trazabilidad de consumibles en tiempo real (NEC-02) & Margen erosionado sin capacidad de corrección \\
-Informes diarios por WhatsApp & Ausencia de canal digital estructurado en campo (NEC-01) & Avance físico-financiero desfasado \\
-Versiones obsoletas en auditoría & Versionado manual en el nombre del archivo (NEC-12) & No conformidades ISO 9001; riesgo contractual \\
-Copias en conflicto de \texttt{GT-FR25} & Colisión de sincronización en Dropbox (NEC-13) & Pérdida de evidencia de pruebas hidrostáticas \\
-Cotizaciones tardías & APU heterogéneos y búsqueda manual de históricos (NEC-06) & Pérdida de licitaciones por sobretiempo \\
-Vencimientos SST no detectados & Control manual en hojas de cálculo (NEC-18) & Riesgo legal (Decreto 1072 de 2015) y de seguridad \\
-Dossier de calidad tardío & Transcripción manual de ensayos NDT (NEC-05) & Retraso en radicación de actas y facturación \\
+\endfirsthead
+\toprule
+\textbf{Síntoma observable} & \textbf{Causa raíz} & \textbf{Efecto en el negocio} & \textbf{Necesidad} \\
+\midrule
+\endhead
 \bottomrule
-\end{tabularx}
-\end{table}
+\endfoot
+``Falta dinero'' al cierre del proyecto & El consumo de electrodos, discos y gases no se controla durante la obra; se concilia al final. & Margen erosionado sin posibilidad de corregir. & \nec{02} \\
+\addlinespace
+Reportes diarios por WhatsApp & No existe un canal estructurado para reportar desde campo. & Avance físico y financiero desfasados. & \nec{01} \\
+\addlinespace
+Cotizaciones que solo salen a tiempo con jornadas extra & APU en plantillas distintas y búsqueda manual de históricos. & Sobretiempo y desgaste del equipo; riesgo de incumplir plazos de oferta. & \nec{06}, \nec{07} \\
+\addlinespace
+Dossier de calidad tardío & Los ensayos de terceros se transcriben a mano a hojas de cálculo. & Se retrasa la radicación de actas y, con ella, el cobro. & \nec{05} \\
+\addlinespace
+Compras urgentes con sobreprecio & Pedidos de última hora, sin flujo de aprobación ni seguimiento. & Sobrecostos, críticos en frentes aislados como Buenaventura. & \nec{08} \\
+\addlinespace
+Vencimientos de cursos y exámenes sin detectar & Fechas controladas con cruces manuales de órdenes y correos. & Riesgo legal y de seguridad para el personal. & \nec{18} \\
+\addlinespace
+Varias versiones de un mismo documento & Versionado manual en el nombre del archivo y copias locales. & Riesgo de trabajar o auditar con una versión no vigente. & \nec{12} \\
+\addlinespace
+Copias en conflicto (p.\,ej.\ \texttt{GT-FR25}) & Edición simultánea sin control en Dropbox. & Riesgo de perder evidencia de pruebas hidrostáticas. & \nec{13} \\
+\end{longtable}
+}
 
-\paragraph{Partes interesadas (stakeholders).}
+\paragraph{Partes interesadas.}
+La Tabla~\ref{tab:nec-interesados} clasifica a los interesados según su \textbf{poder} sobre el proyecto y su \textbf{interés} en él, y deriva la estrategia de gestión del cuadrante resultante.
 
-La matriz clasifica a los interesados según su \textbf{poder} e \textbf{interés} , y deriva la estrategia de gestión del cuadrante resultante.
-
-\begin{table}[H]
-\centering
-\small
-\caption{Matriz poder--interés de interesados.}
-\begin{tabularx}{\textwidth}{@{}l c c X@{}}
+{\small
+\begin{longtable}{@{}L{4.1cm} c c L{8.6cm}@{}}
+\caption{Matriz poder--interés de interesados.}\label{tab:nec-interesados}\\
 \toprule
 \textbf{Interesado} & \textbf{Poder} & \textbf{Interés} & \textbf{Estrategia de gestión} \\
 \midrule
-Gerencia general & Alto & Alto & \textbf{Gestionar de cerca.} Patrocinador del proyecto; validación de alcance y presupuesto. \\
-Clientes (Chevron, Primax) & Alto & Bajo & \textbf{Mantener satisfechos.} Auditorías y requisitos contractuales condicionan el diseño. \\
-Coordinación del SIG / calidad & Alto & Alto & \textbf{Gestionar de cerca.} Dueño funcional de NEC-12 a NEC-17. \\
-Gestión Humana y SST & Alto & Alto & \textbf{Gestionar de cerca.} Dueño funcional de NEC-18 y NEC-19; riesgo legal directo. \\
-Ingenieros residentes y supervisores & Medio & Alto & \textbf{Mantener informados.} Usuarios clave de captura en campo. \\
-Área comercial y de costos & Medio & Alto & \textbf{Mantener informados.} Usuarios clave de NEC-06 y NEC-07. \\
-Almacén y logística & Bajo & Alto & \textbf{Mantener informados.} Usuarios de NEC-02 y NEC-03. \\
-Compras & Bajo & Medio & \textbf{Monitorear.} Usuarios de NEC-08. \\
-Cuadrillas y personal de campo & Bajo & Alto & \textbf{Mantener informados.} Usabilidad móvil crítica. \\
-Área financiera y contable & Alto & Nulo & \textbf{Monitorear.} Explícitamente fuera del alcance; riesgo de fricción política. \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-\paragraph{Catálogo de necesidades identificadas.}
-
-Cada necesidad se formula bajo la estructura ``La empresa necesita [capacidad] para [beneficio]'' y se vincula con su evidencia en el diagnóstico. La prioridad usa MoSCoW: \textbf{M} (debe), \textbf{S} (debería), \textbf{C} (podría).
-
-\medskip
-\noindent\textbf{A. Operación de campo y taller}
-
-\begin{longtable}{@{}p{1.4cm} p{5.6cm} p{4.6cm} p{1.4cm}@{}}
+\endfirsthead
 \toprule
-\textbf{ID} & \textbf{Necesidad} & \textbf{Evidencia} & \textbf{Prior.} \\
+\textbf{Interesado} & \textbf{Poder} & \textbf{Interés} & \textbf{Estrategia de gestión} \\
 \midrule
 \endhead
-NEC-01 & Registrar de forma estructurada el informe diario de actividades de cada cuadrilla, para sustituir los reportes por WhatsApp y consolidar el avance sin retrasos. & Informalidad en reportes de campo; formato \texttt{GT-FR48} es soporte de facturación (Cadena de valor, Operaciones). & M \\
-NEC-02 & Controlar en tiempo real el consumo de consumibles (electrodos, discos, gases) por frente de obra, para detectar desviaciones antes del cierre del proyecto. & Carencia de trazabilidad; la conciliación se hace al cierre y se descubre que ``falta dinero'' (Logística interna). & M \\
-NEC-03 & Contar con hoja de vida, estado, fecha de adquisición y ubicación de cada herramienta y equipo, para reducir pérdidas y asignarlos por frente. & Inventario estático y ciego; descontrol en devoluciones; sin stock de seguridad (Logística interna). & S \\
-NEC-04 & Medir el avance físico y la productividad real de las cuadrillas frente a lo cotizado, para evaluar la rentabilidad de contratos marco y proyectos. & Rendimientos sin analítica; desfase físico-financiero (Operaciones). & M \\
-NEC-05 & Consolidar los resultados de ensayos (NDT, hidrostáticas, cilindros de concreto) y el libro de tubería en un dossier de calidad, sin transcripción manual a hojas de cálculo. & Consolidación manual del dossier; \texttt{GT-FR64} (Weld Book) y formatos de ensayos (Logística externa; Gestión Técnica). & M \\
 \bottomrule
+\endfoot
+Gerencia general & Alto & Alto & \textbf{Gestionar de cerca.} Patrocinador; valida alcance y presupuesto. \\
+Coordinación del SIG y calidad & Alto & Alto & \textbf{Gestionar de cerca.} Dueño funcional de \nec{12} a \nec{17}. \\
+Gestión humana y SST & Alto & Alto & \textbf{Gestionar de cerca.} Dueño funcional de \nec{18} y \nec{19}; riesgo legal directo. \\
+Clientes (Chevron, Primax y otros) & Alto & Bajo & \textbf{Mantener satisfechos.} Sus auditorías y requisitos contractuales condicionan el diseño. \\
+Área financiera y contable & Alto & Bajo & \textbf{Mantener satisfecha.} No participa y queda fuera del alcance; se le informa para evitar fricciones. \\
+Ingenieros residentes y supervisores & Medio & Alto & \textbf{Mantener informados.} Usuarios clave de la captura en campo. \\
+Área comercial y de costos & Medio & Alto & \textbf{Mantener informados.} Usuarios clave de \nec{06} y \nec{07}. \\
+Almacén y logística & Bajo & Alto & \textbf{Mantener informados.} Usuarios de \nec{02} y \nec{03}. \\
+Cuadrillas y personal de campo & Bajo & Alto & \textbf{Mantener informados.} La usabilidad desde el celular es crítica. \\
+Compras & Bajo & Medio & \textbf{Monitorear.} Usuarios de \nec{08}. \\
+Subcontratistas de ensayos (END) & Bajo & Bajo & \textbf{Monitorear.} Entregan los reportes que alimentan \nec{05}. \\
 \end{longtable}
+}
 
-\noindent\textbf{B. Gestión comercial y gerencial}
+\paragraph{Catálogo de necesidades.}
+Cada necesidad sigue la estructura ``la empresa necesita [capacidad] para [beneficio]'' y se vincula con su evidencia en el diagnóstico (Tabla~\ref{tab:nec-catalogo}). La prioridad usa MoSCoW: \textbf{M} (debe), \textbf{S} (debería) y \textbf{C} (podría).
 
-\begin{longtable}{@{}p{1.4cm} p{5.6cm} p{4.6cm} p{1.4cm}@{}}
+{\small
+\begin{longtable}{@{}l L{7.0cm} L{5.5cm} c@{}}
+\caption{Catálogo de necesidades identificadas.}\label{tab:nec-catalogo}\\
 \toprule
-\textbf{ID} & \textbf{Necesidad} & \textbf{Evidencia} & \textbf{Prior.} \\
+\textbf{ID} & \textbf{Necesidad} & \textbf{Evidencia en el diagnóstico} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Necesidad} & \textbf{Evidencia en el diagnóstico} & \textbf{Prior.} \\
 \midrule
 \endhead
-NEC-06 & Estandarizar el Análisis de Precios Unitarios (APU) y conservar un histórico consultable de tarifas y rendimientos, para cotizar con consistencia y rapidez. & Plantillas Excel heterogéneas; búsquedas en carpetas de hace años o por llamadas (Marketing y ventas). & M \\
-NEC-07 & Estandarizar la generación de cotizaciones (con y sin AIU) y su seguimiento, para evitar sobretiempos y reprocesos al licitar. & Sobreesfuerzo operativo en cotización; formato \texttt{GC-FR04} (Gestión Comercial). & S \\
-NEC-08 & Visualizar el ciclo completo de una compra (requisición, cotización, aprobación, despacho y entrega), para reducir compras urgentes con sobreprecio. & Falta de trazabilidad del lead time; autorizaciones sin flujo formal; sobrecostos en Buenaventura (Compras). & M \\
-NEC-09 & Disponer de un tablero gerencial operativo con avance físico, costos directos de obra y alertas por proyecto, sin depender de revisiones manuales ni llamadas. & Opacidad de costos directos; facturación ciega; desfase de información (Infraestructura). & M \\
-NEC-10 & Analizar la concentración de ingresos por cliente y contrato, y la desviación entre lo cotizado y lo ejecutado, para sustentar el margen de imprevistos (hoy 7--10\% empírico). & 80\% de la facturación en un solo cliente (Porter, poder de los clientes); contingencias no analizadas (Postventa). & S \\
-NEC-11 & Mantener un repositorio de lecciones aprendidas y fallas por proyecto que alimente nuevas cotizaciones. & Ausencia de lecciones aprendidas (Postventa). & C \\
+\midrule
+\multicolumn{4}{r@{}}{\footnotesize\emph{Continúa en la página siguiente}} \\
+\endfoot
 \bottomrule
+\endlastfoot
+% ---------------- A ----------------
+\multicolumn{4}{@{}l}{\textbf{A. Operación de campo y taller}} \\*
+\addlinespace[3pt]
+\nec{01} & Registrar de forma estructurada el informe diario de actividades de cada cuadrilla, para sustituir los reportes por WhatsApp y consolidar el avance sin retrasos. & Informalidad en los reportes de campo (cadena de valor, Operaciones). El formato \texttt{GT-FR48} es soporte de facturación (diagnóstico Dropbox). & M \\
+\addlinespace
+\nec{02} & Controlar el consumo de consumibles (electrodos, discos, gases) por frente de obra mientras la obra avanza, para detectar desviaciones antes del cierre del proyecto. & Sin trazabilidad; la conciliación se hace al cierre y se descubre que ``falta dinero'' (Logística interna). & M \\
+\addlinespace
+\nec{03} & Contar con hoja de vida, estado, fecha de adquisición y ubicación de cada herramienta y equipo, para reducir pérdidas y asignarlos por frente. & Inventario estático; descontrol en devoluciones; sin stock de seguridad (Logística interna). & S \\
+\addlinespace
+\nec{04} & Medir el avance físico y la productividad real de las cuadrillas frente a lo cotizado, para evaluar la rentabilidad de contratos marco y proyectos. & Rendimientos sin analítica; desfase físico-financiero (Operaciones). & M \\
+\addlinespace
+\nec{05} & Consolidar los resultados de ensayos (END, hidrostáticas, cilindros de concreto) y el libro de tubería en un dossier de calidad, para radicar actas sin transcripción manual. & Consolidación manual del dossier (Logística externa). Formato \texttt{GT-FR64}, \emph{Weld Book} (diagnóstico Dropbox). & M \\
+\addlinespace[6pt]
+% ---------------- B ----------------
+\multicolumn{4}{@{}l}{\textbf{B. Gestión comercial y gerencial}} \\*
+\addlinespace[3pt]
+\nec{06} & Estandarizar el Análisis de Precios Unitarios (APU) y conservar un histórico consultable de tarifas y rendimientos, para cotizar con consistencia y rapidez. & Plantillas de Excel heterogéneas; búsquedas en carpetas de hace años o por llamadas (Marketing y ventas). & M \\
+\addlinespace
+\nec{07} & Estandarizar la generación de cotizaciones (con y sin AIU) y su seguimiento, para evitar sobretiempos y reprocesos al licitar. & Sobreesfuerzo operativo al cotizar (Marketing y ventas). Formato \texttt{GC-FR04} (diagnóstico Dropbox). & S \\
+\addlinespace
+\nec{08} & Visualizar el ciclo completo de una compra (requisición, cotización, aprobación, despacho y entrega), para reducir las compras urgentes con sobreprecio. & Sin trazabilidad del \emph{lead time}; autorizaciones sin flujo formal; sobrecostos en Buenaventura (Compras). & M \\
+\addlinespace
+\nec{09} & Disponer de un tablero gerencial con avance físico, costos directos de obra y alertas por proyecto, para decidir sin depender de revisiones manuales ni llamadas. & Opacidad de costos directos; seguimiento limitado al balance mensual (Infraestructura). & M \\
+\addlinespace
+\nec{10} & Analizar la concentración de ingresos por cliente y contrato y la desviación entre lo cotizado y lo ejecutado, para sustentar el margen de imprevistos (hoy 7--10\% empírico). & 80\% de la facturación en un solo cliente (Porter, poder de los clientes); contingencias no analizadas (Postventa). & S \\
+\addlinespace
+\nec{11} & Mantener un repositorio de lecciones aprendidas y fallas por proyecto, para alimentar las nuevas cotizaciones y no repetir desvíos. & Ausencia de lecciones aprendidas (Postventa). & C \\
+\addlinespace[6pt]
+% ---------------- C ----------------
+\multicolumn{4}{@{}l}{\textbf{C. Gestión documental del Sistema Integrado de Gestión (SIG)}} \\*
+\addlinespace[3pt]
+\nec{12} & Controlar las versiones de forma automática y archivar las obsoletas, para que el personal use solo la versión vigente. & Copias locales que divergen de la versión aprobada (Desarrollo tecnológico). Versionado manual en el nombre (\texttt{v1}, \texttt{v6}) y carpeta \texttt{Documentos Obsoletos} (diagnóstico Dropbox). & M \\
+\addlinespace
+\nec{13} & Evitar la edición simultánea conflictiva sobre un mismo documento, para no perder información de pruebas ni de informes. & Archivos ``copia en conflicto'', p.\,ej.\ \texttt{GT-FR25} (diagnóstico Dropbox). & S \\
+\addlinespace
+\nec{14} & Buscar documentos por atributos (cliente, sede, año, proceso, tipo) y no solo por ruta de carpetas, para ubicar la evidencia con rapidez ante una auditoría. & Estructura exclusivamente en carpetas anidadas, sin metadatos (diagnóstico Dropbox). & S \\
+\addlinespace
+\nec{15} & Restringir el acceso por rol a la información sensible (nómina, salud ocupacional, tarifas y márgenes), para proteger datos personales y comerciales. & Permisos a nivel de carpeta; riesgo de alteración o eliminación (diagnóstico Dropbox). & M \\
+\addlinespace
+\nec{16} & Aprobar y firmar digitalmente actas y autorizaciones, con validez probatoria y sello de tiempo, para no imprimir y escanear. & Firmas manuscritas escaneadas en PDF (diagnóstico Dropbox). & S \\
+\addlinespace
+\nec{17} & Registrar quién consultó, modificó o descargó cada documento, para sustentar auditorías de clientes y de certificación. & Sin registro de auditoría en el gestor actual (diagnóstico Dropbox). & M \\
+\addlinespace[6pt]
+% ---------------- D ----------------
+\multicolumn{4}{@{}l}{\textbf{D. Talento humano y seguridad y salud en el trabajo (SST)}} \\*
+\addlinespace[3pt]
+\nec{18} & Recibir alertas anticipadas de vencimiento de cursos (alturas, espacios confinados), calificaciones de soldadores y exámenes médicos ocupacionales, para que nadie ejecute tareas de alto riesgo con una certificación vencida. & Riesgo operativo y legal por vencimientos inadvertidos (Gestión de recursos humanos; matriz de competencias). & M \\
+\addlinespace
+\nec{19} & Digitalizar el registro de inducciones y capacitaciones hechas en campo, para no depender de soportes físicos que viajan entre ciudades. & Dispersión documental y riesgo de pérdida ante auditorías del cliente (Gestión de recursos humanos). & S \\
 \end{longtable}
+}
 
-\noindent\textbf{C. Gestión documental del Sistema Integrado de Gestión (SIG)}
+\paragraph{Priorización.}
+La prioridad combina tres criterios: (i) el riesgo legal, contractual o de seguridad si la necesidad no se atiende, (ii) el impacto económico (margen, sobrecostos, tiempo administrativo) y (iii) la frecuencia con la que ocurre el problema. Como referencia, la guía de MoSCoW (DSDM) recomienda que los ``Debe'' no superen el 60\% del esfuerzo; aquí se usa el número de necesidades como aproximación (Tabla~\ref{tab:nec-moscow}).
 
-\begin{longtable}{@{}p{1.4cm} p{5.6cm} p{4.6cm} p{1.4cm}@{}}
+{\small
+\begin{longtable}{@{}L{2.6cm} L{4.4cm} c L{6.4cm}@{}}
+\caption{Resumen de la priorización MoSCoW.}\label{tab:nec-moscow}\\
 \toprule
-\textbf{ID} & \textbf{Necesidad} & \textbf{Evidencia} & \textbf{Prior.} \\
+\textbf{Prioridad} & \textbf{Necesidades} & \textbf{Cant.} & \textbf{Justificación} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Prioridad} & \textbf{Necesidades} & \textbf{Cant.} & \textbf{Justificación} \\
 \midrule
 \endhead
-NEC-12 & Controlar versiones de forma automática y garantizar que el personal use solo la versión vigente, con las obsoletas archivadas. & Versionado manual en el nombre (\texttt{v1}, \texttt{v6}); carpeta \texttt{Documentos Obsoletos}; copias locales divergentes (Diagnóstico Dropbox; Desarrollo tecnológico). & M \\
-NEC-13 & Evitar la edición simultánea conflictiva sobre un mismo documento, para no perder información de pruebas ni informes. & Archivos ``copia en conflicto'' (p.\,ej. \texttt{GT-FR25}). & M \\
-NEC-14 & Buscar documentos por atributos (cliente, sede, año, proceso, tipo), no solo por ruta de carpetas. & Estructura exclusivamente en carpetas anidadas, sin metadatos. & M \\
-NEC-15 & Restringir el acceso por rol a información sensible (nómina, salud ocupacional, tarifas y márgenes). & Permisos a nivel de carpeta; riesgo de alteración o eliminación. & M \\
-NEC-16 & Aprobar y firmar digitalmente actas y autorizaciones, con validez probatoria y sello de tiempo, evitando imprimir y escanear. & Firmas manuscritas escaneadas en PDF. & S \\
-NEC-17 & Registrar quién consultó, modificó o descargó cada documento, para sustentar auditorías de clientes y de certificación. & Sin audit trail en el gestor actual. & M \\
 \bottomrule
+\endfoot
+Debe (M) & \nec{01}, 02, 04, 05, 06, 08, 09, 12, 15, 17, 18 & 11 (58\%) & Afectan directamente el margen, la seguridad de las personas, la protección de datos o la conformidad ante auditorías (ISO 9001, RUC). \\
+\addlinespace
+Debería (S) & \nec{03}, 07, 10, 13, 14, 16, 19 & 7 (37\%) & Mejoran la eficiencia y el control, pero el negocio puede operar sin ellas en una primera versión. \\
+\addlinespace
+Podría (C) & \nec{11} & 1 (5\%) & Valor a largo plazo; depende de contar antes con datos históricos limpios. \\
+\addlinespace
+No en esta versión (W) & Integración con contabilidad y facturación; regularización de licencias de software técnico & -- & El área financiera no participa; el licenciamiento se resuelve con una decisión de compra, no con el sistema. \\
 \end{longtable}
-
-\noindent\textbf{D. Talento humano y seguridad y salud en el trabajo}
-
-\begin{longtable}{@{}p{1.4cm} p{5.6cm} p{4.6cm} p{1.4cm}@{}}
-\toprule
-\textbf{ID} & \textbf{Necesidad} & \textbf{Evidencia} & \textbf{Prior.} \\
-\midrule
-\endhead
-NEC-18 & Recibir alertas anticipadas de vencimiento de cursos (alturas, espacios confinados), calificaciones de soldadores y exámenes médicos ocupacionales. & Riesgo operativo y legal por vencimientos inadvertidos (Gestión de RR.\,HH.; matriz de competencias). & M \\
-NEC-19 & Digitalizar el registro de inducciones y capacitaciones hechas en campo, para no depender de soportes físicos que viajan entre ciudades. & Dispersión documental y riesgo de pérdida ante auditorías del cliente. & S \\
-\bottomrule
-\end{longtable}
-
-\paragraph{Análisis y priorización.}
-
-La priorización combina tres criterios: (i) riesgo legal, contractual o de seguridad si la necesidad no se atiende, (ii) impacto económico (margen, sobrecostos, tiempo administrativo) y (iii) frecuencia con la que ocurre el problema.
-
-\begin{table}[H]
-\centering
-\small
-\caption{Resumen de priorización MoSCoW.}
-\begin{tabularx}{\textwidth}{@{}l X X@{}}
-\toprule
-\textbf{Prioridad} & \textbf{Necesidades} & \textbf{Justificación} \\
-\midrule
-Debe (M) & NEC-01, 02, 04, 05, 06, 08, 09, 12, 13, 14, 15, 17, 18 & Afectan directamente el margen, la seguridad de las personas, la trazabilidad exigida por clientes petroleros o la conformidad ante auditorías (ISO 9001, RUC). \\
-Debería (S) & NEC-03, 07, 10, 16, 19, 20 & Mejoran eficiencia y control, pero el negocio puede operar sin ellas en una primera versión. \\
-Podría (C) & NEC-11 & Valor estratégico a largo plazo; depende de contar antes con datos históricos limpios. \\
-\bottomrule
-\end{tabularx}
-\end{table}
+}
 
 \textbf{Observaciones del análisis.}
 \begin{itemize}
-    \item Las necesidades NEC-01, 02, 04 y 09 forman una cadena: sin captura diaria estructurada (NEC-01) no hay consumo (NEC-02), productividad (NEC-04) ni tablero gerencial (NEC-09). Conviene abordarlas en el mismo incremento.
-    \item Las necesidades del dominio C (NEC-12 a 17) son las que justifican el gestor documental, y resuelven los seis puntos de dolor del diagnóstico de Dropbox (concurrencia, versiones, metadatos, RBAC, firmas y auditoría).
-    \item NEC-18 es la de mayor riesgo legal inmediato ya que trabajo en alturas y espacios confinados, Decreto 1072 de 2015, y tiene bajo costo de implementación; es candidata a primera entrega.
+    \item \nec{01}, 02, 04 y 09 forman una cadena: sin la captura diaria estructurada (\nec{01}) no hay datos de consumo (\nec{02}), de productividad (\nec{04}) ni tablero gerencial (\nec{09}). Conviene abordarlas en el mismo incremento.
+    \item Las necesidades del dominio~C (\nec{12} a \nec{17}) responden a los seis puntos de dolor del diagnóstico de Dropbox: concurrencia, versiones, metadatos, permisos, firmas y auditoría.
+    \item \nec{18} es la de mayor riesgo legal y humano inmediato (trabajo en alturas y en espacios confinados) y su alcance es acotado, por lo que es candidata a primera entrega.
 \end{itemize}
+
+% ------------------------------------------------------------------------------
+\subsubsection{Formulación del problema}
+\label{sec:problema}
+% ------------------------------------------------------------------------------
+
+Con las necesidades identificadas, el problema se formula con los elementos del diseño en ingeniería (Tabla~\ref{tab:nec-problema}).
+
+{\small
+\begin{longtable}{@{}L{3.1cm} p{12.9cm}@{}}
+\caption{Formulación del problema bajo el estándar de Diseño en Ingeniería.}\label{tab:nec-problema}\\
+\toprule
+\textbf{Elemento} & \textbf{Enunciado} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Elemento} & \textbf{Enunciado} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\textbf{Situación actual} & Loard Construcciones ejecuta montajes para el sector de hidrocarburos bajo normas API, ASME y ASTM. El campo reporta por WhatsApp y en papel; los costos, los consumibles y el avance se consolidan a mano y al cierre del proyecto. La información documentada del SIG se guarda en Dropbox (más de 23.000 archivos), organizada solo por carpetas, con versionado manual en el nombre del archivo y copias locales. \\
+\addlinespace
+\textbf{Problema} & La empresa \textbf{no dispone} de información operativa, comercial y documental oportuna, trazable y confiable. Las desviaciones se descubren cuando ya no se pueden corregir y la evidencia que exigen los clientes se arma a mano. Esto produce: (i) erosión del margen, (ii) riesgo legal, contractual y de seguridad por vencimientos y versiones sin control y (iii) reprocesos y sobretiempo en el dossier, las cotizaciones y las compras. \\
+\addlinespace
+\textbf{Necesidad} & Capturar la información donde se origina (frente de obra, taller y oficina) y controlarla y consultarla de forma centralizada, para detectar las desviaciones mientras la obra está en ejecución y tener la evidencia disponible ante auditorías. Se detalla en el catálogo \nec{01} a \nec{19}. \\
+\addlinespace
+\textbf{Dirección de solución (hipótesis)} & Un sistema de información complementario a los sistemas contables actuales (en este documento, ERP/SIG), con captura desde el celular en campo, control documental y tablero gerencial. Es una hipótesis: las alternativas se comparan en el Discovery de producto (OST). \\
+\addlinespace
+\textbf{Restricciones} & El área financiera y contable queda \textbf{fuera del alcance}. La solución debe respetar ISO 9001:2015, el SG-SST (Decreto 1072 de 2015), el RUC y la protección de datos personales (Ley 1581 de 2012), y ser usable por personal de campo con distinta familiaridad tecnológica. \\
+\addlinespace
+\textbf{Criterios de éxito (preliminares)} & Reducción \(\geq 50\%\) del tiempo administrativo de consolidación documental; \(\geq 95\%\) de los reportes diarios capturados digitalmente; cero no conformidades por uso de versiones obsoletas en auditoría externa; 100\% de los vencimientos SST con alerta anticipada \(\geq 30\) días. La línea base se medirá en el diagrama As-Is y las metas se formalizarán como KPI y KRI en el Balanced Scorecard. \\
+\end{longtable}
+}
+
+\paragraph{Consideraciones de diseño.}
+El \emph{Outcome 2} pide que la solución responda a las necesidades considerando seis grupos de factores. La Tabla~\ref{tab:nec-outcome2} los aterriza al caso y señala qué implica cada uno para el diseño.
+
+{\small
+\begin{longtable}{@{}L{2.7cm} L{6.4cm} L{6.4cm}@{}}
+\caption{Consideraciones de diseño según el \emph{Outcome 2}.}\label{tab:nec-outcome2}\\
+\toprule
+\textbf{Factor} & \textbf{Cómo aparece en Loard Construcciones} & \textbf{Implicación para el diseño} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Factor} & \textbf{Cómo aparece en Loard Construcciones} & \textbf{Implicación para el diseño} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Salud pública, seguridad y bienestar & El personal trabaja en alturas y en espacios confinados. Las soldaduras y pruebas certifican la integridad de tuberías y tanques de hidrocarburos, cuya falla afectaría a trabajadores y comunidades. & \nec{18} y \nec{05} son ``Debe''. La evidencia de certificaciones y ensayos debe ser íntegra y trazable. \\
+\addlinespace
+Globales & Se trabaja con códigos internacionales (API, ASME, ASTM), ISO 9001 y los estándares HSE de un cliente multinacional. & El sistema conserva la estructura documental que exigen las normas y los clientes; no la reemplaza. \\
+\addlinespace
+Culturales & Reportar por WhatsApp y en papel es un hábito arraigado, y los usuarios de campo tienen distinta familiaridad tecnológica. & Captura simple desde el celular y adopción gradual. La usabilidad pesa tanto como la funcionalidad. \\
+\addlinespace
+Sociales & El sistema guardará datos personales y de salud ocupacional de los trabajadores y hará visible la productividad de las cuadrillas. & Acceso por rol (\nec{15}) y tratamiento conforme a la Ley 1581 de 2012. Debe acordarse con la empresa el uso de los datos de productividad (\nec{04}). \\
+\addlinespace
+Ambientales & Los soportes físicos viajan entre ciudades y se imprime para firmar. El descontrol de consumibles y las compras urgentes generan desperdicio y transportes adicionales. & Menos papel y traslados (\nec{16}, \nec{19}) y menos desperdicio (\nec{02}, \nec{08}). Es un beneficio secundario y aún no está cuantificado. \\
+\addlinespace
+Económicos & La empresa compite con un margen límite no negociable, reserva entre 7 y 10\% para imprevistos y cobra a 30 y 60 días contra actas. & El costo de la solución debe justificarse frente al margen que protege. Lo que acelere la radicación de actas (\nec{05}) mejora el flujo de caja. \\
+\end{longtable}
+}
 
 \paragraph{Restricciones y supuestos.}
-
 \begin{itemize}
-    \item \textbf{Alcance:} el área financiera y contable no participa; los sistemas contables, balances y conciliaciones tributarias quedan fuera. El ERP cubre la gestión operativa de campo y taller y la gestión gerencial y comercial.
-    \item \textbf{Normativas:} el sistema debe respaldar la información documentada de ISO 9001:2015, los requisitos del SG-SST (Decreto 1072 de 2015) y del RUC. Para datos de personal aplica la protección de datos personales (Ley 1581 de 2012) y, para firmas digitales, la Ley 527 de 1999.
-    \item \textbf{Contexto de uso:} usuarios en campo con distintos niveles de familiaridad tecnológica, en cinco sedes (Cartagena, Bogotá, Medellín, Yumbo y Buenaventura).
-    \item \textbf{Supuesto:} el repositorio actual se conserva como fuente de migración (más de 23.000 archivos y la codificación \texttt{[Proceso]-[Tipo][Número] v[Versión]}).
+    \item \textbf{Alcance:} el área financiera y contable no participa; los sistemas contables, los balances y las conciliaciones tributarias quedan fuera. El foco acordado es la gestión operativa de campo y taller y la gestión gerencial y comercial. La gestión documental del SIG y el control de vencimientos SST se incluyen como dominios de soporte, porque de ellos depende la conformidad ante las auditorías de los clientes; esta ampliación está por validar con la empresa.
+    \item \textbf{Normativas:} ISO 9001:2015 (información documentada), SG-SST (Decreto 1072 de 2015), trabajo en alturas (Resolución 4272 de 2021), espacios confinados (Resolución 0491 de 2020) y RUC. Para los datos del personal aplica la Ley 1581 de 2012 y, para las firmas digitales, la Ley 527 de 1999.
+    \item \textbf{Contexto de uso:} administración central en Bogotá y frentes de obra en Cartagena, Medellín, Yumbo, Cartago y Buenaventura, con usuarios de campo de distinta familiaridad tecnológica.
+    \item \textbf{Supuestos:} el repositorio actual se conserva como fuente de migración (más de 23.000 archivos y la codificación \texttt{[Proceso]-[Tipo][Número] v[Versión]}); en los frentes aislados la conectividad puede ser intermitente.
 \end{itemize}
 
+\paragraph{Preguntas por validar con la empresa.}
+Este catálogo es una primera versión. Antes de pasar a la especificación quedan por confirmar:
+\begin{enumerate}
+    \item ¿La gestión documental del SIG y el control SST entran en el alcance, además de campo, taller, comercial y gerencial?
+    \item ¿Cuál es la línea base de cada meta? Por ejemplo, las horas que toma armar un dossier y el porcentaje de reportes diarios que llegan el mismo día.
+    \item ¿Qué conectividad hay en los frentes aislados, como Buenaventura?
+    \item ¿Quién aprueba hoy una compra y quién debería aprobarla?
+    \item ¿El orden de prioridad propuesto coincide con el de la gerencia?
+\end{enumerate}
+
+% ============================ FIN SECCIÓN 1.3 =================================
+
+
 \subsection{Modelo de Alineación Estratégica (SAM)}
+\label{sec:sam}
+
+% --- Definición de Colores del Diagrama SAM ---
+\definecolor{samPurple}{RGB}{106, 38, 158}
+\definecolor{samBlue}{RGB}{0, 114, 206}
+\definecolor{samOrange}{RGB}{234, 118, 37}
+\definecolor{samGreen}{RGB}{98, 172, 61}
+\definecolor{samRedArrow}{RGB}{220, 30, 30}
+\definecolor{samBlackArrow}{RGB}{30, 30, 30}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    box/.style={
+        rectangle,
+        rounded corners=14pt,
+        text width=6.2cm,
+        minimum height=4.2cm,
+        text=white,
+        inner sep=8pt,
+        font=\sffamily
+    },
+    redArrow/.style={
+        {Stealth[length=3.8mm,width=2.6mm]}-{Stealth[length=3.8mm,width=2.6mm]},
+        color=samRedArrow,
+        line width=2.4pt,
+        shorten <=5pt,
+        shorten >=5pt
+    }
+]
+
+% Nodos principales (Cuadrantes del SAM con mayor separación y letra más grande)
+\node[box, fill=samPurple] (bs) at (0, 6.2) {
+    {\centering\textbf{\large Estrategia de Negocio}\par}
+    \vspace{3pt}\hrule height 0.5pt\vspace{6pt}
+    {\footnotesize\raggedright
+    $\bullet$ Obras civiles y montajes \textit{Oil \& Gas} (Chevron, Primax).\par\vspace{3pt}
+    $\bullet$ Rigor en normas API, ASME, ASTM, RUC e ISO.\par\vspace{3pt}
+    $\bullet$ Confiabilidad técnica, seguridad y cero accidentes.\par\vspace{3pt}
+    $\bullet$ Margen límite no negociable (finanzas excluidas).\par}
+};
+
+\node[box, fill=samBlue] (its) at (8.6, 6.2) {
+    {\centering\textbf{\large Estrategia de TI}\par}
+    \vspace{3pt}\hrule height 0.5pt\vspace{6pt}
+    {\footnotesize\raggedright
+    $\bullet$ ERP/SIG Operativo para obra, taller y cotizaciones.\par\vspace{3pt}
+    $\bullet$ Trazabilidad en tiempo real y registro \textit{Audit Trail}.\par\vspace{3pt}
+    $\bullet$ Control de versiones y seguridad por roles (RBAC).\par\vspace{3pt}
+    $\bullet$ Formalización digital y firma electrónica (Ley 527).\par}
+};
+
+\node[box, fill=samOrange] (bo) at (0, 0) {
+    {\centering\textbf{\large Operación del Negocio}\par}
+    \vspace{3pt}\hrule height 0.5pt\vspace{6pt}
+    {\footnotesize\raggedright
+    $\bullet$ Coordinación central Bogotá y frentes en 5 ciudades.\par\vspace{3pt}
+    $\bullet$ Reportes diarios (\texttt{GT-FR48}), \textit{Weld Book} y APU.\par\vspace{3pt}
+    $\bullet$ Matriz IPER y control de tareas críticas (alturas).\par\vspace{3pt}
+    $\bullet$ Cuadrillas técnicas especializadas en procesos manuales.\par}
+};
+
+\node[box, fill=samGreen] (ito) at (8.6, 0) {
+    {\centering\textbf{\large Operación de TI}\par}
+    \vspace{3pt}\hrule height 0.5pt\vspace{6pt}
+    {\footnotesize\raggedright
+    $\bullet$ Migración de Dropbox (23.000 archivos) a BD relacional.\par\vspace{3pt}
+    $\bullet$ App móvil/web con soporte fuera de línea (\textit{offline}).\par\vspace{3pt}
+    $\bullet$ Alertas automáticas de vencimiento SST ($>$30 días).\par\vspace{3pt}
+    $\bullet$ Control de concurrencia (\textit{check-out}) y soporte en sitio.\par}
+};
+
+% Flechas de alineación e integración (amplias y nítidas)
+\draw[redArrow] (bs) -- (its);
+\draw[redArrow] (bs) -- (bo);
+\draw[redArrow] (its) -- (ito);
+\draw[redArrow] (bo) -- (ito);
+
+\end{tikzpicture}
+\caption{Modelo de Alineación Estratégica (SAM) para Loard Construcciones S.A.S.}
+\label{fig:sam_model}
+\end{figure}
+
+A continuación, se detalla la caracterización de cada una de las cuatro secciones del modelo adaptadas a la realidad estratégica, operacional y tecnológica de la compañía:
+
+\subsubsection{Estrategia de Negocio (\textit{Business Strategy})}
+Constituye el posicionamiento externo de Loard Construcciones S.A.S. en el mercado industrial:
+\begin{itemize}
+    \item \textbf{Alcance del Negocio (\textit{Business Scope}):} Prestación de servicios especializados de montajes civiles y mecánicos y mantenimiento integral de infraestructura para el sector de hidrocarburos (\textit{Oil \& Gas}), abarcando tanques de almacenamiento y líneas de transporte de combustible. Su demanda se concentra fuertemente en contratos marco y obras específicas de clientes multinacionales de alta exigencia, destacando a Chevron como cliente principal abordanto aproximadamente el 80\% de la facturación, con presencia operativa en cinco nodos estratégicos: Bogotá, Cartagena, Medellín, Yumbo y Buenaventura.
+    \item \textbf{Competencias Distintivas (\textit{Distinctive Competencies}):} Rigor técnico y aseguramiento normativo bajo estándares internacionales de ingeniería (API, ASME, ASTM, SSPC/NACE) y cumplimiento del Registro Uniforme de Evaluación del Sistema de Gestión en Seguridad, Salud en el Trabajo y Ambiente (RUC) y entorno actual basado en normas ISO (9001, 14001, OHSAS 18001). La empresa compite por confiabilidad técnica, conocimiento de los estándares del cliente y un historial intachable, manteniendo un margen límite de ganancia no negociable que rechaza guerras de precios que comprometan la seguridad y calidad del trabajo.
+    \item \textbf{Gobernanza del Negocio (\textit{Business Governance}):} Relaciones comerciales de largo plazo basadas en acuerdos marco y licitaciones privadas, alianzas con laboratorios tercerizados para Ensayos No Destructivos y delimitación explícita del alcance operativo, en el cual el área contable y tributaria opera de forma aislada e independiente de los sistemas de obra.
+\end{itemize}
+
+\subsubsection{Estrategia de TI (\textit{IT Strategy})}
+Define la visión y directrices tecnológicas necesarias para habilitar la estrategia competitiva:
+\begin{itemize}
+    \item \textbf{Alcance de las TI (\textit{IT Scope}):} Desarrollo y adopción de una plataforma centralizada de gestión operativa y comercial (ERP) focalizada en dos frentes críticos: (i) gestión de campo y taller (control de materiales y consumibles, bitácora de herramientas, reportes diarios estructurados y trazabilidad de avance físico) y (ii) gestión comercial y de calidad (centralización de históricos de Análisis de Precios Unitarios - APU, trazabilidad del flujo de compras y automatización del Dossier de Calidad). Se excluyen intencionalmente los módulos de contabilidad financiera y liquidación tributaria en el proyecto de mejora tecnologica.
+    \item \textbf{Competencias Sistémicas (\textit{Systemic Competencies}):} Disponibilidad e integridad de datos en tiempo real entre los frentes remotos y la gerencia central; inmutabilidad y registro de trazabilidad (\textit{Audit Trail}) para satisfacer auditorías externas; control automatizado de versiones documentales que impida el uso de formatos obsoletos; y arquitectura de seguridad con control de acceso basado en roles (RBAC) para proteger información confidencial.
+    \item \textbf{Gobernanza de TI (\textit{IT Governance}):} Formalización integral del ecosistema digital, sustituyendo la comunicación informal por mensajería instantánea (WhatsApp); estandarización de flujos de aprobación digital con validez jurídica bajo la Ley 527 de 1999 (firma electrónica); y estricto cumplimiento de la Ley 1581 de 2012 para el tratamiento de datos personales y registros de salud ocupacional.
+\end{itemize}
+
+\subsubsection{Operación del Negocio (\textit{Business Operation})}
+Abarca la infraestructura interna, los procesos y el talento humano que sustentan el día a día operativo:
+\begin{itemize}
+    \item \textbf{Estructura Administrativa (\textit{Administrative Structure}):} Organización funcional y geográficamente dispersa, coordinada desde la sede principal en Bogotá y desplegada en frentes de trabajo locales mediante ingenieros residentes de obra, \hl{supervisores de campo e inspectores de calidad y SSTA.}
+    \item \textbf{Procesos de Negocio (\textit{Business Processes}):} Ciclo licitatorio y costeo de proyectos soportado en APU; ejecución de órdenes de trabajo en contrato marco y proyectos no rutinarios; captura diaria de labores mediante el formato de Informe Diario de Actividades; seguimiento de soldadura en el Libro de Tubería (\textit{Weld Book}); gestión logística de abastecimiento en zonas de alta complejidad (p.\,ej.\ Buenaventura); y administración preventiva de la matriz IPER y vigencias de certificaciones críticas (trabajo en alturas y espacios confinados).
+    \item \textbf{Habilidades y Talento Humano (\textit{Skills}):} Mano de obra técnica altamente especializada (soldadores calificados, tuberos y montadores) y profesionales de ingeniería con vasta experiencia normativa pero con hábitos operacionales arraigados al registro analógico en papel, cuadernos de notas y plantillas dispersas de cálculo.
+\end{itemize}
+
+\subsubsection{Operación de TI (\textit{IT Operation})}
+Comprende la infraestructura tecnológica interna, aplicaciones y mecanismos de soporte técnico:
+\begin{itemize}
+    \item \textbf{Arquitectura Tecnológica (\textit{IT Infrastructure \& Architecture}):} Transición estructural desde un repositorio de archivos en la nube no relacional y pasivo (Dropbox con más de 23.000 archivos en extensiones \texttt{.xlsx}, \texttt{.docx} y \texttt{.pdf}, caracterizado por colisiones de sincronización y dispersión en carpetas) hacia una solución de software cliente-servidor accesible \hl{vía web y móvil}, soportada sobre una base de datos relacional transaccional y servicios de almacenamiento seguro de documentos indexados por metadatos.
+    \item \textbf{Procesos de TI (\textit{IT Processes}):} Implementación de mecanismos de control de concurrencia (\textit{check-in / check-out}) para prevenir copias conflictivas; rutinas automáticas de sincronización de datos de campo (soportando captura fuera de línea para frentes con conectividad intermitente); consolidación automática de reportes de avance físico contra el presupuesto de APU; y alertas tempranas automáticas ante vencimientos de certificaciones SST con anticipación mayor o igual a 30 días.
+    \item \textbf{Habilidades y Soporte de TI (\textit{IT Skills}):} Planes de capacitación continua y acompañamiento en la gestión del cambio dirigidos a residentes de obra para asegurar una alta usabilidad en dispositivos móviles; capacidades de administración de usuarios, perfiles y políticas de seguridad; y soporte técnico permanente enfocado en la resiliencia operativa y respaldo continuo de la información documental.
+\end{itemize}
 
 \subsection{Análisis de Gobernanza y Marco de Decisión}
 
@@ -305,6 +542,141 @@ Podría (C) & NEC-11 & Valor estratégico a largo plazo; depende de contar antes
 \section{Ingeniería de procesos (BPMN 2.0)}
 \subsection{Diagrama As-Is: Mapa de Calor y Cuellos de Botella Actuales}
 \subsection{Diagrama To-Be: Proceso Optimizado con el Sistema de Información}
+
+% =========================================================================
+% CONTENIDO DEL PUNTO 3.2 (PEGAR EN LA LÍNEA 308)
+% =========================================================================
+
+% Definición de colores corporativos/BPMN (por si no están en tu preámbulo)
+\providecommand{\definecolor}[3]{}
+\definecolor{bpmnBlue}{HTML}{EBF3FA}
+\definecolor{bpmnBlueBorder}{HTML}{2B6CB0}
+\definecolor{bpmnTeal}{HTML}{E6FFFA}
+\definecolor{bpmnTealBorder}{HTML}{234E52}
+\definecolor{bpmnGreen}{HTML}{E6F4EA}
+\definecolor{bpmnGreenBorder}{HTML}{137333}
+\definecolor{bpmnRed}{HTML}{FCE8E6}
+\definecolor{bpmnRedBorder}{HTML}{C5221F}
+\definecolor{bpmnOrange}{HTML}{FEF3C7}
+\definecolor{bpmnOrangeBorder}{HTML}{D97706}
+
+El rediseño del proceso operativo y documental (\textit{To-Be}) para \textbf{Loard Construcciones S.A.S.} establece una arquitectura de información centralizada sustentada en un sistema ERP/SIG integrado[cite: 1, 4]. Este modelo erradica la dependencia de canales informales (gestión por WhatsApp), la fragmentación documental en carpetas locales o Dropbox con versionado manual, y la transcripción extemporánea de datos en hojas de cálculo[cite: 1, 4].
+
+El flujo optimizado garantiza trazabilidad en tiempo real, integridad de la información documentada bajo la norma ISO 9001:2015, cumplimiento automatizado del SG-SST (Decreto 1072 de 2015) y control continuo del margen financiero por proyecto[cite: 1, 4, 8, 9].
+
+\subsubsection{Delimitación de Carriles (Swimlanes) y Roles Funcionales}
+
+El proceso se estructura secuencialmente sobre cuatro carriles de responsabilidad (\textit{swimlanes}):
+
+\begin{enumerate}
+    \item \textbf{Operario de Campo / Cuadrilla:} Responsable de la captura primaria estandarizada mediante un aplicativo móvil estructurado con funcionalidad offline/online[cite: 1, 4, 9]. Registra en tiempo real el informe diario de actividades (\textbf{NEC-01}), el consumo de insumos y soldaduras por frente de obra (\textbf{NEC-02}) y las horas de operación de equipos y herramientas (\textbf{NEC-03})[cite: 1, 4, 5].
+    \item \textbf{Ingeniero Residente / Supervisor de Obra:} Actúa como el primer punto de control cualitativo y cuantitativo[cite: 1, 4, 5]. Revisa, valida y aprueba en su bandeja de entrada los reportes operativos diarios, supervisando la desviación del avance físico e insumos frente al presupuesto de Análisis de Precios Unitarios (APU) (\textbf{NEC-04}, \textbf{NEC-06})[cite: 1, 5, 6].
+    \item \textbf{Sistema de Información (Motor ERP/SIG):} Núcleo automatizado de reglas de negocio[cite: 1, 4]. Asigna automáticamente código, metadatos y versionado estandarizado a cada archivo (\textbf{NEC-12}, \textbf{NEC-14})[cite: 1, 7]; ejecuta el control de concurrencia y bloqueo (\textit{check-out/check-in}) (\textbf{NEC-13})[cite: 1, 7]; restringe accesos por perfil RBAC (\textbf{NEC-15})[cite: 1, 7]; consolida el Libro de Tubería / \textit{Weld Book} y ensayos NDT sin transcripción manual (\textbf{NEC-05})[cite: 1, 5]; dispara alertas preventivas de vencimientos SST a más de 30 días (\textbf{NEC-18})[cite: 1, 8] y alimenta dinámicamente el Tablero Gerencial (\textbf{NEC-09})[cite: 1, 7].
+    \item \textbf{Coordinación SIG / SST y Gerencia General:} Realiza la validación normativa final, firma digitalmente certificados y actas con validez legal e inmutabilidad (Ley 527 de 1999) (\textbf{NEC-16})[cite: 1, 7, 9], audita el registro inalterable de eventos (\textit{audit trail}) (\textbf{NEC-17})[cite: 1, 8] y autoriza facturación o entregas finales al cliente petrolero[cite: 1, 4].
+\end{enumerate}
+
+\subsubsection{Diagramación BPMN 2.0 del Proceso Optimizado}
+
+A continuación se presenta el flujo de trabajo en notación estándar BPMN 2.0:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    font=\sffamily\tiny,
+    start/.style={circle, draw=bpmnGreenBorder, fill=bpmnGreen, thick, minimum size=6.5mm, inner sep=0pt},
+    end/.style={circle, draw=bpmnRedBorder, fill=bpmnRed, ultra thick, minimum size=6.5mm, inner sep=0pt},
+    task/.style={rectangle, draw=bpmnBlueBorder, fill=bpmnBlue, rounded corners=3pt, thick, align=center, minimum width=2.5cm, minimum height=1.0cm},
+    systemtask/.style={rectangle, draw=bpmnTealBorder, fill=bpmnTeal, rounded corners=3pt, thick, align=center, minimum width=2.5cm, minimum height=1.0cm},
+    gateway/.style={diamond, draw=bpmnOrangeBorder, fill=bpmnOrange, thick, aspect=1.2, minimum size=7.5mm, inner sep=0pt},
+    arrow/.style={->, >=Stealth, thick, draw=black!75},
+    laneTitle/.style={rectangle, draw=gray!60, fill=gray!20, thick, minimum width=2.6cm, align=center, font=\sffamily\bfseries\tiny},
+    laneBox/.style={rectangle, draw=gray!40, fill=gray!3, thick, minimum width=14.0cm, anchor=west}
+]
+
+    % --- SWIMLANES ---
+    \node[laneTitle, minimum height=2.1cm] (l1t) at (0, 0) {Operario de Campo\\/ Cuadrilla};
+    \node[laneBox, minimum height=2.1cm] (l1b) at (1.3, 0) {};
+    
+    \node[laneTitle, minimum height=2.1cm] (l2t) at (0, -2.3) {Ingeniero Residente\\/ Supervisor};
+    \node[laneBox, minimum height=2.1cm] (l2b) at (1.3, -2.3) {};
+
+    \node[laneTitle, minimum height=3.5cm] (l3t) at (0, -5.3) {Sistema de Información\\(Motor ERP / SIG)};
+    \node[laneBox, minimum height=3.5cm] (l3b) at (1.3, -5.3) {};
+
+    \node[laneTitle, minimum height=2.1cm] (l4t) at (0, -8.3) {Coordinación SIG/SST\\/ Gerencia};
+    \node[laneBox, minimum height=2.1cm] (l4b) at (1.3, -8.3) {};
+
+    % --- NODOS ---
+    \node[start] (start) at (2.0, 0) {};
+    \node[task] (t1) at (4.3, 0) {Capturar Reporte Diario\\y Consumo Insumos\\(\textbf{NEC-01, NEC-02})};
+
+    \node[task] (t2) at (4.3, -2.3) {Revisar y Validar\\Reporte Operativo\\(\textbf{NEC-04})};
+    \node[gateway] (g1) at (7.5, -2.3) {};
+
+    \node[systemtask] (sys1) at (8.8, -4.5) {Registrar Avance,\\Actualizar Inventario\\y Metadatos (\textbf{NEC-14})};
+    \node[systemtask] (sys2) at (12.4, -4.5) {Consolidar Dossier\\y Control Versiones\\(\textbf{NEC-05, NEC-12})};
+    \node[systemtask] (sys3) at (8.8, -6.1) {Alimentar Tablero\\Gerencial en Vivo\\(\textbf{NEC-09})};
+
+    \node[task] (t3) at (12.4, -8.3) {Firmar Digitalmente\\Actas y Dossier\\(\textbf{NEC-16})};
+    \node[end] (end) at (14.2, -8.3) {};
+
+    % --- CONECTORES ---
+    \draw[arrow] (start) -- (t1);
+    \draw[arrow] (t1) -- (t2);
+    \draw[arrow] (t2) -- (g1);
+    
+    \draw[arrow] (g1) |- node[near start, right, font=\tiny\bfseries, color=green!40!black] {Aprobado} (sys1.west);
+    \draw[arrow] (g1) -- node[above, font=\tiny\bfseries, color=red!60!black] {Rechazado} ++(0, 1.3) -| (t1.north);
+
+    \draw[arrow] (sys1) -- (sys2);
+    \draw[arrow] (sys1) -- (sys3);
+    \draw[arrow] (sys2) -- (t3);
+    \draw[arrow] (t3) -- (end);
+
+\end{tikzpicture}
+\caption{Diagrama BPMN 2.0 del Proceso Optimizado To-Be para Loard Construcciones S.A.S.}
+\label{fig:bpmn_tobe}
+\end{figure}
+
+\subsubsection{Matriz de Impacto y Transformación Operativa (As-Is vs. To-Be)}
+
+La Tabla~\ref{tab:asis_tobe} resume los cambios en la arquitectura operativa y su impacto directo en los indicadores clave de rendimiento (KPI Targets) del negocio:
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm} X X >{\raggedright\arraybackslash}p{3.2cm}}
+\toprule
+\textbf{Dimensión} & \textbf{Estado Actual (As-Is)} & \textbf{Estado Optimizado (To-Be)} & \textbf{Impacto Esperado / Target} \\
+\midrule
+\textbf{Captura de Campo} & Mensajes dispersos en WhatsApp y formatos físicos en papel[cite: 1, 4]. & Formulario móvil estructurado con funcionalidad offline/online (\textbf{NEC-01})[cite: 1, 4]. & Captura digital $\ge 95\%$ el mismo día de operación[cite: 1, 4]. \\
+\addlinespace
+\textbf{Control de Consumibles} & Verificación al cierre de obra; hallazgo tardío de pérdidas o faltantes[cite: 1, 5]. & Imputación en tiempo real por frente de obra e hito de APU (\textbf{NEC-02})[cite: 1, 5]. & Reducción de desperdicio de insumos $\ge 15\%$[cite: 1, 4]. \\
+\addlinespace
+\textbf{Gestión Documental} & Versionado manual en Dropbox (\texttt{v1}, \texttt{v6}) y archivos en conflicto[cite: 1, 4, 7]. & Control automático de versiones, bloqueo (\textit{check-out}) y metadatos (\textbf{NEC-12, NEC-13})[cite: 1, 7]. & 0 no conformidades en auditorías por uso de versión obsoleta[cite: 1, 4]. \\
+\addlinespace
+\textbf{Dossier de Calidad} & Transcripción manual de ensayos NDT a hojas de cálculo al finalizar[cite: 1, 4, 6]. & Consolidación automatizada del Libro de Tubería / \textit{Weld Book} (\textbf{NEC-05})[cite: 1, 6]. & Reducción $\ge 50\%$ del tiempo de armado y entrega del dossier[cite: 1, 4]. \\
+\addlinespace
+\textbf{Cumplimiento SST} & Control estático en plantillas; riesgo de vencimientos no detectados[cite: 1, 4, 8]. & Motor de alertas automáticas a más de 30 días de vencimiento (\textbf{NEC-18})[cite: 1, 4, 8]. & 100\% de certificaciones y exámenes médicos al día[cite: 1, 4]. \\
+\addlinespace
+\textbf{Flujo de Aprobación} & Impresión de actas, firma física manuscrita y re-escaneo[cite: 1, 7]. & Flujo 100\% digital con firma electrónica y sello de tiempo (Ley 527) (\textbf{NEC-16})[cite: 1, 7, 9]. & Reducción del ciclo de aprobación de 5 días a $<$24 horas[cite: 1, 4]. \\
+\bottomrule
+\end{tabularx}
+\caption{Matriz Comparativa de Transformación Operativa: Estado As-Is vs. Estado To-Be.}
+\label{tab:asis_tobe}
+\end{table}
+
+\subsubsection{Mecanismos de Control Automatizado y Reglas de Negocio}
+
+La efectividad del proceso optimizado descansa sobre cuatro controles sistémicos de ejecución obligatoria:
+
+\begin{itemize}
+    \item \textbf{Inmutabilidad y Audit Trail (\textbf{NEC-17}):} El motor del ERP/SIG registra automáticamente una bitácora inalterable para cada interacción con la información (creación, edición, consulta, descarga o aprobación), incluyendo identificación de usuario, estampa de tiempo UTC e IP de origen[cite: 1, 4, 8].
+    \item \textbf{Seguridad y Control de Acceso por Roles (\textbf{NEC-15}):} Arquitectura de seguridad RBAC que restringe la visibilidad de datos confidenciales (tarifas de APU, márgenes comerciales, historiales médicos SST y nómina de personal) según los privilegios asignados al rol[cite: 1, 6, 7].
+    \item \textbf{Consolidación Financiera en Tiempo Real (\textbf{NEC-09}):} Al sincronizarse el reporte de campo con el catálogo de insumos y APU, el sistema calcula de forma instantánea el porcentaje de avance físico-financiero y la desviación frente al margen proyectado, alertando desviaciones a la gerencia[cite: 1, 6, 7].
+    \item \textbf{Alineación Normativa y Contractual:} Respalda la estructura exigida por la norma ISO 9001:2015 para la gestión de información documentada, cumple con las exigencias del RUC para el sector hidrocarburos y protege los datos personales bajo la Ley 1581 de 2012[cite: 1, 4, 9].
+\end{itemize}
 
 \section{Especificación de requerimientos}
 \subsection{Product Backlog: Historias de Usuario bajo Criterios INVEST y Priorización MoSCoW}
