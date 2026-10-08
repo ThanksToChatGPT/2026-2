@@ -58,3 +58,9 @@ Mostrar como el helper hace el calculo del speedup y comparar con la teoria
 
 Recursive Action javadoc
 Hermana de recursive action = RecursiveTask, RecursiveTask retorna algo
+
+
+
+# Segunda sustentacion:
+Paralelismo funcional
+
