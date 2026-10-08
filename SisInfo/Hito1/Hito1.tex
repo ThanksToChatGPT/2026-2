@@ -18,8 +18,9 @@
 \usepackage[hidelinks,pdfencoding=auto,psdextra]{hyperref}
 % --- Paquete de Dibujo TikZ y sus Librerías ---
 \usepackage{tikz}
-\usepackage{soul}
 \usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, backgrounds, babel}
+\usepackage{soul}
+
 % --- Colores del Diagrama BPMN ---
 \definecolor{bpmnBlue}{HTML}{EBF3FA}
 \definecolor{bpmnBlueBorder}{HTML}{2B6CB0}
@@ -43,9 +44,11 @@
 
 % --- Configuración de Encabezados y Pies de Página ---
 \pagestyle{fancy}
+\setlength{\headheight}{14.5pt}
+\addtolength{\topmargin}{-2.5pt}
 \fancyhf{}
 \fancyhead[L]{\small\scshape Sistemas de Información}
-\fancyhead[R]{\small\scshape [Título del Documento]}
+\fancyhead[R]{\small\scshape Hito 1}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.2pt}
@@ -425,7 +428,7 @@ Este catálogo es una primera versión. Antes de pasar a la especificación qued
     box/.style={
         rectangle,
         rounded corners=14pt,
-        text width=6.2cm,
+        text width=6.6cm,
         minimum height=4.2cm,
         text=white,
         inner sep=8pt,
@@ -445,7 +448,7 @@ Este catálogo es una primera versión. Antes de pasar a la especificación qued
     {\centering\textbf{\large Estrategia de Negocio}\par}
     \vspace{3pt}\hrule height 0.5pt\vspace{6pt}
     {\footnotesize\raggedright
-    $\bullet$ Obras civiles y montajes \textit{Oil \& Gas} (Chevron, Primax).\par\vspace{3pt}
+    $\bullet$ Obras civiles y montajes \textit{Oil \& Gas} (Chevron).\par\vspace{3pt}
     $\bullet$ Rigor en normas API, ASME, ASTM, RUC e ISO.\par\vspace{3pt}
     $\bullet$ Confiabilidad técnica, seguridad y cero accidentes.\par\vspace{3pt}
     $\bullet$ Margen límite no negociable (finanzas excluidas).\par}
@@ -466,7 +469,7 @@ Este catálogo es una primera versión. Antes de pasar a la especificación qued
     \vspace{3pt}\hrule height 0.5pt\vspace{6pt}
     {\footnotesize\raggedright
     $\bullet$ Coordinación central Bogotá y frentes en 5 ciudades.\par\vspace{3pt}
-    $\bullet$ Reportes diarios (\texttt{GT-FR48}), \textit{Weld Book} y APU.\par\vspace{3pt}
+    $\bullet$ Reportes diarios, \textit{Weld Book} y APU.\par\vspace{3pt}
     $\bullet$ Matriz IPER y control de tareas críticas (alturas).\par\vspace{3pt}
     $\bullet$ Cuadrillas técnicas especializadas en procesos manuales.\par}
 };
@@ -530,9 +533,68 @@ Comprende la infraestructura tecnológica interna, aplicaciones y mecanismos de 
 
 \subsection{Balanced Scorecard: Definición del Problema mediante KPI y KRI}
 
+El diseño del nuevo sistema de información (ERP) responde a deficiencias en la gestión operativa y documental de \textbf{Loard Construcciones S.A.S.}, las cuales amenazan la rentabilidad y el cumplimiento fluido de los proyectos sin constantes contratiempos y sobreprecios. El problema central radica en la \textbf{desconexión entre la ejecución física en campo y el control administrativo e informativo central}, ocasionada por el uso de canales informales (WhatsApp), registros manuales y repositorios pasivos con fragmentación documental.
 
+Para asegurar que la solución tecnológica alinee la operación con la estrategia de negocio, se define el problema y su solución bajo el marco del \textit{Balanced Scorecard} (Cuadro de Mando Integral). A continuación, se detallan los Indicadores Clave de Desempeño (KPI - \textit{Key Performance Indicators}) y los Indicadores Clave de Riesgo (KRI - \textit{Key Risk Indicators}) que el sistema de información solucionará, organizados en sus cuatro puntos fundamentales:
 
+\begin{enumerate}
+    \item \textbf{Perspectiva Financiera (Gestión de Rentabilidad):} 
+    La empresa compite manteniendo un margen límite de ganancia no negociable, el cual se ve erosionado actualmente por el hallazgo tardío de desperdicios en consumibles y desviaciones ciegas frente al presupuesto (APU).
+    \begin{itemize}
+        \item \textbf{Problema a solucionar:} Falta de control financiero en tiempo real sobre la ejecución de obra.
+        \item \textbf{KPI (Desempeño):} Desviación porcentual entre el costo real acumulado de insumos/horas y el presupuesto base del Análisis de Precios Unitarios (APU). (Meta: Mantener desviación $< 5\%$).
+        \item \textbf{KRI (Riesgo):} Frecuencia de proyectos que reportan sobrecostos operativos por encima del $10\%$ debido a registros tardíos. El sistema mitigará este riesgo al obligar la imputación en tiempo real por frente de obra (\textbf{NEC-02}).
+    \end{itemize}
 
+    \item \textbf{Perspectiva del Cliente (Calidad y Cumplimiento Normativo):}
+    Los clientes multinacionales de alta exigencia (Chevron) requieren una calidad documentada impecable y cumplimiento estricto del Registro Uniforme de Evaluación (RUC).
+    \begin{itemize}
+        \item \textbf{Problema a solucionar:} Demoras en la facturación y entrega del dossier por transcripciones manuales de NDT y uso riesgoso de formatos obsoletos.
+        \item \textbf{KPI (Desempeño):} Reducción en el tiempo de ciclo (\textit{Lead Time}) para la consolidación y entrega final del Dossier de Calidad y \textit{Weld Book} al cliente. (Meta: Reducción $\ge 20\%$ del tiempo actual).
+        \item \textbf{KRI (Riesgo):} Número de No Conformidades (NC) críticas levantadas en auditorías externas por el uso de versiones documentales obsoletas. El sistema elimina este riesgo mediante control automático de versiones y bloqueo de archivos \textit{check-out} (\textbf{NEC-12, NEC-13}).
+    \end{itemize}
+
+    \item \textbf{Perspectiva de Procesos Internos (Eficiencia y SSTA):}
+    La operación actual padece cuellos de botella severos debido a la dependencia de firmas físicas manuscritas, formatos en papel y control estático del sistema de Seguridad y Salud en el Trabajo.
+    \begin{itemize}
+        \item \textbf{Problema a solucionar:} Fragmentación de la información y lentitud en los flujos de aprobación y validación de certificaciones.
+        \item \textbf{KPI (Desempeño):} Porcentaje de informes diarios de campo capturados digitalmente el mismo día (\textbf{NEC-01}) (Meta: $\ge 80\%$) y tiempo promedio del ciclo de aprobación de actas (Meta: Reducción de 5 días a $< 24$ horas mediante firma electrónica, \textbf{NEC-16}).
+        \item \textbf{KRI (Riesgo):} Tasa de incidentes potenciales por personal operando con certificaciones críticas vencidas (ej. trabajo en alturas). El motor ERP prevendrá esto con alertas automáticas $\ge 30$ días antes del vencimiento (\textbf{NEC-18}).
+    \end{itemize}
+
+    \item \textbf{Perspectiva de Aprendizaje y Crecimiento (Talento y Adopción):}
+    La principal barrera interna es la resistencia al cambio y el arraigo del personal técnico a los apuntes analógicos en libretas.
+    \begin{itemize}
+        \item \textbf{Problema a solucionar:} Baja resiliencia digital y dificultades en la adopción de herramientas informáticas en campo por parte del personal de cuadrilla.
+        \item \textbf{KPI (Desempeño):} Tasa de Adopción Tecnológica: porcentaje de operarios y supervisores que utilizan la plataforma móvil de manera autónoma y correcta. (Meta: $90\%$ de adopción tras el primer trimestre post-lanzamiento).
+        \item \textbf{KRI (Riesgo):} Tasa de reportes de campo rechazados por errores de ingreso de datos o uso indebido de la funcionalidad \textit{offline}/\textit{online}. Se controlará mediante capacitación continua y validación de reglas de negocio directamente en la interfaz (\textbf{NEC-04}).
+    \end{itemize}
+\end{enumerate}
+
+El monitoreo estructurado de estas métricas garantizará que la adopción de la nueva plataforma centralizada trascienda la mera digitalización, operando como un apalancador estratégico que blinda el margen comercial, optimiza la logística de procesos internos y certifica rigurosamente la calidad para los clientes clave del sector.
+
+La Tabla~\ref{tab:resumen_kpi_kri} consolida los indicadores definidos para el sistema de información en cada perspectiva:
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{>{\raggedright\bfseries}p{3cm} X X}
+\toprule
+Perspectiva BSC & KPI (Indicador de Desempeño) & KRI (Indicador de Riesgo) \\
+\midrule
+Financiera & Desviación costo real vs. presupuesto APU (Meta: $< 5\%$) & Frecuencia de proyectos con sobrecostos $>10\%$ por reportes tardíos \\
+\addlinespace
+Cliente & Reducción tiempo de entrega Dossier y \textit{Weld Book} (Meta: $\ge 20\%$) & No Conformidades críticas por uso de versiones documentales obsoletas \\
+\addlinespace
+Procesos Internos & Captura digital diaria ($\ge 80\%$) y ciclo de aprobación de actas ($< 24$ h) & Incidentes por personal con certificaciones críticas vencidas \\
+\addlinespace
+Aprendizaje y Crecimiento & Tasa de adopción autónoma de la app móvil (Meta: $90\%$) & Tasa de reportes rechazados por errores de captura en campo \\
+\bottomrule
+\end{tabularx}
+\caption{Resumen de Indicadores Clave de Desempeño (KPI) y Riesgo (KRI) por Perspectiva del BSC.}
+\label{tab:resumen_kpi_kri}
+\end{table}
 \section{Discovery de producto}
 \subsection{Opportunity Solution Tree (OST)}
 \subsection{Customer Journey Map y Definición de Roles de Usuario}
@@ -681,4 +743,8 @@ La efectividad del proceso optimizado descansa sobre cuatro controles sistémico
 \section{Especificación de requerimientos}
 \subsection{Product Backlog: Historias de Usuario bajo Criterios INVEST y Priorización MoSCoW}
 \subsection{Matriz de Requerimientos No Funcionales (RNF) y Restricciones Técnicas y Legales (Ley 1581)}
+
+
+\section{Consideraciones etica: AI:}
+
 \end{document}
