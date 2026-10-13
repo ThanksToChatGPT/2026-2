@@ -1,143 +1,44 @@
-/**
- * ====================================================================
- * SPORTS HEADS: BASKETBALL 1v1 - CURRY VS LEBRON
- * ====================================================================
- * Stack: p5.js + Matter.js
- * 
- * - Fondo: Background.png (1024 x 696) con estadio, público, marcador y cancha.
- * - Línea de la cancha: y = 606 (los jugadores se desplazan sobre esta línea,
- *   justo encima de la zona azul inferior).
- * - Personajes:
- *   - Jugador 1 (Izquierda): Stephen Curry (Curry.png)
- *   - Jugador 2 (Derecha): LeBron James (Lebron.png) - Volteado horizontalmente
- * - Aros y postes: Anclados a las paredes laterales con barreras invisibles
- *   que impiden el paso bajo la canasta.
- */
+// Module aliases
+const { Engine, Bodies, Body, Events, Composite } = Matter;
 
-// Desestructuración de módulos de Matter.js
-const {
-  Engine,
-  World,
-  Bodies,
-  Body,
-  Events,
-  Composite
-} = Matter;
-
-// ====================================================================
-// CONSTANTES GLOBALES Y DIMENSIONES
-// ====================================================================
-// Dimensiones exactas según Background.png
-const CANVAS_WIDTH  = 1024;
+const CANVAS_WIDTH = 1024;
 const CANVAS_HEIGHT = 696;
+const FLOOR_Y = 606; // Court baseline in Background.png
 
-// En Background.png, la línea inferior de la cancha de madera está en y = 606.
-// Por debajo (y = 606 a 696) se encuentra la zona azul del suelo.
-const FLOOR_Y       = 606;
+const bgImg = new Image();
+bgImg.src = 'Background.png';
 
-// Altura del aro (media-alta sobre la cancha)
-const HOOP_Y        = 340;
+const p1Img = new Image();
+p1Img.src = 'Curry.png';
 
-// Dimensiones de las físicas
-const PLAYER_RADIUS = 44;   // Radio físico de la cabeza/cuerpo
-const BALL_RADIUS   = 18;   // Balón de baloncesto
-const MOVE_SPEED    = 5.2;  // Velocidad de desplazamiento horizontal
-const JUMP_FORCE    = -12.8;// Impulso de salto (flotante y controlado)
+const p2Img = new Image();
+p2Img.src = 'Lebron.png';
 
-// Bounding box del contenido no transparente en los sprites originales (2400x1792)
-const SPRITE_DATA = {
-  curry:  { sx: 644, sy: 20, sw: 1072, sh: 1752 },
-  lebron: { sx: 644, sy: 24, sw: 1080, sh: 1748 }
-};
+const hoopImg = new Image();
+hoopImg.src = 'Hoop.png';
 
-// Altura y anchura calculadas de renderizado para los personajes
-const CHAR_RENDER_H = 108;
-const CHAR_RENDER_W = 66;
+let player1, player2, ball;
+let leftHoop, rightHoop;
+let game;
 
-// Categorías de colisión para Matter.js (bitmasks)
-const CAT_DEFAULT = 0x0001; // Límites (suelo, techo, paredes)
-const CAT_PLAYER  = 0x0002; // Jugadores
-const CAT_BALL    = 0x0004; // Balón
-const CAT_HOOP    = 0x0008; // Bordes físicos del aro
-const CAT_BARRIER = 0x0010; // Barreras bloqueadas bajo el aro
-
-// ====================================================================
-// RECURSOS GRÁFICOS Y VARIABLES DE ESTADO
-// ====================================================================
-let bgImg;
-let curryImg;
-let lebronImg;
-
-let engine;
-let world;
-
-// Entidades físicas
-let player1, player2;
-let ball;
-let hoopLeft, hoopRight;
-let barrierLeft, barrierRight;
-let floorBody, ceilBody, wallLeftBody, wallRightBody;
-
-// Estado del partido y marcador
-let scoreP1 = 0;
-let scoreP2 = 0;
-let isScoring = false;
-let scoreMessage = '';
-
-// ====================================================================
-// CARGA ROBUSTA DE IMÁGENES (Compatible con file:/// y servidores locales)
-// ====================================================================
-let bgReady = false;
-let curryReady = false;
-let lebronReady = false;
-
-const nativeBg = new Image();
-const nativeCurry = new Image();
-const nativeLebron = new Image();
-
-function initImages() {
-  nativeBg.onload = () => { bgReady = true; };
-  nativeBg.src = 'Background.png';
-
-  nativeCurry.onload = () => { curryReady = true; };
-  nativeCurry.src = 'Curry.png';
-
-  nativeLebron.onload = () => { lebronReady = true; };
-  nativeLebron.src = 'Lebron.png';
-}
-
-// ====================================================================
-// SETUP: INICIALIZACIÓN
-// ====================================================================
 function setup() {
   const canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
   canvas.parent('game-container');
 
-  // Inicializar carga de recursos (imágenes de fondo y jugadores)
-  initImages();
-
-  // 1. Motor de físicas con ritmo pausado y flotante
   engine = Engine.create();
-  world = engine.world;
   engine.gravity.y = 0.65;
-  engine.gravity.scale = 0.001;
 
-  // 2. Límites sólidos (Piso en la línea de la cancha y = 606)
   createBoundaries();
 
-  // 3. Aros anclados a las paredes y barreras bajo los aros
-  createHoops();
+  leftHoop = new Hoop(true);
+  rightHoop = new Hoop(false);
+  player1 = new Player(280, FLOOR_Y - 44, true);
+  player2 = new Player(width - 280, FLOOR_Y - 44, false);
+  ball = new Ball(width / 2, 230);
+  game = new Game();
 
-  // 4. Jugadores (Curry y LeBron)
-  createPlayers();
+  setupCollisions();
 
-  // 5. Balón
-  createBall();
-
-  // 6. Detector de canastas
-  setupScoreListener();
-
-  // Prevenir scroll de la página con flechas o barra espaciadora
   window.addEventListener('keydown', (e) => {
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
       e.preventDefault();
@@ -145,638 +46,500 @@ function setup() {
   });
 }
 
-// ====================================================================
-// DRAW: BUCLE PRINCIPAL DE JUEGO
-// ====================================================================
 function draw() {
-  // 1. Controles de jugadores
-  handlePlayerInputs();
+  game.update();
 
-  // 2. Paso de físicas de Matter.js
+  if (!game.isGameOver) {
+    player1.update();
+    player2.update();
+  }
+
   Engine.update(engine, 1000 / 60);
 
-  // 3. Forzar bloqueo estricto de rotación para mantener erguidos a los personajes
-  Body.setAngle(player1, 0);
-  Body.setAngularVelocity(player1, 0);
-  Body.setAngle(player2, 0);
-  Body.setAngularVelocity(player2, 0);
+  // Clear previous frame and render court background
+  background(20);
+  if (bgImg.complete) {
+    drawingContext.drawImage(bgImg, 0, 0, width, height);
+  }
 
-  // 4. Renderizado en capas
-  drawBackground();
-  drawHoop(hoopLeft, true);
-  drawHoop(hoopRight, false);
-  drawPlayer(player1, 'CURRY', true);
-  drawPlayer(player2, 'LEBRON', false);
-  drawBall(ball);
-  drawScoreboard();
+  leftHoop.show();
+  rightHoop.show();
+  player1.show();
+  player2.show();
+  ball.show();
+  game.drawScoreboard();
 }
 
-// ====================================================================
-// CREACIÓN DE ENTIDADES FÍSICAS (MATTER.JS)
-// ====================================================================
-
-/**
- * Crea las paredes, el techo y el suelo sólido ubicado en la línea de la cancha (y = 606).
- */
 function createBoundaries() {
-  const wallThickness = 60;
-
-  // Suelo: Su cara superior queda exactamente en FLOOR_Y (606)
-  floorBody = Bodies.rectangle(width / 2, FLOOR_Y + wallThickness / 2, width * 2, wallThickness, {
-    isStatic: true,
-    restitution: 0.6,
-    friction: 0.1,
-    collisionFilter: {
-      category: CAT_DEFAULT,
-      mask: CAT_PLAYER | CAT_BALL
-    }
-  });
-
-  // Techo
-  ceilBody = Bodies.rectangle(width / 2, -wallThickness / 2, width * 2, wallThickness, {
-    isStatic: true,
-    restitution: 0.5,
-    collisionFilter: {
-      category: CAT_DEFAULT,
-      mask: CAT_PLAYER | CAT_BALL
-    }
-  });
-
-  // Pared izquierda
-  wallLeftBody = Bodies.rectangle(-wallThickness / 2, height / 2, wallThickness, height * 2, {
-    isStatic: true,
-    restitution: 0.7,
-    friction: 0.05,
-    collisionFilter: {
-      category: CAT_DEFAULT,
-      mask: CAT_PLAYER | CAT_BALL
-    }
-  });
-
-  // Pared derecha
-  wallRightBody = Bodies.rectangle(width + wallThickness / 2, height / 2, wallThickness, height * 2, {
-    isStatic: true,
-    restitution: 0.7,
-    friction: 0.05,
-    collisionFilter: {
-      category: CAT_DEFAULT,
-      mask: CAT_PLAYER | CAT_BALL
-    }
-  });
-
-  Composite.add(world, [floorBody, ceilBody, wallLeftBody, wallRightBody]);
+  const thickness = 60;
+  const floor = Bodies.rectangle(width / 2, FLOOR_Y + thickness / 2, width * 2, thickness, { isStatic: true, restitution: 0.6 });
+  const ceiling = Bodies.rectangle(width / 2, -thickness / 2, width * 2, thickness, { isStatic: true });
+  const leftWall = Bodies.rectangle(-thickness / 2, height / 2, thickness, height * 2, { isStatic: true, restitution: 0.7 });
+  const rightWall = Bodies.rectangle(width + thickness / 2, height / 2, thickness, height * 2, { isStatic: true, restitution: 0.7 });
+  Composite.add(engine.world, [floor, ceiling, leftWall, rightWall]);
 }
 
-/**
- * Crea los aros izquierdo y derecho pegados a las paredes y sus barreras bloqueadas inferiores.
- */
-function createHoops() {
-  const rimPinRadius = 6;
-  const rimSpan = 75;            // Apertura amplia y limpia para el balón (diámetro 36)
-  const hoopDepthFromWall = 25;  // Distancia del pin posterior anclado a la pared
+function setupCollisions() {
+  const checkGoal = (event) => {
+    for (const pair of event.pairs) {
+      const { bodyA, bodyB } = pair;
+      const isBall = bodyA === ball.body || bodyB === ball.body;
+      if (!isBall) continue;
 
-  // ----------------------------------------------------
-  // ARO IZQUIERDO (Canasta defendida por Curry)
-  // ----------------------------------------------------
-  const leftBackX  = hoopDepthFromWall;
-  const leftFrontX = hoopDepthFromWall + rimSpan; // x = 100
-
-  // Pin soporte de pared
-  const leftPinBack = Bodies.circle(leftBackX, HOOP_Y, rimPinRadius, {
-    isStatic: true,
-    restitution: 0.75,
-    friction: 0.05,
-    collisionFilter: { category: CAT_HOOP, mask: CAT_PLAYER | CAT_BALL }
-  });
-
-  // Pin frontal del aro
-  const leftPinFront = Bodies.circle(leftFrontX, HOOP_Y, rimPinRadius, {
-    isStatic: true,
-    restitution: 0.75,
-    friction: 0.05,
-    collisionFilter: { category: CAT_HOOP, mask: CAT_PLAYER | CAT_BALL }
-  });
-
-  // Sensor de anotación
-  const leftSensor = Bodies.rectangle((leftBackX + leftFrontX) / 2, HOOP_Y + 14, rimSpan - 14, 10, {
-    isStatic: true,
-    isSensor: true,
-    collisionFilter: { category: CAT_HOOP, mask: CAT_BALL }
-  });
-
-  hoopLeft = {
-    pinBack: leftPinBack,
-    pinFront: leftPinFront,
-    sensor: leftSensor,
-    side: 'left'
-  };
-
-  // Barrera estática invisible desde la base del aro hasta el suelo
-  // Bloquea x de 0 a 100, impidiendo que jugadores o balón entren bajo la canasta
-  const leftBarrierWidth  = leftFrontX;
-  const leftBarrierHeight = FLOOR_Y - (HOOP_Y + 28);
-  const leftBarrierY      = (HOOP_Y + 28) + leftBarrierHeight / 2;
-
-  barrierLeft = Bodies.rectangle(leftBarrierWidth / 2, leftBarrierY, leftBarrierWidth, leftBarrierHeight, {
-    isStatic: true,
-    restitution: 0.5,
-    friction: 0.1,
-    collisionFilter: {
-      category: CAT_BARRIER,
-      mask: CAT_PLAYER | CAT_BALL
-    }
-  });
-
-  // ----------------------------------------------------
-  // ARO DERECHO (Canasta defendida por LeBron)
-  // ----------------------------------------------------
-  const rightBackX  = width - hoopDepthFromWall;
-  const rightFrontX = width - (hoopDepthFromWall + rimSpan); // x = 924
-
-  // Pin soporte de pared
-  const rightPinBack = Bodies.circle(rightBackX, HOOP_Y, rimPinRadius, {
-    isStatic: true,
-    restitution: 0.75,
-    friction: 0.05,
-    collisionFilter: { category: CAT_HOOP, mask: CAT_PLAYER | CAT_BALL }
-  });
-
-  // Pin frontal del aro
-  const rightPinFront = Bodies.circle(rightFrontX, HOOP_Y, rimPinRadius, {
-    isStatic: true,
-    restitution: 0.75,
-    friction: 0.05,
-    collisionFilter: { category: CAT_HOOP, mask: CAT_PLAYER | CAT_BALL }
-  });
-
-  // Sensor de anotación
-  const rightSensor = Bodies.rectangle((rightBackX + rightFrontX) / 2, HOOP_Y + 14, rimSpan - 14, 10, {
-    isStatic: true,
-    isSensor: true,
-    collisionFilter: { category: CAT_HOOP, mask: CAT_BALL }
-  });
-
-  hoopRight = {
-    pinBack: rightPinBack,
-    pinFront: rightPinFront,
-    sensor: rightSensor,
-    side: 'right'
-  };
-
-  // Barrera estática invisible derecha
-  const rightBarrierWidth  = width - rightFrontX;
-  const rightBarrierHeight = FLOOR_Y - (HOOP_Y + 28);
-  const rightBarrierY      = (HOOP_Y + 28) + rightBarrierHeight / 2;
-
-  barrierRight = Bodies.rectangle(width - rightBarrierWidth / 2, rightBarrierY, rightBarrierWidth, rightBarrierHeight, {
-    isStatic: true,
-    restitution: 0.5,
-    friction: 0.1,
-    collisionFilter: {
-      category: CAT_BARRIER,
-      mask: CAT_PLAYER | CAT_BALL
-    }
-  });
-
-  Composite.add(world, [
-    leftPinBack, leftPinFront, leftSensor, barrierLeft,
-    rightPinBack, rightPinFront, rightSensor, barrierRight
-  ]);
-}
-
-/**
- * Crea a Curry y LeBron como cuerpos circulares pesados con rotación bloqueada.
- */
-function createPlayers() {
-  const playerOptions = {
-    restitution: 0.05,
-    friction: 0.1,
-    frictionAir: 0.04,   // Fricción de aire para saltos deportivos controlados
-    density: 0.015,      // Masa significativamente mayor a la del balón
-    inertia: Infinity,   // Bloqueo físico estricto de rotación
-    inverseInertia: 0,
-    collisionFilter: {
-      category: CAT_PLAYER,
-      mask: CAT_DEFAULT | CAT_BALL | CAT_HOOP | CAT_BARRIER | CAT_PLAYER
-    }
-  };
-
-  // Jugador 1 (Curry): empieza en x = 280 sobre la línea de la cancha
-  player1 = Bodies.circle(280, FLOOR_Y - PLAYER_RADIUS, PLAYER_RADIUS, playerOptions);
-
-  // Jugador 2 (LeBron): empieza en x = 744 sobre la línea de la cancha
-  player2 = Bodies.circle(width - 280, FLOOR_Y - PLAYER_RADIUS, PLAYER_RADIUS, playerOptions);
-
-  Composite.add(world, [player1, player2]);
-}
-
-/**
- * Crea el balón elástico y ligero.
- */
-function createBall() {
-  const ballOptions = {
-    restitution: 0.82,     // Rebote elástico marcado
-    friction: 0.03,        // Fricción baja
-    frictionAir: 0.007,    // Fricción suave para parábolas aerodinámicas
-    density: 0.0008,       // Ligero para rebotar contra los jugadores
-    collisionFilter: {
-      category: CAT_BALL,
-      mask: CAT_DEFAULT | CAT_PLAYER | CAT_HOOP | CAT_BARRIER
-    }
-  };
-
-  // Se genera en el centro para el saque inicial
-  ball = Bodies.circle(width / 2, 230, BALL_RADIUS, ballOptions);
-  Composite.add(world, ball);
-}
-
-// ====================================================================
-// CONTROLES DE LOS JUGADORES
-// ====================================================================
-
-/**
- * Verifica si un jugador está tocando el suelo o la cabeza del rival para autorizar el salto.
- */
-function isPlayerGrounded(player) {
-  // Comprobación sobre el suelo: cota del piso y no en plena aceleración ascendente
-  const touchingFloor = (player.position.y >= FLOOR_Y - PLAYER_RADIUS - 4) && (player.velocity.y >= -1.0);
-  if (touchingFloor) return true;
-
-  // Comprobación sobre la cabeza del otro jugador
-  const otherPlayer = (player === player1) ? player2 : player1;
-  const dx = Math.abs(player.position.x - otherPlayer.position.x);
-  const dy = player.position.y - otherPlayer.position.y;
-  const onTopOfOpponent = (dx < PLAYER_RADIUS * 1.5) && (dy < -PLAYER_RADIUS * 1.4) && (dy > -PLAYER_RADIUS * 2.2) && (player.velocity.y >= -1.0);
-
-  return onTopOfOpponent;
-}
-
-/**
- * Gestiona el movimiento y salto de Curry y LeBron.
- */
-function handlePlayerInputs() {
-  // ----------------------------------------------------
-  // CURRY (P1 - Izquierda): A / D para mover, W para saltar
-  // ----------------------------------------------------
-  let p1SpeedX = 0;
-  if (keyIsDown(65)) { // A: Izquierda
-    p1SpeedX -= MOVE_SPEED;
-  }
-  if (keyIsDown(68)) { // D: Derecha
-    p1SpeedX += MOVE_SPEED;
-  }
-
-  if (p1SpeedX !== 0) {
-    Body.setVelocity(player1, { x: p1SpeedX, y: player1.velocity.y });
-  } else {
-    Body.setVelocity(player1, { x: player1.velocity.x * 0.85, y: player1.velocity.y });
-  }
-
-  if (keyIsDown(87) && isPlayerGrounded(player1)) { // W: Salto
-    Body.setVelocity(player1, { x: player1.velocity.x, y: JUMP_FORCE });
-  }
-
-  // ----------------------------------------------------
-  // LEBRON (P2 - Derecha): Flechas Izq / Der para mover, Flecha Arriba para saltar
-  // ----------------------------------------------------
-  let p2SpeedX = 0;
-  if (keyIsDown(LEFT_ARROW)) { // Flecha Izquierda
-    p2SpeedX -= MOVE_SPEED;
-  }
-  if (keyIsDown(RIGHT_ARROW)) { // Flecha Derecha
-    p2SpeedX += MOVE_SPEED;
-  }
-
-  if (p2SpeedX !== 0) {
-    Body.setVelocity(player2, { x: p2SpeedX, y: player2.velocity.y });
-  } else {
-    Body.setVelocity(player2, { x: player2.velocity.x * 0.85, y: player2.velocity.y });
-  }
-
-  if (keyIsDown(UP_ARROW) && isPlayerGrounded(player2)) { // Flecha Arriba: Salto
-    Body.setVelocity(player2, { x: player2.velocity.x, y: JUMP_FORCE });
-  }
-}
-
-// ====================================================================
-// LÓGICA DE CANASTA Y PARTIDO
-// ====================================================================
-
-/**
- * Escucha las colisiones con el sensor interior del aro.
- */
-function setupScoreListener() {
-  Events.on(engine, 'collisionStart', (event) => {
-    if (isScoring) return;
-
-    const pairs = event.pairs;
-    for (let i = 0; i < pairs.length; i++) {
-      const { bodyA, bodyB } = pairs[i];
-
-      let targetHoop = null;
-      let targetBall = null;
-
-      if (bodyA === hoopLeft.sensor && bodyB === ball) {
-        targetHoop = 'left';
-        targetBall = bodyB;
-      } else if (bodyB === hoopLeft.sensor && bodyA === ball) {
-        targetHoop = 'left';
-        targetBall = bodyA;
-      } else if (bodyA === hoopRight.sensor && bodyB === ball) {
-        targetHoop = 'right';
-        targetBall = bodyB;
-      } else if (bodyB === hoopRight.sensor && bodyA === ball) {
-        targetHoop = 'right';
-        targetBall = bodyA;
-      }
-
-      // Validar que el balón atraviese el sensor de arriba hacia abajo (velocidad vertical > 0)
-      if (targetHoop && targetBall && targetBall.velocity.y > 0.35) {
-        handleGoal(targetHoop);
-        break;
+      if ((bodyA === leftHoop.sensor || bodyB === leftHoop.sensor) && ball.body.velocity.y > 0.05) {
+        game.handleGoal(false);
+      } else if ((bodyA === rightHoop.sensor || bodyB === rightHoop.sensor) && ball.body.velocity.y > 0.05) {
+        game.handleGoal(true);
       }
     }
-  });
-}
+  };
 
-/**
- * Procesa la anotación, actualiza el marcador y reinicia tras 1 segundo.
- */
-function handleGoal(hoopSide) {
-  isScoring = true;
-
-  if (hoopSide === 'right') {
-    // Balón entró en aro derecho -> Anota Curry (P1)
-    scoreP1++;
-    scoreMessage = '¡CANASTA DE CURRY! (+1)';
-  } else if (hoopSide === 'left') {
-    // Balón entró en aro izquierdo -> Anota LeBron (P2)
-    scoreP2++;
-    scoreMessage = '¡CANASTA DE LEBRON! (+1)';
-  }
-
-  // Pausa de 1 segundo antes de reiniciar el balón en el centro de la cancha
-  setTimeout(() => {
-    resetBall();
-    scoreMessage = '';
-    isScoring = false;
-  }, 1000);
-}
-
-/**
- * Reposiciona el balón en el centro superior de la cancha.
- */
-function resetBall() {
-  Body.setPosition(ball, { x: width / 2, y: 230 });
-  Body.setVelocity(ball, { x: 0, y: 0 });
-  Body.setAngularVelocity(ball, 0);
-  Body.setAngle(ball, 0);
+  Events.on(engine, 'collisionStart', checkGoal);
+  Events.on(engine, 'collisionActive', checkGoal);
 }
 
 // ====================================================================
-// RENDERIZADO VISUAL (P5.JS)
+// CLASSES (OOP)
 // ====================================================================
 
-/**
- * Dibuja Background.png a resolución nativa 1024 x 696.
- */
-function drawBackground() {
-  if (bgReady) {
-    drawingContext.drawImage(nativeBg, 0, 0, width, height);
-  } else if (bgImg && bgImg.width > 0) {
-    image(bgImg, 0, 0, width, height);
-  } else {
-    // Fallback geométrico si la imagen aún no está disponible
-    background(240);
+class Player {
+  constructor(x, y, isP1) {
+    this.isP1 = isP1;
+    this.radius = 44;
+    this.img = isP1 ? p1Img : p2Img;
+    this.crop = isP1 ? { sx: 644, sy: 20, sw: 1072, sh: 1752 } : { sx: 644, sy: 24, sw: 1080, sh: 1748 };
+    this.renderW = 66;
+    this.renderH = 108;
+
+    this.body = Bodies.circle(x, y, this.radius, {
+      restitution: 0.05,
+      friction: 0.1,
+      frictionAir: 0.04,
+      density: 0.015,
+      inertia: Infinity
+    });
+    Composite.add(engine.world, this.body);
+  }
+
+  isGrounded() {
+    return this.body.position.y >= FLOOR_Y - this.radius - 4 && this.body.velocity.y >= -1.0;
+  }
+
+  update() {
+    Body.setAngle(this.body, 0);
+    Body.setAngularVelocity(this.body, 0);
+
+    let vx = 0;
+    if (this.isP1) {
+      if (keyIsDown(65)) vx -= 5.2; // A
+      if (keyIsDown(68)) vx += 5.2; // D
+      if (keyIsDown(87) && this.isGrounded()) { // W
+        Body.setVelocity(this.body, { x: this.body.velocity.x, y: -12.8 });
+      }
+    } else {
+      if (keyIsDown(LEFT_ARROW)) vx -= 5.2;
+      if (keyIsDown(RIGHT_ARROW)) vx += 5.2;
+      if (keyIsDown(UP_ARROW) && this.isGrounded()) {
+        Body.setVelocity(this.body, { x: this.body.velocity.x, y: -12.8 });
+      }
+    }
+
+    if (vx !== 0) {
+      Body.setVelocity(this.body, { x: vx, y: this.body.velocity.y });
+    } else {
+      Body.setVelocity(this.body, { x: this.body.velocity.x * 0.85, y: this.body.velocity.y });
+    }
+  }
+
+  show() {
+    push();
+    translate(this.body.position.x, this.body.position.y);
+    if (!this.isP1) scale(-1, 1);
+
+    if (this.img.complete) {
+      drawingContext.drawImage(
+        this.img,
+        this.crop.sx,
+        this.crop.sy,
+        this.crop.sw,
+        this.crop.sh,
+        -this.renderW / 2,
+        this.radius - this.renderH,
+        this.renderW,
+        this.renderH
+      );
+    } else {
+      fill(255);
+      stroke(30);
+      strokeWeight(3);
+      ellipse(0, 0, this.radius * 2);
+    }
+    pop();
+
+    textAlign(CENTER, CENTER);
     fill(255);
-    stroke(30);
+    stroke(0);
     strokeWeight(3);
-    rect(0, FLOOR_Y, width, height - FLOOR_Y);
-  }
-}
-
-/**
- * Dibuja a Curry o LeBron integrando su sprite con el calzado exactamente sobre FLOOR_Y (606).
- */
-function drawPlayer(player, label, isPlayer1) {
-  const ready = isPlayer1 ? curryReady : lebronReady;
-  const nImg  = isPlayer1 ? nativeCurry : nativeLebron;
-  const pImg  = isPlayer1 ? curryImg : lebronImg;
-  const crop  = isPlayer1 ? SPRITE_DATA.curry : SPRITE_DATA.lebron;
-
-  push();
-  translate(player.position.x, player.position.y);
-
-  if (!isPlayer1) {
-    // Voltear horizontalmente a LeBron para que mire hacia Curry y hacia la cancha
-    scale(-1, 1);
-  }
-
-  if (ready) {
-    // Dibujo nativo recortado de alta precisión: la suela del calzado queda exactamente en +PLAYER_RADIUS
-    drawingContext.drawImage(
-      nImg,
-      crop.sx, crop.sy, crop.sw, crop.sh,
-      -CHAR_RENDER_W / 2, PLAYER_RADIUS - CHAR_RENDER_H, CHAR_RENDER_W, CHAR_RENDER_H
-    );
-  } else if (pImg && pImg.width > 0) {
-    image(
-      pImg,
-      -CHAR_RENDER_W / 2,
-      PLAYER_RADIUS - CHAR_RENDER_H,
-      CHAR_RENDER_W,
-      CHAR_RENDER_H,
-      crop.sx,
-      crop.sy,
-      crop.sw,
-      crop.sh
-    );
-  } else {
-    // Placeholder geométrico de respaldo
-    fill(255);
-    stroke(30);
-    strokeWeight(3);
-    ellipse(0, 0, PLAYER_RADIUS * 2, PLAYER_RADIUS * 2);
-  }
-
-  pop();
-
-  // Nombre del jugador sobre la cabeza (renderizado sin voltear para que el texto sea legible)
-  push();
-  textAlign(CENTER, CENTER);
-  fill(255);
-  stroke(20);
-  strokeWeight(3);
-  textSize(12);
-  textStyle(BOLD);
-  const labelY = player.position.y + PLAYER_RADIUS - CHAR_RENDER_H - 10;
-  text(label, player.position.x, labelY);
-  pop();
-}
-
-/**
- * Dibuja el balón de baloncesto con sus costuras rotando con el ángulo de físicas.
- */
-function drawBall(ballBody) {
-  push();
-  translate(ballBody.position.x, ballBody.position.y);
-  rotate(ballBody.angle);
-
-  // Balón naranja clásico
-  fill(245, 110, 30);
-  stroke(30);
-  strokeWeight(2.5);
-  ellipse(0, 0, BALL_RADIUS * 2, BALL_RADIUS * 2);
-
-  // Costuras negras del balón
-  noFill();
-  stroke(30);
-  strokeWeight(1.8);
-  line(-BALL_RADIUS, 0, BALL_RADIUS, 0);
-  line(0, -BALL_RADIUS, 0, BALL_RADIUS);
-  arc(-BALL_RADIUS * 0.45, 0, BALL_RADIUS, BALL_RADIUS * 1.8, -HALF_PI, HALF_PI);
-  arc(BALL_RADIUS * 0.45, 0, BALL_RADIUS, BALL_RADIUS * 1.8, HALF_PI, -HALF_PI);
-
-  pop();
-}
-
-/**
- * Dibuja el aro pegado a la pared, el tablero y la red.
- */
-function drawHoop(hoop, isLeft) {
-  push();
-
-  // 1. Tablero de baloncesto anclado a la pared
-  fill(255);
-  stroke(30);
-  strokeWeight(3);
-  rectMode(CORNER);
-  if (isLeft) {
-    rect(0, HOOP_Y - 65, 18, 105);
-    // Cuadro interior del tablero
-    rect(3, HOOP_Y - 40, 12, 40);
-  } else {
-    rect(width - 18, HOOP_Y - 65, 18, 105);
-    rect(width - 15, HOOP_Y - 40, 12, 40);
-  }
-
-  // 2. Red semitransparente de la canasta
-  fill(255, 235);
-  stroke(60);
-  strokeWeight(1.5);
-  beginShape();
-  if (isLeft) {
-    vertex(hoop.pinBack.position.x, hoop.pinBack.position.y);
-    vertex(hoop.pinFront.position.x, hoop.pinFront.position.y);
-    vertex(hoop.pinFront.position.x - 14, hoop.pinFront.position.y + 36);
-    vertex(hoop.pinBack.position.x + 8, hoop.pinBack.position.y + 36);
-  } else {
-    vertex(hoop.pinBack.position.x, hoop.pinBack.position.y);
-    vertex(hoop.pinFront.position.x, hoop.pinFront.position.y);
-    vertex(hoop.pinFront.position.x + 14, hoop.pinFront.position.y + 36);
-    vertex(hoop.pinBack.position.x - 8, hoop.pinBack.position.y + 36);
-  }
-  endShape(CLOSE);
-
-  // Malla interior de la red
-  stroke(130);
-  strokeWeight(1);
-  if (isLeft) {
-    line(hoop.pinBack.position.x + 18, hoop.pinBack.position.y, hoop.pinFront.position.x - 24, hoop.pinFront.position.y + 36);
-    line(hoop.pinFront.position.x - 18, hoop.pinFront.position.y, hoop.pinBack.position.x + 20, hoop.pinBack.position.y + 36);
-  } else {
-    line(hoop.pinBack.position.x - 18, hoop.pinBack.position.y, hoop.pinFront.position.x + 24, hoop.pinFront.position.y + 36);
-    line(hoop.pinFront.position.x + 18, hoop.pinFront.position.y, hoop.pinBack.position.x - 20, hoop.pinBack.position.y + 36);
-  }
-
-  // 3. Aro metálico naranja
-  fill(255, 85, 0);
-  stroke(30);
-  strokeWeight(3);
-  line(hoop.pinBack.position.x, hoop.pinBack.position.y, hoop.pinFront.position.x, hoop.pinFront.position.y);
-  ellipse(hoop.pinBack.position.x, hoop.pinBack.position.y, 11, 11);
-  ellipse(hoop.pinFront.position.x, hoop.pinFront.position.y, 11, 11);
-
-  pop();
-}
-
-/**
- * Renderiza el marcador digital integrado perfectamente en la estructura del marcador de Background.png,
- * el banner de canasta y los controles en la zona azul inferior.
- */
-function drawScoreboard() {
-  push();
-
-  // ----------------------------------------------------
-  // 1. MARCADOR EN EL TABLERO DEL ESTADIO (x: 323 a 705, y: 70 a 143)
-  // ----------------------------------------------------
-  textAlign(CENTER, CENTER);
-
-  // Panel Izquierdo: CURRY (Panel en x = 398, y = 110)
-  fill(255, 215, 0); // Amarillo Warriors
-  noStroke();
-  textSize(12);
-  textStyle(BOLD);
-  text('CURRY (P1)', 398, 88);
-
-  fill(255);
-  stroke(20);
-  strokeWeight(2);
-  textSize(30);
-  textStyle(BOLD);
-  text(scoreP1, 398, 116);
-
-  // Panel Central: VS
-  fill(200);
-  noStroke();
-  textSize(14);
-  textStyle(BOLD);
-  text('VS', 511, 110);
-
-  // Panel Derecho: LEBRON (Panel en x = 625, y = 110)
-  fill(255, 215, 0); // Oro Lakers
-  noStroke();
-  textSize(12);
-  textStyle(BOLD);
-  text('LEBRON (P2)', 625, 88);
-
-  fill(255);
-  stroke(20);
-  strokeWeight(2);
-  textSize(30);
-  textStyle(BOLD);
-  text(scoreP2, 625, 116);
-
-  // ----------------------------------------------------
-  // 2. BANNER DE CANASTA CUANDO SE ANOTA
-  // ----------------------------------------------------
-  if (isScoring && scoreMessage !== '') {
-    rectMode(CENTER);
-    fill(255);
-    stroke(30);
-    strokeWeight(3);
-    rect(width / 2, 180, 360, 46, 8);
-
-    fill(30);
-    noStroke();
-    textSize(20);
+    textSize(12);
     textStyle(BOLD);
-    text(scoreMessage, width / 2, 179);
+    text(this.isP1 ? 'P1' : 'P2', this.body.position.x, this.body.position.y + this.radius - this.renderH - 10);
   }
 
-  // ----------------------------------------------------
-  // 3. LEYENDA DE CONTROLES EN LA ZONA AZUL INFERIOR (y = 606 a 696)
-  // ----------------------------------------------------
-  fill(255);
-  stroke(20);
-  strokeWeight(2.5);
-  textSize(13);
-  textStyle(BOLD);
-  text(
-    'P1 (Curry): [A / D] Mover  [W] Salto   |   P2 (LeBron): [← / →] Mover  [↑] Salto',
-    width / 2,
-    675
-  );
+  reset(x) {
+    Body.setPosition(this.body, { x: x, y: FLOOR_Y - this.radius });
+    Body.setVelocity(this.body, { x: 0, y: 0 });
+  }
+}
 
-  pop();
+class Ball {
+  constructor(x, y) {
+    this.radius = 18;
+    this.body = Bodies.circle(x, y, this.radius, {
+      restitution: 0.82,
+      friction: 0.03,
+      frictionAir: 0.007,
+      density: 0.0008
+    });
+    Composite.add(engine.world, this.body);
+  }
+
+  reset() {
+    Body.setPosition(this.body, { x: width / 2, y: 230 });
+    Body.setVelocity(this.body, { x: 0, y: 0 });
+    Body.setAngularVelocity(this.body, 0);
+    Body.setAngle(this.body, 0);
+  }
+
+  show() {
+    push();
+    translate(this.body.position.x, this.body.position.y);
+    rotate(this.body.angle);
+
+    fill(245, 110, 30);
+    stroke(30);
+    strokeWeight(2.5);
+    ellipse(0, 0, this.radius * 2);
+
+    noFill();
+    stroke(30);
+    strokeWeight(1.8);
+    line(-this.radius, 0, this.radius, 0);
+    line(0, -this.radius, 0, this.radius);
+    arc(-this.radius * 0.45, 0, this.radius, this.radius * 1.8, -HALF_PI, HALF_PI);
+    arc(this.radius * 0.45, 0, this.radius, this.radius * 1.8, HALF_PI, -HALF_PI);
+    pop();
+  }
+}
+
+class Hoop {
+  constructor(isLeft) {
+    this.isLeft = isLeft;
+    this.span = 88;
+    this.backX = isLeft ? 22 : width - 22;
+    this.frontX = isLeft ? this.backX + this.span : this.backX - this.span;
+    this.y = 340;
+
+    // Permissive rim pins: friendly bounce (restitution 0.35) and slight friction so shots roll in
+    this.pinBack = Bodies.circle(this.backX, this.y, 5, {
+      isStatic: true,
+      restitution: 0.35,
+      friction: 0.15
+    });
+    this.pinFront = Bodies.circle(this.frontX, this.y, 5, {
+      isStatic: true,
+      restitution: 0.35,
+      friction: 0.15
+    });
+
+    // Permissive scoring sensor across rim throat
+    const sensorW = this.span - 8;
+    const sensorH = 26;
+    const sensorX = (this.backX + this.frontX) / 2;
+    const sensorY = this.y + 16;
+    this.sensor = Bodies.rectangle(sensorX, sensorY, sensorW, sensorH, {
+      isStatic: true,
+      isSensor: true
+    });
+
+    // Backboard physics collider for bank shots
+    const bbWidth = 18;
+    const bbHeight = 105;
+    const bbX = isLeft ? bbWidth / 2 : width - bbWidth / 2;
+    const bbY = 275 + bbHeight / 2;
+    this.backboard = Bodies.rectangle(bbX, bbY, bbWidth, bbHeight, {
+      isStatic: true,
+      restitution: 0.55,
+      friction: 0.1
+    });
+
+    // Invisible vertical barrier: thin vertical line from hoop to floor.
+    // Blocks horizontal traversal past the hoop, but allows vertical movement.
+    const bWidth = 6;
+    const bHeight = FLOOR_Y - this.y;
+    const bX = this.backX;
+    const bY = this.y + bHeight / 2;
+    this.barrier = Bodies.rectangle(bX, bY, bWidth, bHeight, {
+      isStatic: true,
+      restitution: 0.3,
+      friction: 0.1
+    });
+
+    Composite.add(engine.world, [this.backboard, this.pinBack, this.pinFront, this.sensor, this.barrier]);
+  }
+
+  show() {
+    push();
+    // Backboard
+    rectMode(CORNER);
+    fill(255);
+    stroke(30);
+    strokeWeight(3);
+    if (this.isLeft) {
+      rect(0, 275, 18, 105);
+      fill(220, 40, 40);
+      stroke(30);
+      strokeWeight(2);
+      rect(3, 310, 12, 30);
+    } else {
+      rect(width - 18, 275, 18, 105);
+      fill(220, 40, 40);
+      stroke(30);
+      strokeWeight(2);
+      rect(width - 15, 310, 12, 30);
+    }
+
+    // Hoop.png integration
+    if (hoopImg.complete && hoopImg.naturalWidth > 0) {
+      const pinDistInImg = 248; // distance between pin centers in Hoop.png (x=54 to x=302)
+      const scaleFactor = this.span / pinDistInImg;
+      const imgW = 347 * scaleFactor;
+      const imgH = 348 * scaleFactor;
+
+      push();
+      if (this.isLeft) {
+        const drawX = this.pinBack.position.x - 54 * scaleFactor;
+        const drawY = this.pinBack.position.y - 141 * scaleFactor;
+        drawingContext.drawImage(hoopImg, drawX, drawY, imgW, imgH);
+      } else {
+        translate(this.pinBack.position.x, this.pinBack.position.y);
+        scale(-1, 1);
+        drawingContext.drawImage(hoopImg, -54 * scaleFactor, -141 * scaleFactor, imgW, imgH);
+      }
+      pop();
+    } else {
+      // Fallback procedural rim & net
+      fill(255, 235);
+      stroke(60);
+      strokeWeight(1.5);
+      beginShape();
+      if (this.isLeft) {
+        vertex(this.pinBack.position.x, this.pinBack.position.y);
+        vertex(this.pinFront.position.x, this.pinFront.position.y);
+        vertex(this.pinFront.position.x - 14, this.pinFront.position.y + 36);
+        vertex(this.pinBack.position.x + 8, this.pinBack.position.y + 36);
+      } else {
+        vertex(this.pinBack.position.x, this.pinBack.position.y);
+        vertex(this.pinFront.position.x, this.pinFront.position.y);
+        vertex(this.pinFront.position.x + 14, this.pinFront.position.y + 36);
+        vertex(this.pinBack.position.x - 8, this.pinBack.position.y + 36);
+      }
+      endShape(CLOSE);
+
+      fill(255, 85, 0);
+      stroke(30);
+      strokeWeight(3);
+      line(this.pinBack.position.x, this.pinBack.position.y, this.pinFront.position.x, this.pinFront.position.y);
+      ellipse(this.pinBack.position.x, this.pinBack.position.y, 10);
+      ellipse(this.pinFront.position.x, this.pinFront.position.y, 10);
+    }
+    pop();
+  }
+}
+
+class Game {
+  constructor() {
+    this.scoreP1 = 0;
+    this.scoreP2 = 0;
+    this.timeRemaining = 60; // 1-minute match
+    this.isGameOver = false;
+    this.isScoring = false;
+    this.scoreMessage = '';
+    this.lastTime = millis();
+  }
+
+  update() {
+    const now = millis();
+    const dt = (now - this.lastTime) / 1000;
+    this.lastTime = now;
+
+    if (!this.isGameOver) {
+      this.timeRemaining -= dt;
+      if (this.timeRemaining <= 0) {
+        this.timeRemaining = 0;
+        this.isGameOver = true;
+      }
+
+      // Permissive scoring & net guide assists
+      if (!this.isScoring && ball && ball.body) {
+        const bx = ball.body.position.x;
+        const by = ball.body.position.y;
+        const vy = ball.body.velocity.y;
+
+        // Downward ball traversing hoop throat
+        if (vy > 0.05) {
+          if (bx >= leftHoop.pinBack.position.x - 4 && bx <= leftHoop.pinFront.position.x + 4) {
+            if (by >= leftHoop.y + 6 && by <= leftHoop.y + 36) {
+              this.handleGoal(false);
+            }
+          } else if (bx >= rightHoop.pinFront.position.x - 4 && bx <= rightHoop.pinBack.position.x + 4) {
+            if (by >= rightHoop.y + 6 && by <= rightHoop.y + 36) {
+              this.handleGoal(true);
+            }
+          }
+        }
+
+        // Net funnel: guides ball down smoothly inside net
+        const inLeftNet = bx >= leftHoop.pinBack.position.x && bx <= leftHoop.pinFront.position.x && by >= leftHoop.y && by <= leftHoop.y + 50;
+        const inRightNet = bx >= rightHoop.pinFront.position.x && bx <= rightHoop.pinBack.position.x && by >= rightHoop.y && by <= rightHoop.y + 50;
+        if (inLeftNet || inRightNet) {
+          Body.setVelocity(ball.body, { x: ball.body.velocity.x * 0.92, y: ball.body.velocity.y });
+        }
+      }
+    } else if (keyIsDown(82) || keyIsDown(32)) { // R or Space to restart
+      this.restart();
+    }
+  }
+
+  handleGoal(isRightHoop) {
+    if (this.isScoring || this.isGameOver) return;
+    this.isScoring = true;
+
+    if (isRightHoop) {
+      this.scoreP1++;
+      this.scoreMessage = 'P1 SCORED! (+1)';
+    } else {
+      this.scoreP2++;
+      this.scoreMessage = 'P2 SCORED! (+1)';
+    }
+
+    setTimeout(() => {
+      ball.reset();
+      this.scoreMessage = '';
+      this.isScoring = false;
+    }, 1000);
+  }
+
+  restart() {
+    this.scoreP1 = 0;
+    this.scoreP2 = 0;
+    this.timeRemaining = 60;
+    this.isGameOver = false;
+    this.isScoring = false;
+    this.scoreMessage = '';
+    this.lastTime = millis();
+
+    player1.reset(280);
+    player2.reset(width - 280);
+    ball.reset();
+  }
+
+  drawScoreboard() {
+    push();
+    textAlign(CENTER, CENTER);
+
+    // P1 Panel
+    fill(255, 215, 0);
+    noStroke();
+    textSize(13);
+    textStyle(BOLD);
+    text('P1', 398, 88);
+
+    fill(255);
+    stroke(20);
+    strokeWeight(2);
+    textSize(30);
+    text(this.scoreP1, 398, 116);
+
+    // Clock
+    fill(200);
+    noStroke();
+    textSize(10);
+    text('TIME', 511, 88);
+
+    const secs = Math.ceil(this.timeRemaining);
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    const timeStr = nf(m, 2) + ':' + nf(s, 2);
+
+    fill(secs <= 10 && secs > 0 ? color(255, 60, 60) : color(255));
+    stroke(20);
+    strokeWeight(2);
+    textSize(22);
+    text(timeStr, 511, 114);
+
+    // P2 Panel
+    fill(255, 215, 0);
+    noStroke();
+    textSize(13);
+    text('P2', 625, 88);
+
+    fill(255);
+    stroke(20);
+    strokeWeight(2);
+    textSize(30);
+    text(this.scoreP2, 625, 116);
+
+    // Goal banner
+    if (this.isScoring && this.scoreMessage !== '' && !this.isGameOver) {
+      rectMode(CENTER);
+      fill(255);
+      stroke(30);
+      strokeWeight(3);
+      rect(width / 2, 180, 320, 44, 8);
+
+      fill(30);
+      noStroke();
+      textSize(20);
+      text(this.scoreMessage, width / 2, 179);
+    }
+
+    // Controls at bottom
+    fill(255);
+    stroke(20);
+    strokeWeight(2.5);
+    textSize(13);
+    text('P1: [A / D] Move  [W] Jump   |   P2: [Left / Right] Move  [Up] Jump', width / 2, 675);
+
+    // Game over screen
+    if (this.isGameOver) {
+      rectMode(CENTER);
+      fill(255);
+      stroke(30);
+      strokeWeight(4);
+      rect(width / 2, height / 2 - 20, 420, 140, 12);
+
+      fill(30);
+      noStroke();
+      textSize(24);
+      text('GAME OVER', width / 2, height / 2 - 60);
+
+      textSize(22);
+      if (this.scoreP1 > this.scoreP2) {
+        fill(20, 120, 220);
+        text('P1 WINS!', width / 2, height / 2 - 24);
+      } else if (this.scoreP2 > this.scoreP1) {
+        fill(220, 80, 20);
+        text('P2 WINS!', width / 2, height / 2 - 24);
+      } else {
+        fill(80);
+        text('DRAW!', width / 2, height / 2 - 24);
+      }
+
+      fill(80);
+      textSize(13);
+      textStyle(NORMAL);
+      text('Press [R] or [Space] to restart', width / 2, height / 2 + 18);
+    }
+    pop();
+  }
 }
