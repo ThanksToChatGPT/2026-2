@@ -1,0 +1,212 @@
+Universidad Nacional de Colombia
+Facultad de Ingeniería
+Sede Bogotá
+
+Departamento de Ingeniería de Sistemas e Industrial
+Asignatura: Sistemas de información
+Código 2025982
+​
+Profesor:
+Jhon Alexander Garcia Camargo
+Ph. D. Ingeniería Industria y Organizaciones
+jhagarciaca@unal.edu.co
+ORCID
+
+Entrega hito 1: Documento de especificación de requerimientos y modelos de
+procesos.
+El entregable 1, corresponde al diagnóstico de la situación actual de una organización y busca proponer
+una solución tecnológica alineada con sus objetivos estratégicos mediante técnicas de Product Discovery
+y modelado de procesos. Este entregable está alineado con el objetivo específico respecto al desarrollo
+del curso:
+1.​ Analizar la arquitectura y los procesos de negocio de una organización para identificar brechas
+tecnológicas y oportunidades de mejora mediante el uso de marcos de referencia
+internacionales.
+Temas clave para el alcance del proyecto, abordados durante las clases y de forma autónoma por parte
+de los estudiantes:
+1.​ Estrategia de TI, alineación
+2.​ Negocio-TI, ciclos de vida (SDLC vs Agile).
+3.​ Diagnóstico de la organización y definición del problema.
+4.​ Análisis y requerimientos
+5.​ Modelado de procesos (BPMN)
+6.​ Análisis de requerimientos de información
+
+Estructura de la Entrega
+El entregable puede ser un repositorio (GitHub/GitLab, Drive) o un documento técnico (PDF, Slides, etc)
+o una combinación de herramientas de gestión TI y de proyectos a su criterio, que contenga los
+siguientes pilares:
+I. Diagnóstico y alineación estratégica
+-​
+-​
+-​
+
+Modelo de Alineación Estratégica (SAM): definir cómo el sistema propuesto impacta los
+objetivos de negocio.
+Análisis de gobernanza: identificar quiénes son los stakeholders y bajo qué marco de decisión
+operará el sistema (TOGAF, COBIT, etc).
+Balanced scorecard: gestión de la organización, problema definido respecto de KPI-KRI que
+solucionará el sistema.
+
+II. Discovery de producto
+-​
+-​
+
+Opportunity Solution Tree (OST): un mapa visual que conecte el Outcome (ej. aumentar
+ventas) con las Oportunidades (dolores del cliente) y las Soluciones (funcionalidades).
+Customer Journey Map: evidencia de la empatía con el usuario final. Definición de roles y
+posibles características de nuestros usuarios respecto al producto.
+
+III. Ingeniería de procesos (BPMN 2.0)
+-​
+-​
+
+Diagrama As-Is: el "Mapa de Calor" con los cuellos de botella actuales.
+Diagrama To-Be: el proceso optimizado donde el Sistema de Información es el protagonista.
+
+IV. Especificación de requerimientos
+-​
+-​
+
+Product Backlog: historias de usuario bajo criterios de priorización y alcance claramente
+definidos y argumentados (INVEST).
+Matriz de Requerimientos No Funcionales (RNF): basada en normas de técnicas, de calidad u
+otras, detallando restricciones legales (Ley 1581) y técnicas.
+
+Rúbrica de evaluación (%acordado de la nota total)
+Criterio
+
+Peso
+
+Nivel Experto (5.0)
+
+Nivel Junior (1.0 - 2.0)
+
+Alineación
+estratégica
+
+25%
+
+Demuestra con el modelo SAM
+cómo el SI genera ventaja
+competitiva o ahorro real.
+
+El sistema parece un
+capricho técnico sin
+conexión con el negocio.
+
+Modelado de
+procesos (BPMN)
+
+25%
+
+Trazabilidad total entre el dolor del
+As-Is y la automatización del To-Be.
+
+Errores de sintaxis BPMN y
+flujos que no resuelven
+nada.
+
+Discovery y
+requerimientos
+
+30%
+
+Historias de usuario validadas.
+Priorización MoSCoW clara y
+realista.
+
+"Tomaron pedidos" del
+cliente sin cuestionar el
+valor o la factibilidad.
+
+Restricciones y
+RNF
+
+20%
+
+Define métricas claras de
+rendimiento, seguridad y
+cumplimiento legal.
+
+Ignora las leyes de datos y
+no define qué tan rápido o
+seguro debe ser el SI.
+
+Ejemplos y pistas para la entrega
+
+❌ Ejemplo Pobre: "El sistema debe tener un login."
+✅ Ejemplo de Ingeniería: "Requerimiento No Funcional (Seguridad): El sistema debe implementar
+OAuth 2.0 para garantizar la integridad de los datos, cumpliendo con la política de acceso de la
+empresa y la Ley 1581."
+
+❌ Ejemplo Pobre: Un BPMN que es solo una línea recta.
+✅ Ejemplo de Ingeniería: Un BPMN que muestra flujos de excepción (qué pasa si el pago falla) y usa
+Service Tasks para representar donde la API del sistema hace el trabajo pesado.
+
+Estructura sugerida de la presentación oral de la entrega
+Para sustentar un proyecto de ingeniería de esta complejidad en solo 10 minutos, los estudiantes
+deben abandonar la "exposición escolar" y adoptar un formato de pitch de consultoría. El objetivo no
+es mostrar todo lo que hicieron (eso está en la documentación técnica anexa), sino demostrar que
+entienden el problema y han diseñado la solución correcta.
+
+Tiempo
+
+Sección
+
+Foco Estratégico
+
+1 min
+
+Contexto y gancho
+
+¿Cuál es el dolor de la empresa y por qué nos
+importa hoy?
+
+2 min
+
+Discovery
+
+El origen de la solución: del objetivo de negocio
+a la oportunidad.
+
+3 min
+
+Procesos (BPMN)
+
+Contraste As-Is vs. To-Be. ¿Dónde está la
+ganancia de eficiencia?
+
+2 min
+
+Arquitectura de requerimientos
+
+Top 5 Historias de Usuario y el RNF más crítico
+
+1 min
+
+Viabilidad y cierre
+
+¿Por qué este proyecto es factible y genera
+valor real?
+
+1 min
+
+Buffer / Pregunta de impacto
+
+Espacio para la pregunta del "Gerente"
+(Docente).
+
+Consejos para una sustentación de "nivel gerencial"
+Menos es más: No lean las diapositivas. Si el diagrama BPMN es muy grande, resalten solo la zona que
+el sistema va a transformar.
+Trazabilidad visual: Usen flechas o colores para mostrar cómo un "punto de dolor" en el Journey Map se
+convirtió en una "tarea automatizada" en el BPMN y finalmente en una "Historia de Usuario".
+Manejo de la incertidumbre: Si no tuvieron acceso a información primaria, digan: "Basados en un
+análisis de Benchmarking con el líder del sector y arqueología de documentos, inferimos que...". Eso
+demuestra proactividad de ingeniería.
+Uso de herramientas metodológicas para decisiones: Si el proyecto es muy incierto, justifiquen: "Dada
+la alta incertidumbre en los requerimientos, hemos seleccionado un ciclo de vida Agile para este
+diseño".
+
+¡Éxitos con la entrega y el trabajo emprendido!
+
+
