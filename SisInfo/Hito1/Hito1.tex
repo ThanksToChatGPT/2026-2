@@ -74,7 +74,11 @@
     \centering
     
     % Logo Institucional
-    \includegraphics[width=0.3\textwidth]{unal_logo.png}\par
+    \IfFileExists{unal_logo.png}{%
+        \includegraphics[width=0.3\textwidth]{unal_logo.png}%
+    }{%
+        \fbox{\parbox[c][2cm][c]{0.3\textwidth}{\centering\small Logo institucional\\\texttt{unal\_logo.png}}}%
+    }\par
     \vspace{0.8cm}
     % Materia e Institución
     {\scshape\Large Universidad Nacional de Colombia\par}
@@ -91,15 +95,13 @@
     
 
     
-    % Integrantes (7 miembros)
     {\large
     Sebastian Fernando Gutiérrez Rojas\par
     Ronald Arturo Chávez Cabrera\par
     Camilo Andres Rojas Silva \par
     Angel Inyena Pasuy\par
     Jonathan Felipe López Núñez\par
-    Nombre Completo Integrante 6\par
-    Nombre Completo Integrante 7\par
+    Juan David Peña Lozada\par
     }
     
     \vfill
@@ -119,7 +121,97 @@
 \newpage
 \section{Diagnóstico y alineación estratégica}
 \subsection{Análisis de las 5 Fuerzas de Porter}
-\subsection{Mapeo de la Cadena de Valor identificando puntos de dolor tecnológicos.}
+\label{sec:porter-loard}
+
+\paragraph{Alcance y base del análisis.}
+Se analiza el entorno de los servicios especializados de montaje civil y mecánico y mantenimiento de infraestructura para hidrocarburos en los que participa Loard Construcciones S.A.S. El marco de Porter permite examinar las presiones externas que afectan la rentabilidad del sector~\cite{hbs-cinco-fuerzas}; los problemas internos de información se estudian después mediante la cadena de valor.
+
+La base del caso es el diagnóstico consignado por el grupo: concentración cercana al 80\% de la facturación en un cliente principal, exigencias técnicas y documentales de los clientes, compras urgentes y dificultades para consultar costos y rendimientos históricos. Estas afirmaciones provienen del borrador del equipo y requieren conservar su respaldo documental. Las intensidades siguientes son una valoración cualitativa preliminar; no representan una medición del mercado ni una entrevista adicional.
+
+\subsubsection{Poder de negociación de los clientes: alto}
+La concentración de ingresos en un cliente principal, identificado en el borrador como Chevron, genera dependencia comercial. La pérdida o reducción de sus contratos tendría un efecto importante sobre la continuidad de los ingresos. Además, las exigencias de calidad, seguridad y evidencia documental condicionan la aceptación de los trabajos y la radicación de actas. El diagnóstico señala pagos a 30 y 60 días contra actas, por lo que el retraso documental puede trasladarse al flujo de caja.
+
+\textbf{Implicación estratégica:} sustentar las negociaciones con información confiable de costos, productividad y cumplimiento; analizar la concentración por cliente y contrato (NEC-10) y entregar oportunamente los soportes de calidad (NEC-05). La información puede apoyar la diversificación comercial, aunque no la garantiza.
+
+\subsubsection{Poder de negociación de los proveedores: medio, con presión alta en compras urgentes}
+El caso identifica consumibles como electrodos, discos y gases, así como servicios de ensayos de terceros. Las compras de última hora y los sobrecostos en frentes como Buenaventura reducen el tiempo disponible para comparar ofertas y negociar. Esto sugiere mayor dependencia del proveedor que pueda entregar de inmediato. Sin embargo, no se dispone de datos sobre concentración de proveedores, alternativas disponibles o costos de cambio; por ello, la intensidad global se considera provisional.
+
+\textbf{Implicación estratégica:} mejorar la planeación y la trazabilidad del ciclo de compra (NEC-08), controlar los consumos por frente de obra (NEC-02) y conocer la ubicación y disponibilidad de herramientas y equipos (NEC-03).
+
+\subsubsection{Rivalidad entre competidores existentes: media-alta, por validar}
+El borrador describe una empresa que busca competir mediante confiabilidad técnica y cumplimiento, conservando un margen mínimo de rentabilidad. Se infiere que la adjudicación de obras y contratos enfrenta alternativas de otros contratistas, y que la oportunidad de las cotizaciones, el costo y la experiencia pueden influir en esa comparación. No se cuenta con una lista de competidores, participación de mercado ni resultados de licitaciones; por tanto, no se afirma una guerra de precios ni se atribuyen conductas a empresas específicas.
+
+\textbf{Implicación estratégica:} disminuir el sobretiempo en la preparación de ofertas mediante históricos consistentes de APU y rendimientos (NEC-06 y NEC-07), y comparar lo cotizado con lo ejecutado (NEC-04 y NEC-10) para proteger el margen sin reducir calidad.
+
+\subsubsection{Amenaza de nuevos entrantes: media-baja, por validar}
+El diagnóstico describe trabajos que requieren conocimiento técnico, personal calificado, evidencia de calidad y cumplimiento de condiciones de seguridad exigidas por los clientes. Estos factores pueden dificultar la entrada de contratistas sin experiencia o capacidad documental. La intensidad propuesta supone que dichas exigencias intervienen en la habilitación y adjudicación; debe contrastarse con los criterios reales de selección y la llegada de nuevos participantes.
+
+\textbf{Implicación estratégica:} conservar evidencia trazable de la experiencia y del cumplimiento de la empresa, asegurar el uso de documentos vigentes (NEC-12 y NEC-14) y controlar las competencias del personal (NEC-18 y NEC-19).
+
+\subsubsection{Amenaza de productos o servicios sustitutos: baja-media, por validar}
+Un sustituto satisface la misma necesidad mediante una alternativa diferente. En este caso, podrían ser sustitutos parciales la ejecución con equipos propios del cliente o soluciones de renovación y prefabricación que reduzcan ciertos trabajos en sitio. Estas opciones son hipótesis para contrastar; el material recibido no demuestra su uso por los clientes. La contratación de otra empresa que presta el mismo servicio corresponde a rivalidad, no a sustitución.
+
+\textbf{Implicación estratégica:} demostrar el valor del servicio especializado mediante resultados de productividad, calidad y cumplimiento, y utilizar lecciones aprendidas (NEC-11) para ajustar la oferta a las necesidades del cliente.
+
+\paragraph{Síntesis del diagnóstico externo.}
+La presión mejor sustentada por el borrador es el poder del cliente, debido a la concentración comercial y a las condiciones de aceptación documental. Las compras urgentes añaden presión sobre los costos. Para Loard, disponer de información oportuna de ejecución y calidad contribuye a sostener su diferenciación por confiabilidad y a reconocer desviaciones del margen antes del cierre. Las demás intensidades requieren validación con información comercial y de abastecimiento.
+
+\subsection{Mapeo de la Cadena de Valor identificando puntos de dolor tecnológicos}
+\label{sec:cadena-loard}
+
+La cadena de valor permite relacionar las actividades de Loard con el servicio que recibe el cliente: una obra o mantenimiento ejecutado con calidad, seguridad, cumplimiento y evidencia verificable. Se adapta el modelo de Porter~\cite{hbs-cadena-valor} a una empresa de servicios industriales; la logística externa comprende la entrega del trabajo y de sus soportes documentales. El diagnóstico siguiente retoma los síntomas del borrador y los vincula con el catálogo NEC-01 a NEC-19, sin introducir requerimientos adicionales.
+
+\subsubsection{Actividades primarias}
+{\small
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}p{2.6cm}p{3.5cm}p{5.2cm}p{3.1cm}@{}}
+\caption{Actividades primarias y puntos de dolor tecnológicos.}\label{tab:cadena-primarias}\\
+\toprule
+\textbf{Actividad} & \textbf{Valor aportado} & \textbf{Punto de dolor y efecto} & \textbf{Trazabilidad}\\
+\midrule\endfirsthead
+\toprule\textbf{Actividad} & \textbf{Valor aportado} & \textbf{Punto de dolor y efecto} & \textbf{Trazabilidad}\\\midrule\endhead
+\bottomrule\endfoot
+Logística interna & Disponer de insumos, herramientas y equipos para los frentes de obra. & Consumos conciliados al cierre e inventarios estáticos; dificultades en devoluciones y ubicación. Las pérdidas y faltantes se detectan tarde y afectan el margen o la continuidad del trabajo. & NEC-02 y NEC-03.\\\addlinespace
+Operaciones & Ejecutar montajes y mantenimiento conforme al alcance técnico. & Reportes por WhatsApp y papel; avance y rendimientos consolidados manualmente. La gerencia no dispone de una visión oportuna del avance físico y los costos. & NEC-01, NEC-04 y NEC-09.\\\addlinespace
+Logística externa & Entregar trabajos aceptables y soportes de calidad para radicar actas. & Resultados de ensayos de terceros transcritos a hojas de cálculo; armado tardío del dossier y del libro de tubería. Se retrasa la radicación y el inicio del trámite de cobro. & NEC-05; apoyo de NEC-12 y NEC-16.\\\addlinespace
+Marketing y ventas & Preparar propuestas viables y oportunas. & Plantillas heterogéneas de APU y búsqueda manual de históricos. Las cotizaciones exigen sobretiempo y pueden incorporar rendimientos o costos poco consistentes. & NEC-06 y NEC-07.\\\addlinespace
+Servicio posventa & Atender observaciones y aprovechar la experiencia de proyectos anteriores. & El catálogo señala ausencia de lecciones aprendidas y contingencias estimadas empíricamente. Se dificulta incorporar los resultados reales a futuras ofertas. & NEC-10 y NEC-11.\\
+\end{longtable}}
+
+\subsubsection{Actividades de apoyo}
+{\small
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}p{2.6cm}p{3.5cm}p{5.2cm}p{3.1cm}@{}}
+\caption{Actividades de apoyo y puntos de dolor tecnológicos.}\label{tab:cadena-apoyo}\\
+\toprule\textbf{Actividad} & \textbf{Valor aportado} & \textbf{Punto de dolor y efecto} & \textbf{Trazabilidad}\\\midrule\endfirsthead
+\toprule\textbf{Actividad} & \textbf{Valor aportado} & \textbf{Punto de dolor y efecto} & \textbf{Trazabilidad}\\\midrule\endhead
+\bottomrule\endfoot
+Infraestructura de la empresa & Dirigir contratos, finanzas y el Sistema Integrado de Gestión (SIG). & Seguimiento dependiente del balance mensual, llamadas y revisiones manuales. Las desviaciones no se reconocen a tiempo y la documentación dificulta el control y la auditoría. & NEC-09, NEC-10 y NEC-17.\\\addlinespace
+Gestión de recursos humanos & Contar con personal competente y habilitado para su actividad. & Vencimientos revisados manualmente y soportes físicos de inducciones que viajan entre ciudades. Existe riesgo de omitir una verificación o perder evidencia. & NEC-18 y NEC-19.\\\addlinespace
+Desarrollo tecnológico & Mantener información disponible, vigente y trazable. & Dropbox y copias locales con versiones en nombres, archivos en conflicto, búsqueda por carpetas y firmas escaneadas. El borrador identifica limitaciones de permisos y trazabilidad; su configuración actual debe verificarse. & NEC-12 a NEC-17.\\\addlinespace
+Abastecimiento / compras & Conseguir insumos y servicios en condiciones adecuadas de costo y entrega. & Requisiciones urgentes, autorizaciones sin flujo formal y poca visibilidad del estado de una compra. Se generan sobreprecios y riesgo de retrasos. & NEC-08; relación con NEC-02 y NEC-03.\\
+\end{longtable}}
+
+\subsubsection{Mapa sintético de la cadena de valor}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small, box/.style={draw=black!65, rounded corners=2pt, align=center, inner sep=5pt}]
+\node[box,fill=blue!6,text width=14.6cm] at (7.5,3.6) {\textbf{Infraestructura de la empresa}\\Dirección, finanzas y SIG: información tardía y poca trazabilidad (NEC-09, 10, 17)};
+\node[box,fill=blue!6,text width=14.6cm] at (7.5,2.4) {\textbf{Gestión de recursos humanos}\\Control manual de vencimientos y soportes físicos (NEC-18, 19)};
+\node[box,fill=blue!6,text width=14.6cm] at (7.5,1.2) {\textbf{Desarrollo tecnológico}\\Versiones, concurrencia, búsqueda, acceso, firmas y auditoría (NEC-12 a 17)};
+\node[box,fill=blue!6,text width=14.6cm] at (7.5,0) {\textbf{Abastecimiento / compras}\\Pedidos urgentes y seguimiento fragmentado (NEC-08)};
+\foreach \x/\titulo/\detalle in {1.5/{Logística\\interna}/{Consumos e\\inventario\\NEC-02, 03},4.5/{Operaciones}/{Reportes y\\rendimientos\\NEC-01, 04, 09},7.5/{Logística\\externa}/{Dossier y actas\\NEC-05},10.5/{Marketing\\y ventas}/{APU y ofertas\\NEC-06, 07},13.5/{Servicio\\posventa}/{Aprendizaje\\y contingencias\\NEC-10, 11}} {
+\node[box,fill=orange!12,text width=2.55cm,minimum height=2.25cm] at (\x,-2) {\textbf{\titulo}\\\detalle};}
+\draw[-{Stealth},thick] (0,-3.55) -- (15,-3.55);
+\node[align=center,text width=14.5cm] at (7.5,-4.25) {\textbf{Valor para el cliente:} ejecución confiable, segura y documentada.\\\textbf{Margen:} afectado por sobrecostos, reprocesos y demoras de radicación.};
+\end{tikzpicture}
+\caption{Cadena de valor de Loard adaptada a servicios industriales. El orden sigue el modelo conceptual de Porter; no representa una secuencia de ejecución.}
+\label{fig:cadena-loard}
+\end{figure}
+
+\paragraph{Relación entre los puntos de dolor.}
+La captura informal en operaciones dificulta conocer los consumos y el avance; esa información incompleta limita tanto el seguimiento gerencial como la actualización de rendimientos para nuevas ofertas. La fragmentación documental atraviesa las actividades: afecta reportes, evidencia de calidad, aprobaciones y competencias del personal. Por ello, el problema central no es únicamente almacenar archivos, sino mantener la continuidad y trazabilidad de la información desde la ejecución hasta la entrega y el aprendizaje posterior.
+
 \subsection{Definición inicial del problema bajo el estándar de Diseño de Ingeniería.}
 Esta sección define el problema siguiendo el estándar de Diseño en Ingeniería del resultado de aprendizaje~2 de ABET (\emph{Outcome 2}): aplicar el diseño de ingeniería para producir soluciones que respondan a necesidades especificadas, considerando la salud pública, la seguridad y el bienestar, así como factores globales, culturales, sociales, ambientales y económicos. Por eso avanza en dos pasos: primero se identifican las necesidades de la organización y después se formula el problema con sus restricciones y consideraciones de diseño. Todo el apartado se mantiene en el \emph{espacio del problema} (qué necesita la empresa); el espacio de la solución se trabaja en el Discovery de producto y en la ingeniería de procesos.
 
@@ -148,7 +240,7 @@ Las necesidades se levantan con las actividades del área de requisitos del SWEB
 \endfoot
 Elicitación & Revisión del diagnóstico (5 Fuerzas de Porter y cadena de valor con sus puntos de dolor) y análisis documental del repositorio actual en Dropbox (más de 23.000 archivos). & Lista de síntomas y evidencias. & Hecho \\
 \addlinespace
-Análisis y negociación & Agrupación por dominio, identificación de interesados, redacción de cada necesidad, priorización y delimitación del alcance. & Catálogo \nec{01} a \nec{19} priorizado (primera versión). & Hecho \\
+Análisis y negociación & Agrupación por dominio, identificación de interesados, redacción de cada necesidad, priorización y delimitación del alcance. & Catálogo \nec{01} a \nec{20} priorizado (primera versión). & Hecho \\
 \addlinespace
 Especificación & Traducir cada necesidad en historias de usuario y requerimientos no funcionales verificables (Especificación de requerimientos). & Trazabilidad NEC $\rightarrow$ HU/RNF. & Pendiente \\
 \addlinespace
@@ -253,6 +345,8 @@ Cada necesidad sigue la estructura ``la empresa necesita [capacidad] para [benef
 \nec{04} & Medir el avance físico y la productividad real de las cuadrillas frente a lo cotizado, para evaluar la rentabilidad de contratos marco y proyectos. & Rendimientos sin analítica; desfase físico-financiero (Operaciones). & M \\
 \addlinespace
 \nec{05} & Consolidar los resultados de ensayos (END, hidrostáticas, cilindros de concreto) y el libro de tubería en un dossier de calidad, para radicar actas sin transcripción manual. & Consolidación manual del dossier (Logística externa). Formato \texttt{GT-FR64}, \emph{Weld Book} (diagnóstico Dropbox). & M \\
+\addlinespace
+\nec{20} & Registrar la información de campo sin conexión y sincronizarla al recuperar la señal, para no perder reportes en los frentes aislados. & Conectividad intermitente en frentes aislados como Buenaventura (restricciones y supuestos de la formulación del problema); por validar con la empresa. & S \\
 \addlinespace[6pt]
 % ---------------- B ----------------
 \multicolumn{4}{@{}l}{\textbf{B. Gestión comercial y gerencial}} \\*
@@ -309,9 +403,9 @@ La prioridad combina tres criterios: (i) el riesgo legal, contractual o de segur
 \endhead
 \bottomrule
 \endfoot
-Debe (M) & \nec{01}, 02, 04, 05, 06, 08, 09, 12, 15, 17, 18 & 11 (58\%) & Afectan directamente el margen, la seguridad de las personas, la protección de datos o la conformidad ante auditorías (ISO 9001, RUC). \\
+Debe (M) & \nec{01}, 02, 04, 05, 06, 08, 09, 12, 15, 17, 18 & 11 (55\%) & Afectan directamente el margen, la seguridad de las personas, la protección de datos o la conformidad ante auditorías (ISO 9001, RUC). \\
 \addlinespace
-Debería (S) & \nec{03}, 07, 10, 13, 14, 16, 19 & 7 (37\%) & Mejoran la eficiencia y el control, pero el negocio puede operar sin ellas en una primera versión. \\
+Debería (S) & \nec{03}, 07, 10, 13, 14, 16, 19, 20 & 8 (40\%) & Mejoran la eficiencia y el control, pero el negocio puede operar sin ellas en una primera versión. \\
 \addlinespace
 Podría (C) & \nec{11} & 1 (5\%) & Valor a largo plazo; depende de contar antes con datos históricos limpios. \\
 \addlinespace
@@ -319,12 +413,6 @@ No en esta versión (W) & Integración con contabilidad y facturación; regulari
 \end{longtable}
 }
 
-\textbf{Observaciones del análisis.}
-\begin{itemize}
-    \item \nec{01}, 02, 04 y 09 forman una cadena: sin la captura diaria estructurada (\nec{01}) no hay datos de consumo (\nec{02}), de productividad (\nec{04}) ni tablero gerencial (\nec{09}). Conviene abordarlas en el mismo incremento.
-    \item Las necesidades del dominio~C (\nec{12} a \nec{17}) responden a los seis puntos de dolor del diagnóstico de Dropbox: concurrencia, versiones, metadatos, permisos, firmas y auditoría.
-    \item \nec{18} es la de mayor riesgo legal y humano inmediato (trabajo en alturas y en espacios confinados) y su alcance es acotado, por lo que es candidata a primera entrega.
-\end{itemize}
 
 % ------------------------------------------------------------------------------
 \subsubsection{Formulación del problema}
@@ -350,7 +438,7 @@ Con las necesidades identificadas, el problema se formula con los elementos del 
 \addlinespace
 \textbf{Problema} & La empresa \textbf{no dispone} de información operativa, comercial y documental oportuna, trazable y confiable. Las desviaciones se descubren cuando ya no se pueden corregir y la evidencia que exigen los clientes se arma a mano. Esto produce: (i) erosión del margen, (ii) riesgo legal, contractual y de seguridad por vencimientos y versiones sin control y (iii) reprocesos y sobretiempo en el dossier, las cotizaciones y las compras. \\
 \addlinespace
-\textbf{Necesidad} & Capturar la información donde se origina (frente de obra, taller y oficina) y controlarla y consultarla de forma centralizada, para detectar las desviaciones mientras la obra está en ejecución y tener la evidencia disponible ante auditorías. Se detalla en el catálogo \nec{01} a \nec{19}. \\
+\textbf{Necesidad} & Capturar la información donde se origina (frente de obra, taller y oficina) y controlarla y consultarla de forma centralizada, para detectar las desviaciones mientras la obra está en ejecución y tener la evidencia disponible ante auditorías. Se detalla en el catálogo \nec{01} a \nec{20}. \\
 \addlinespace
 \textbf{Dirección de solución (hipótesis)} & Un sistema de información complementario a los sistemas contables actuales (en este documento, ERP/SIG), con captura desde el celular en campo, control documental y tablero gerencial. Es una hipótesis: las alternativas se comparan en el Discovery de producto (OST). \\
 \addlinespace
@@ -415,11 +503,11 @@ Este catálogo es una primera versión. Antes de pasar a la especificación qued
 \label{sec:sam}
 
 % --- Definición de Colores del Diagrama SAM ---
-\definecolor{samPurple}{RGB}{106, 38, 158}
-\definecolor{samBlue}{RGB}{0, 114, 206}
-\definecolor{samOrange}{RGB}{234, 118, 37}
-\definecolor{samGreen}{RGB}{98, 172, 61}
-\definecolor{samRedArrow}{RGB}{220, 30, 30}
+\definecolor{samPurple}{RGB}{239, 243, 247}
+\definecolor{samBlue}{RGB}{232, 239, 246}
+\definecolor{samOrange}{RGB}{245, 245, 245}
+\definecolor{samGreen}{RGB}{238, 242, 245}
+\definecolor{samRedArrow}{RGB}{70, 90, 110}
 \definecolor{samBlackArrow}{RGB}{30, 30, 30}
 
 \begin{figure}[H]
@@ -427,17 +515,19 @@ Este catálogo es una primera versión. Antes de pasar a la especificación qued
 \begin{tikzpicture}[
     box/.style={
         rectangle,
-        rounded corners=14pt,
+        rounded corners=3pt,
+        draw=black!55,
+        line width=0.6pt,
         text width=6.6cm,
         minimum height=4.2cm,
-        text=white,
+        text=black,
         inner sep=8pt,
         font=\sffamily
     },
     redArrow/.style={
-        {Stealth[length=3.8mm,width=2.6mm]}-{Stealth[length=3.8mm,width=2.6mm]},
+        {Stealth[length=2.3mm,width=1.6mm]}-{Stealth[length=2.3mm,width=1.6mm]},
         color=samRedArrow,
-        line width=2.4pt,
+        line width=0.9pt,
         shorten <=5pt,
         shorten >=5pt
     }
@@ -445,7 +535,7 @@ Este catálogo es una primera versión. Antes de pasar a la especificación qued
 
 % Nodos principales (Cuadrantes del SAM con mayor separación y letra más grande)
 \node[box, fill=samPurple] (bs) at (0, 6.2) {
-    {\centering\textbf{\large Estrategia de Negocio}\par}
+    {\centering\color{primary}\textbf{\large Estrategia de Negocio}\par}
     \vspace{3pt}\hrule height 0.5pt\vspace{6pt}
     {\footnotesize\raggedright
     $\bullet$ Obras civiles y montajes \textit{Oil \& Gas} (Chevron).\par\vspace{3pt}
@@ -455,7 +545,7 @@ Este catálogo es una primera versión. Antes de pasar a la especificación qued
 };
 
 \node[box, fill=samBlue] (its) at (8.6, 6.2) {
-    {\centering\textbf{\large Estrategia de TI}\par}
+    {\centering\color{primary}\textbf{\large Estrategia de TI}\par}
     \vspace{3pt}\hrule height 0.5pt\vspace{6pt}
     {\footnotesize\raggedright
     $\bullet$ ERP/SIG Operativo para obra, taller y cotizaciones.\par\vspace{3pt}
@@ -465,7 +555,7 @@ Este catálogo es una primera versión. Antes de pasar a la especificación qued
 };
 
 \node[box, fill=samOrange] (bo) at (0, 0) {
-    {\centering\textbf{\large Operación del Negocio}\par}
+    {\centering\color{primary}\textbf{\large Operación del Negocio}\par}
     \vspace{3pt}\hrule height 0.5pt\vspace{6pt}
     {\footnotesize\raggedright
     $\bullet$ Coordinación central Bogotá y frentes en 5 ciudades.\par\vspace{3pt}
@@ -475,7 +565,7 @@ Este catálogo es una primera versión. Antes de pasar a la especificación qued
 };
 
 \node[box, fill=samGreen] (ito) at (8.6, 0) {
-    {\centering\textbf{\large Operación de TI}\par}
+    {\centering\color{primary}\textbf{\large Operación de TI}\par}
     \vspace{3pt}\hrule height 0.5pt\vspace{6pt}
     {\footnotesize\raggedright
     $\bullet$ Migración de Dropbox (23.000 archivos) a BD relacional.\par\vspace{3pt}
@@ -516,7 +606,7 @@ Define la visión y directrices tecnológicas necesarias para habilitar la estra
 \subsubsection{Operación del Negocio (\textit{Business Operation})}
 Abarca la infraestructura interna, los procesos y el talento humano que sustentan el día a día operativo:
 \begin{itemize}
-    \item \textbf{Estructura Administrativa (\textit{Administrative Structure}):} Organización funcional y geográficamente dispersa, coordinada desde la sede principal en Bogotá y desplegada en frentes de trabajo locales mediante ingenieros residentes de obra, \hl{supervisores de campo e inspectores de calidad y SSTA.}
+    \item \textbf{Estructura Administrativa (\textit{Administrative Structure}):} Organización funcional y geográficamente dispersa, coordinada desde la sede principal en Bogotá y desplegada en frentes de trabajo locales mediante ingenieros residentes de obra, supervisores de campo e inspectores de calidad y SSTA.
     \item \textbf{Procesos de Negocio (\textit{Business Processes}):} Ciclo licitatorio y costeo de proyectos soportado en APU; ejecución de órdenes de trabajo en contrato marco y proyectos no rutinarios; captura diaria de labores mediante el formato de Informe Diario de Actividades; seguimiento de soldadura en el Libro de Tubería (\textit{Weld Book}); gestión logística de abastecimiento en zonas de alta complejidad (p.\,ej.\ Buenaventura); y administración preventiva de la matriz IPER y vigencias de certificaciones críticas (trabajo en alturas y espacios confinados).
     \item \textbf{Habilidades y Talento Humano (\textit{Skills}):} Mano de obra técnica altamente especializada (soldadores calificados, tuberos y montadores) y profesionales de ingeniería con vasta experiencia normativa pero con hábitos operacionales arraigados al registro analógico en papel, cuadernos de notas y plantillas dispersas de cálculo.
 \end{itemize}
@@ -524,12 +614,99 @@ Abarca la infraestructura interna, los procesos y el talento humano que sustenta
 \subsubsection{Operación de TI (\textit{IT Operation})}
 Comprende la infraestructura tecnológica interna, aplicaciones y mecanismos de soporte técnico:
 \begin{itemize}
-    \item \textbf{Arquitectura Tecnológica (\textit{IT Infrastructure \& Architecture}):} Transición estructural desde un repositorio de archivos en la nube no relacional y pasivo (Dropbox con más de 23.000 archivos en extensiones \texttt{.xlsx}, \texttt{.docx} y \texttt{.pdf}, caracterizado por colisiones de sincronización y dispersión en carpetas) hacia una solución de software cliente-servidor accesible \hl{vía web y móvil}, soportada sobre una base de datos relacional transaccional y servicios de almacenamiento seguro de documentos indexados por metadatos.
+    \item \textbf{Arquitectura Tecnológica (\textit{IT Infrastructure \& Architecture}):} Transición estructural desde un repositorio de archivos en la nube no relacional y pasivo (Dropbox con más de 23.000 archivos en extensiones \texttt{.xlsx}, \texttt{.docx} y \texttt{.pdf}, caracterizado por colisiones de sincronización y dispersión en carpetas) hacia una solución de software cliente-servidor accesible vía web y móvil, soportada sobre una base de datos relacional transaccional y servicios de almacenamiento seguro de documentos indexados por metadatos.
     \item \textbf{Procesos de TI (\textit{IT Processes}):} Implementación de mecanismos de control de concurrencia (\textit{check-in / check-out}) para prevenir copias conflictivas; rutinas automáticas de sincronización de datos de campo (soportando captura fuera de línea para frentes con conectividad intermitente); consolidación automática de reportes de avance físico contra el presupuesto de APU; y alertas tempranas automáticas ante vencimientos de certificaciones SST con anticipación mayor o igual a 30 días.
     \item \textbf{Habilidades y Soporte de TI (\textit{IT Skills}):} Planes de capacitación continua y acompañamiento en la gestión del cambio dirigidos a residentes de obra para asegurar una alta usabilidad en dispositivos móviles; capacidades de administración de usuarios, perfiles y políticas de seguridad; y soporte técnico permanente enfocado en la resiliencia operativa y respaldo continuo de la información documental.
 \end{itemize}
 
+\subsubsection{Alineación Causal: Impacto del Sistema Propuesto en los Objetivos de Negocio}
+
+La validez del modelo SAM radica en demostrar que la inversión tecnológica no constituye un fin en sí misma ni una solución técnica aislada, sino una palanca causal directa para alcanzar los objetivos estratégicos de la compañía y generar ahorros operativos medibles~\cite{chan-reich-2007}. Conforme a los hallazgos de Chan y Reich sobre alineación estratégica en sistemas de información, el desempeño corporativo superior se alcanza cuando la infraestructura y capacidades de TI se acoplan simétricamente con las prioridades de mercado y la excelencia operacional interna. En el contexto de Loard Construcciones S.A.S., este impacto causal se materializa en cuatro objetivos fundamentales:
+
+\begin{itemize}
+    \item \textbf{Blindaje del margen comercial y control de sobrecostos (ahorro real):} 
+    El imperativo de negocio exige salvaguardar el margen neto frente a la agresiva competencia por precios en el sector de hidrocarburos. Actualmente, la empresa descubre desviaciones presupuestales cuando el proyecto concluye (``falta dinero''), asumiendo sobrecostos imprevistos de entre el $7\%$ y el $10\%$. El sistema propuesto impacta este objetivo al integrar la captura digital diaria de frentes (\nec{01}) con el control de inventario de consumibles en tiempo real (\nec{02}) y la comparación automática contra la matriz de APU (\nec{04}, \nec{09}). Esto transforma el control financiero de un ejercicio forense tardío a una gestión preventiva inmediata, cerrando las fugas de stock y asegurando que las desviaciones de costo no superen el umbral crítico del $5\%$.
+    
+    \item \textbf{Aseguramiento de la continuidad de contratos marco y retención del cliente clave:}
+    Dado que Chevron concentra aproximadamente el $80\%$ de la facturación histórica, cualquier fisura en la calidad técnica o retraso documental pone en riesgo la estabilidad del negocio. La plataforma propuesta impacta este objetivo al automatizar la consolidación del Dossier de Calidad y el Libro de Tubería (\textit{Weld Book}) (\nec{05}), erradicando las fallas por versiones obsoletas (\nec{12}) y copias en conflicto (\nec{13}). La incorporación de una pista de auditoría inmutable (\nec{17}) garantiza transparencia probatoria total ante las exigentes auditorías de Chevron, asegurando la renovación de los acuerdos marco y consolidando la ventaja competitiva basada en confiabilidad técnica.
+
+    \item \textbf{Aceleración del ciclo de caja y reducción de tiempos muertos:}
+    La dependencia de firmas manuscritas escaneadas y la dispersión geográfica en cinco ciudades genera cuellos de botella administrativos de más de cinco días hábiles para validar actas de avance. El sistema impacta este objetivo al habilitar flujos de aprobación y firma electrónica con validez jurídica bajo la Ley 527 de 1999 (\nec{16}), reduciendo el ciclo de aprobación a menos de 24 horas y acortando en al menos un $20\%$ el tiempo total de entrega del dossier, lo cual acelera la radicación de facturas y optimiza la liquidez del flujo de caja.
+
+    \item \textbf{Mitigación del riesgo legal y operacional en SSTA:}
+    En la industria de \textit{Oil \& Gas}, un accidente por personal no certificado acarrea la suspensión inmediata de operaciones, la pérdida de la calificación RUC y severas sanciones bajo el Decreto 1072 de 2015. El sistema impacta este objetivo preventivo mediante un motor de alertas tempranas automáticas ($\ge 30$ días) para vencimientos de cursos de alturas, espacios confinados y exámenes ocupacionales (\nec{18}), bloqueando preventivamente en sistema la asignación de operarios que no cumplan los requisitos de habilitación legal.
+\end{itemize}
+
 \subsection{Análisis de Gobernanza y Marco de Decisión}
+\label{sec:gobernanza}
+
+Para garantizar una toma de decisiones rápida y evitar la sobrecarga burocrática en un ciclo de ejecución de 16 semanas (un semestre), el sistema de información adopta un modelo de **gobernanza ágil y adaptativa**. Este esquema toma los principios estructurales de **COBIT** (separación funcional entre patrocinio estratégico y gestión técnica) y los lineamientos de arquitectura de **TOGAF**, pero los despoja de comités lentos y formatos extensos de cambio, integrando las decisiones directamente dentro de las ceremonias de desarrollo ágil con iteraciones (*sprints*) de dos semanas.
+
+\subsubsection{Marco de Decisión Ágil: Integración COBIT y TOGAF}
+
+El marco articula dos niveles de decisión sincronizados con el ritmo de entrega continua:
+\begin{enumerate}
+    \item \textbf{Nivel de Dirección y Patrocinio (Alineación con EDM de COBIT):} Define la visión, valida las prioridades estratégicas y asegura la asignación oportuna de recursos. En lugar de comisiones periódicas distantes, este nivel interactúa al cierre de cada incremento funcional, evaluando resultados tangibles frente a los indicadores del Balanced Scorecard.
+    \item \textbf{Nivel de Gestión Ágil y Arquitectura (Alineación con PBRM y TOGAF):} Gestiona el flujo de trabajo continuo, la coherencia de datos y el diseño del software. Cualquier variación en requerimientos técnicos o funcionales se resuelve en el refinamiento del backlog bajo criterios INVEST y MoSCoW, garantizando respuestas en menos de 48 horas sin requerir trámites burocráticos de cambio (RFC tradicionales).
+\end{enumerate}
+
+\subsubsection{Instancias Ágiles de Decisión}
+
+La gobernanza se ejerce a través de dos ceremonias vivas y focalizadas:
+\begin{itemize}
+    \item \textbf{Mesa de Decisión y Demo de Sprint (Quincenal, 45 minutos):} Con la participación de la Gerencia General (Patrocinador) y los líderes funcionales de Calidad y SST (quienes actúan como contrapartes decisorias). Se revisa el software funcional desplegado en el sprint, se validan los criterios de aceptación y se aprueban de forma inmediata las prioridades del siguiente ciclo (*Pivot or Persevere*).
+    \item \textbf{Sesión de Refinamiento y Control de Arquitectura (Semanal, 30 minutos):} Espacio dinámico entre el equipo del proyecto, el líder técnico y los delegados de campo (ingeniero residente o encargado de costos). Evalúa ajustes de usabilidad y resuelve impedimentos técnicos (sincronización \textit{offline}, integración de formatos) de manera ágil.
+\end{itemize}
+
+\subsubsection{Mapeo Ágil de Stakeholders (Matriz RACI)}
+
+A partir del análisis de interesados de la sección~\ref{tab:nec-interesados}, la Tabla~\ref{tab:gobernanza-raci} formaliza el rol de cada una de las 11 partes interesadas en el marco de decisión ágil, categorizándolas bajo el modelo RACI (\textbf{R}esponsable de ejecutar/capturar, \textbf{A}probador final, \textbf{C}onsultado para diseño, e \textbf{I}nformado sobre avances):
+
+{\small
+\begin{longtable}{@{}L{3.6cm} L{2.2cm} c L{5.8cm} L{3.5cm}@{}}
+\caption{Matriz de gobernanza ágil y toma de decisiones por interesado.}\label{tab:gobernanza-raci}\\
+\toprule
+\textbf{Interesado} & \textbf{Nivel en marco} & \textbf{RACI} & \textbf{Ámbito de decisión / Rol en el sistema} & \textbf{Mecanismo de interacción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Interesado} & \textbf{Nivel en marco} & \textbf{RACI} & \textbf{Ámbito de decisión / Rol en el sistema} & \textbf{Mecanismo de interacción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Gerencia general & Dirección (EDM) & A & Patrocinador principal; valida la viabilidad del MVP, aprueba la priorización de alto nivel y valida el cierre de fase. & Demos de Sprint e hitos de entrega. \\
+\addlinespace
+Coordinación del SIG y calidad & Dueño funcional & A/R & Valida historias de usuario de gestión documental, control de versiones e inmutabilidad (\nec{12}--\nec{17}). Veto sobre cambios normativos. & Sprint Reviews quincenales y pruebas de aceptación. \\
+\addlinespace
+Gestión humana y SST & Dueño funcional & A/R & Valida historias de certificaciones críticas, matriz IPER y alertas de trabajo seguro (\nec{18}, \nec{19}). Veto en seguridad legal. & Sprint Reviews quincenales y pruebas funcionales. \\
+\addlinespace
+Clientes (Chevron, Primax y otros) & Externo (Condición) & C/I & Sus normas técnicas (API, ASME, RUC) y requerimientos de dossier condicionan los criterios de aceptación del sistema. & Validación de requisitos contractuales. \\
+\addlinespace
+Área financiera y contable & Frontera limpia & I & Límite estricto de alcance para garantizar entrega en 16 semanas; recibe reportes de exportación sin intervenir en la obra. & Notificación de reportes de cierre de corte. \\
+\addlinespace
+Ingenieros residentes y supervisores & Operación / Campo & R/C & Usuarios clave para pruebas en sitio; capturan reportes diarios (\nec{01}) y consumos (\nec{02}); retroalimentan usabilidad móvil. & Pruebas piloto por sprint y canal continuo. \\
+\addlinespace
+Área comercial y de costos & Consulta funcional & R/C & Parametriza la base de datos de APU y cotizaciones (\nec{06}, \nec{07}); valida rendimientos y costos de insumos. & Refinamiento de historias de catálogo APU. \\
+\addlinespace
+Almacén y logística & Operación / Apoyo & R/C & Valida el flujo ágil de inventario de consumibles y bitácora de herramientas (\nec{02}, \nec{03}) en frentes remotos. & Pruebas de módulo en sprint de inventarios. \\
+\addlinespace
+Cuadrillas y personal de campo & Usuario final & I & Personal de obra que utiliza la app móvil (modo \textit{offline}); retroalimenta tiempos de carga y legibilidad de pantallas. & Pruebas de usabilidad en dispositivos móviles. \\
+\addlinespace
+Compras & Consulta ágil & C/I & Valida visibilidad del flujo de requisiciones y tiempos de entrega de insumos críticos (\nec{08}). & Módulo de compras en sprint correspondiente. \\
+\addlinespace
+Subcontratistas de ensayos (END) & Proveedor externo & I & Proveedores de certificados e informes de ensayos no destructivos para la compilación del dossier (\nec{05}). & Estandarización de plantillas de carga digital. \\
+\end{longtable}
+}
+
+\subsubsection{Reglas de Decisión para la Agilidad del Proyecto}
+
+Para sostener la velocidad de desarrollo y el cumplimiento en el horizonte de 16 semanas, rigen tres reglas operativas:
+\begin{enumerate}
+    \item \textbf{Gestión de Cambios Directa en Backlog (Sin Burocracia):} Se elimina el papeleo de Solicitudes de Cambio (RFC). Todo nuevo requerimiento o ajuste detectado en campo se ingresa directamente como ítem en el *Product Backlog*, se estima en puntos y se prioriza bajo MoSCoW en la siguiente sesión de refinamiento con el dueño funcional.
+    \item \textbf{Criterio de Aceptación Normativo Inmediato:} Las exigencias legales (Decreto 1072, Ley 1581) y técnicas (auditorías RUC, códigos API) constituyen la *Definición de Terminado (DoD - Definition of Done)* obligatoria; ninguna funcionalidad pasa a producción si incumple estos requisitos.
+    \item \textbf{Blindaje del Alcance (Timeboxing Estricto):} El sistema concentra todos sus recursos en los módulos operativos de campo, compras, SIG y SST. Se descarta cualquier ampliación hacia contabilidad o nómina que ponga en riesgo la culminación del proyecto dentro del ciclo semestral planificado.
+\end{enumerate}
 
 \subsection{Balanced Scorecard: Definición del Problema mediante KPI y KRI}
 
@@ -597,12 +774,542 @@ Aprendizaje y Crecimiento & Tasa de adopción autónoma de la app móvil (Meta: 
 \end{table}
 \section{Discovery de producto}
 \subsection{Opportunity Solution Tree (OST)}
+\label{sec:ost}
+
+\subsubsection{Propósito y resultado esperado}
+
+El Opportunity Solution Tree (OST), desarrollado por Teresa Torres,
+relaciona un resultado esperado con las necesidades de los usuarios,
+las alternativas de solución y las pruebas de sus supuestos
+\cite{torres-ost}. Su propósito es explorar distintas formas de
+resolver el problema antes de seleccionar una solución.
+
+Para Loard Construcciones S.A.S., se selecciona como resultado
+principal \textbf{reducir el tiempo de preparación del dossier de
+calidad de cada corte de obra}. Este resultado conecta las
+dificultades de captura en campo, búsqueda de evidencia y
+transcripción manual con la entrega documental al cliente.
+
+Se adopta para este árbol la meta preliminar del Balanced Scorecard:
+\textbf{reducir al menos un 20\% el tiempo de preparación del dossier
+frente a la línea base que se establezca}. La meta debe validarse
+con la empresa y armonizarse con los demás apartados del documento.
+
+La medición comienza cuando se inicia la preparación del dossier
+del corte y termina cuando este se encuentra completo y listo para
+revisión. No incluye la espera por firmas, la radicación ni el pago.
+
+\[
+\text{Reducción del tiempo} =
+\frac{T_{\mathrm{base}}-T_{\mathrm{piloto}}}
+     {T_{\mathrm{base}}}\times 100\%
+\]
+
+Los tiempos deben compararse entre cortes de complejidad semejante,
+considerando cantidad de soportes y tipos de ensayo. La reducción
+no debe lograrse omitiendo entregables o disminuyendo la calidad
+de la evidencia.
+
+\subsubsection{Oportunidades identificadas}
+
+Las oportunidades se expresan como necesidades de los usuarios,
+no como funcionalidades del sistema. Se derivan del diagnóstico,
+la cadena de valor y los recorridos del cliente y del residente
+incluidos en este documento.
+
+\begin{enumerate}
+    \item \textbf{O1. Contar con información de campo completa y
+    asociada al proyecto.}
+    El residente necesita reunir avances y evidencias sin recuperar
+    mensajes dispersos o solicitar aclaraciones repetidas.
+    Se relaciona con NEC-01 y NEC-04.
+
+    \item \textbf{O2. Encontrar con rapidez los soportes vigentes.}
+    El responsable de calidad necesita identificar qué documento
+    corresponde al proyecto y cuál es su versión aprobada, sin
+    comparar múltiples carpetas y copias.
+    Se relaciona con NEC-12, NEC-13 y NEC-14.
+
+    \item \textbf{O3. Reunir los ensayos y entregables sin repetir
+    su transcripción.}
+    El responsable del dossier necesita incorporar los reportes
+    de terceros y comprobar su integridad documental.
+    Se relaciona con NEC-05.
+\end{enumerate}
+
+Estas oportunidades son hipótesis sustentadas en el material del
+grupo. Deben contrastarse con residentes y responsables de calidad;
+no se presentan como resultados de nuevas entrevistas.
+
+\subsubsection{Árbol de oportunidades y soluciones}
+
+La Figura~\ref{fig:ost-loard} presenta dos alternativas por
+oportunidad. Las pruebas del último nivel buscan evaluar los
+supuestos de cada alternativa antes de decidir su implementación.
+
+\begin{figure}[!htbp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    font=\sffamily\small,
+    resultado/.style={
+        rectangle,
+        rounded corners=3pt,
+        draw=primary,
+        fill=blue!7,
+        text width=14.6cm,
+        minimum height=1.5cm,
+        align=center,
+        inner sep=5pt
+    },
+    oportunidad/.style={
+        rectangle,
+        rounded corners=3pt,
+        draw=black!60,
+        fill=gray!10,
+        text width=4.5cm,
+        minimum height=1.7cm,
+        align=center,
+        inner sep=4pt
+    },
+    solucion/.style={
+        rectangle,
+        rounded corners=3pt,
+        draw=secondary,
+        fill=blue!4,
+        text width=2.15cm,
+        minimum height=2.5cm,
+        align=center,
+        inner sep=4pt
+    },
+    prueba/.style={
+        rectangle,
+        rounded corners=3pt,
+        draw=black!55,
+        fill=gray!4,
+        text width=2.15cm,
+        minimum height=2.5cm,
+        align=center,
+        inner sep=4pt
+    },
+    enlace/.style={
+        -{Stealth[length=2mm]},
+        draw=black!70,
+        thick
+    }
+]
+
+\node[resultado] (r) at (7.7,0) {
+    \textbf{Resultado esperado}\\
+    Reducir al menos un 20\% el tiempo de preparación
+    del dossier de calidad\\
+    \textit{Meta preliminar; línea base pendiente}
+};
+
+\node[oportunidad] (o1) at (2.5,-3.3) {
+    \textbf{O1. Información de campo}\\
+    Contar con reportes y evidencias completos,
+    asociados al proyecto
+};
+
+\node[oportunidad] (o2) at (7.7,-3.3) {
+    \textbf{O2. Evidencia vigente}\\
+    Encontrar rápidamente el soporte correcto
+    y su versión aprobada
+};
+
+\node[oportunidad] (o3) at (12.9,-3.3) {
+    \textbf{O3. Dossier completo}\\
+    Reunir ensayos y entregables
+    sin repetir transcripciones
+};
+
+\node[solucion] (s1) at (1.2,-6.7) {
+    \textbf{S1}\\
+    Formulario móvil con campos obligatorios
+    y captura sin conexión
+};
+
+\node[solucion] (s2) at (3.8,-6.7) {
+    \textbf{S2}\\
+    Plantilla digital única con revisión diaria
+    del supervisor
+};
+
+\node[solucion] (s3) at (6.4,-6.7) {
+    \textbf{S3}\\
+    Repositorio con metadatos
+    y control de versiones
+};
+
+\node[solucion] (s4) at (9,-6.7) {
+    \textbf{S4}\\
+    Índice de soportes y carpeta
+    de documentos aprobados
+};
+
+\node[solucion] (s5) at (11.6,-6.7) {
+    \textbf{S5}\\
+    Generación del dossier desde
+    registros estructurados
+};
+
+\node[solucion] (s6) at (14.2,-6.7) {
+    \textbf{S6}\\
+    Lista contractual de entregables
+    y carga directa de reportes
+};
+
+\node[prueba] (p1) at (1.2,-10.2) {
+    \textbf{P1}\\
+    Probar captura móvil
+    con interrupción de conexión
+};
+
+\node[prueba] (p2) at (3.8,-10.2) {
+    \textbf{P2}\\
+    Probar una jornada con
+    plantilla y revisión
+};
+
+\node[prueba] (p3) at (6.4,-10.2) {
+    \textbf{P3}\\
+    Buscar soportes en una muestra
+    con varias versiones
+};
+
+\node[prueba] (p4) at (9,-10.2) {
+    \textbf{P4}\\
+    Comparar búsqueda con índice
+    y búsqueda por carpetas
+};
+
+\node[prueba] (p5) at (11.6,-10.2) {
+    \textbf{P5}\\
+    Generar un dossier de muestra
+    y revisar su integridad
+};
+
+\node[prueba] (p6) at (14.2,-10.2) {
+    \textbf{P6}\\
+    Revisar un expediente con
+    entregables faltantes
+};
+
+\draw[enlace] (r.south) -- (7.7,-1.7) -| (o1.north);
+\draw[enlace] (r.south) -- (o2.north);
+\draw[enlace] (r.south) -- (7.7,-1.7) -| (o3.north);
+
+\draw[enlace] (o1.south) -- (2.5,-4.6) -| (s1.north);
+\draw[enlace] (o1.south) -- (2.5,-4.6) -| (s2.north);
+\draw[enlace] (o2.south) -- (7.7,-4.6) -| (s3.north);
+\draw[enlace] (o2.south) -- (7.7,-4.6) -| (s4.north);
+\draw[enlace] (o3.south) -- (12.9,-4.6) -| (s5.north);
+\draw[enlace] (o3.south) -- (12.9,-4.6) -| (s6.north);
+
+\draw[enlace] (s1.south) -- (p1.north);
+\draw[enlace] (s2.south) -- (p2.north);
+\draw[enlace] (s3.south) -- (p3.north);
+\draw[enlace] (s4.south) -- (p4.north);
+\draw[enlace] (s5.south) -- (p5.north);
+\draw[enlace] (s6.south) -- (p6.north);
+
+\end{tikzpicture}%
+}
+\caption{OST preliminar para Loard Construcciones S.A.S.:
+resultado, oportunidades, alternativas y pruebas de supuestos.
+Las conexiones representan relaciones de exploración,
+no una secuencia BPMN.}
+\label{fig:ost-loard}
+\end{figure}
+
+\subsubsection{Pruebas de supuestos y criterios de evaluación}
+
+Las pruebas propuestas no se han ejecutado. Se utilizarán datos
+ficticios o documentos autorizados y anonimizados. Los criterios
+permiten comparar alternativas sin asumir que una plataforma
+integrada es necesariamente la mejor opción.
+
+{\small
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}p{0.8cm}p{3.2cm}p{6.0cm}p{4.5cm}@{}}
+\caption{Pruebas propuestas para evaluar las alternativas del OST.}
+\label{tab:ost-pruebas}\\
+\toprule
+\textbf{ID} &
+\textbf{Supuesto} &
+\textbf{Prueba propuesta} &
+\textbf{Qué se evaluará}\\
+\midrule
+\endfirsthead
+
+\toprule
+\textbf{ID} &
+\textbf{Supuesto} &
+\textbf{Prueba propuesta} &
+\textbf{Qué se evaluará}\\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+P1 &
+El residente puede registrar información completa desde el móvil,
+incluso sin señal. &
+Realizar una tarea de captura en un prototipo,
+interrumpir la conexión y recuperarla. &
+Completitud, tiempo de captura, necesidad de ayuda
+y conservación de los datos al sincronizar.\\
+\addlinespace
+
+P2 &
+Una plantilla única y una revisión diaria pueden reducir
+las aclaraciones sin desarrollar una aplicación nueva. &
+Simular una jornada con la plantilla y una lista de revisión
+del supervisor. &
+Campos faltantes, devoluciones y tiempo total
+de registro y revisión.\\
+\addlinespace
+
+P3 &
+Los metadatos y el control de versiones facilitan encontrar
+la evidencia vigente. &
+Solicitar la búsqueda de soportes en un prototipo que contenga
+versiones vigentes y obsoletas. &
+Tiempo de búsqueda y selección correcta
+del documento aprobado.\\
+\addlinespace
+
+P4 &
+Un índice y una carpeta de aprobados pueden mejorar la búsqueda
+con una intervención más sencilla. &
+Comparar tareas equivalentes de búsqueda con el índice
+y con la organización actual por carpetas. &
+Tiempo de búsqueda, errores y esfuerzo
+de mantener el índice actualizado.\\
+\addlinespace
+
+P5 &
+Los registros disponibles permiten generar un dossier
+sin repetir la transcripción. &
+Generar un expediente de muestra desde registros estructurados
+y contrastarlo con la lista contractual de entregables. &
+Integridad de los soportes, errores de correspondencia
+y tiempo de preparación.\\
+\addlinespace
+
+P6 &
+La carga directa y una lista contractual permiten detectar
+faltantes antes de enviar el dossier a revisión. &
+Revisar un expediente de prueba con faltantes conocidos
+y reportes de terceros. &
+Faltantes detectados, omisiones y tiempo
+de revisión documental.\\
+
+\end{longtable}
+}
+
+\subsubsection{Priorización y decisión de producto}
+
+Se propone explorar primero O1 y O2, porque la generación del
+dossier depende de contar con información completa y documentos
+identificables. O3 se evaluará a partir de esos insumos, evitando
+automatizar registros incompletos o inconsistentes.
+
+La comparación de alternativas considerará:
+\begin{itemize}
+    \item Reducción del tiempo de preparación y del reproceso.
+    \item Integridad y trazabilidad de la evidencia.
+    \item Facilidad de uso para residentes y responsables de calidad.
+    \item Funcionamiento en condiciones de conectividad intermitente.
+    \item Costo de implementación y esfuerzo de mantenimiento.
+\end{itemize}
+
+S1, S3 y S5 son alternativas compatibles con la plataforma integrada
+descrita en el To-Be. S2, S4 y S6 permiten explorar mejoras de menor
+complejidad y una posible adopción gradual. Las opciones pueden
+complementarse; su selección dependerá de los resultados de las
+pruebas y de la validación con la empresa.
+
+El árbol no abarca todas las necesidades del catálogo. Se concentra
+en el resultado de preparación del dossier; compras, cotizaciones,
+control de vencimientos SST y demás dominios conservan su
+trazabilidad en los apartados correspondientes.
+
+\paragraph{Estado del Discovery.}
+Las oportunidades, las alternativas y los criterios de evaluación
+son preliminares. No se afirma que las pruebas hayan demostrado
+una mejora ni que la selección tecnológica esté cerrada.
 \subsection{Customer Journey Map y Definición de Roles de Usuario}
+\subsubsection{Alcance del mapa}
+
+El mapa describe el recorrido de dos actores. El primero es el cliente petrolero (Chevron o Primax) que contrata los servicios de la empresa. El segundo es el ingeniero residente que ejecuta la obra en campo. Este último será el usuario principal del ERP. Cada etapa se examina con la Matriz de Análisis del Viaje del Cliente.
+
+El nivel de experiencia es una estimación cualitativa basada en el diagnóstico de la empresa. Debe confirmarse con entrevistas a los actores. Las oportunidades se vinculan con el catálogo de necesidades (\texttt{NEC-xx}).
+
+\subsubsection{Matriz de Análisis del Viaje del Cliente}
+
+\paragraph{Actor 1: cliente petrolero.}
+
+{\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}p{2.0cm} p{2.7cm} p{2.2cm} p{1.4cm} p{3.4cm} p{2.9cm}@{}}
+\caption{Matriz de análisis del viaje del cliente petrolero.}\label{tab:viaje-cliente}\\
+\toprule
+\textbf{Etapa} & \textbf{Acciones del actor} & \textbf{Puntos de contacto} & \textbf{Experiencia} & \textbf{Puntos de dolor} & \textbf{Oportunidad} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Etapa} & \textbf{Acciones del actor} & \textbf{Puntos de contacto} & \textbf{Experiencia} & \textbf{Puntos de dolor} & \textbf{Oportunidad} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+1. Solicitud de servicio & Identifica una necesidad de mantenimiento u obra. Solicita una cotización. & Correo. Reunión técnica. Visita al sitio. & Media & Consultar tarifas pasadas exige revisar carpetas antiguas o llamar al personal. & Histórico consultable de APU (NEC-06). \\
+2. Cotización y adjudicación & Evalúa propuestas con AIU o sin AIU. Compara el precio con la trayectoria técnica. & Propuesta formal (GC-FR04). Comité técnico. & Media & Las plantillas varían entre residentes. Se recurre a sobretiempos para no perder licitaciones. & Cotización estandarizada (NEC-06, NEC-07). \\
+3. Habilitación y movilización & Verifica el cumplimiento del RUC. Revisa las certificaciones del personal. Autoriza el inicio. & Soportes de SST. Actas de inducción. Matriz de competencias. & Baja & Los cursos vencidos pasan inadvertidos. Los soportes físicos viajan entre ciudades. & Alertas de vencimiento (NEC-18). Registro digital de inducciones (NEC-19). \\
+4. Ejecución de la obra & Sigue el avance. Aprueba cambios. Supervisa la seguridad en el frente. & Informes diarios. WhatsApp. Visitas de interventoría. & Media & Los reportes llegan por canales informales. La información gerencial llega con retraso. & Reporte diario estructurado (NEC-01). Avance físico medible (NEC-04). \\
+5. Control de calidad y entrega técnica & Recibe pruebas y ensayos. Revisa el dossier de calidad. & Reportes de ensayos de terceros. Libro de tubería. Dossier final. & Baja & El dossier se arma a mano. Los reportes se transcriben a hojas de cálculo. & Dossier generado desde registros (NEC-05). \\
+6. Liquidación y pago & Revisa las actas de obra. Aprueba el porcentaje ejecutado. Autoriza el pago a 30 o 60 días. & Acta de liquidación (GT-FR47). Firma manuscrita escaneada. & Media & Las actas se imprimen. Se firman a mano. Luego se escanean. & Firma digital con sello de tiempo (NEC-16). \\
+7. Auditoría y postventa & Audita al contratista. Reclama garantías si hay fallas. & Auditorías del cliente. Ingeniero residente. & Media & No se sabe quién consultó o modificó un documento. No existe un historial central de fallas. & Registro de auditoría (NEC-17). Lecciones aprendidas (NEC-11). \\
+\end{longtable}
+}
+
+\paragraph{Actor 2: ingeniero residente.}
+
+{\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}p{2.0cm} p{2.7cm} p{2.2cm} p{1.4cm} p{3.4cm} p{2.9cm}@{}}
+\caption{Matriz de análisis del viaje del ingeniero residente.}\label{tab:viaje-residente}\\
+\toprule
+\textbf{Etapa} & \textbf{Acciones del actor} & \textbf{Puntos de contacto} & \textbf{Experiencia} & \textbf{Puntos de dolor} & \textbf{Oportunidad} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Etapa} & \textbf{Acciones del actor} & \textbf{Puntos de contacto} & \textbf{Experiencia} & \textbf{Puntos de dolor} & \textbf{Oportunidad} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+1. Recepción del proyecto & Revisa el alcance contractual. Descarga los formatos vigentes. & Dropbox. Correo. Copias locales. & Baja & Existe el riesgo de usar una versión obsoleta. Las copias locales divergen de la aprobada. & Versión vigente única (NEC-12, NEC-14). \\
+2. Planeación de recursos & Define las cuadrillas. Estima materiales. Consulta rendimientos pasados. & Excel. Project. Llamadas telefónicas. & Baja & No sabe qué herramienta hay disponible ni dónde está. Los históricos son difíciles de ubicar. & Hoja de vida de herramientas (NEC-03). APU históricos (NEC-06). \\
+3. Solicitud de compras & Pide materiales o servicios. Gestiona cotizaciones de proveedores. & Correo. WhatsApp. Proveedores locales. & Baja & Las autorizaciones carecen de un flujo formal. Las compras urgentes se pagan con sobreprecio. & Flujo de requisición a entrega (NEC-08). \\
+4. Ejecución y reporte & Dirige las cuadrillas. Reporta el avance diario. Controla los consumibles. & Informe diario (GT-FR48). WhatsApp. Almacén de obra. & Media & Reporta por canales informales. No hay control de consumo en tiempo real. & NEC-01. NEC-02. NEC-04. \\
+5. Cierre y entrega & Reúne los ensayos. Arma el dossier. Prepara las actas. & Reportes de terceros. Hojas de cálculo. Formato GT-FR47. & Baja & Consolida todo a mano. Trabaja contra el plazo de radicación. & Dossier automatizado (NEC-05). Firma digital (NEC-16). \\
+\end{longtable}
+}
+
+\subsubsection{Análisis de la matriz}
+
+\begin{itemize}
+    \item \textbf{Momentos de verdad.} La habilitación del personal (etapa 3) define si el cliente autoriza el inicio. La entrega del dossier (etapa 5) define si se aprueba la liquidación. Ambos momentos presentan experiencia baja.
+    \item \textbf{Causa común.} Los puntos de dolor de ambos actores provienen de información dispersa. Esa dispersión aparece en correos, WhatsApp, hojas de cálculo y copias locales.
+    \item \textbf{Mayor carga para el residente.} Cuatro de sus cinco etapas tienen experiencia baja. Su trabajo administrativo compite con el tiempo que dedica al frente de obra.
+    \item \textbf{Prioridad de diseño.} Las necesidades NEC-01, NEC-05, NEC-08 y NEC-18 aparecen en las etapas más críticas. Deben guiar el primer incremento del sistema.
+\end{itemize}
 
 
 
 \section{Ingeniería de procesos (BPMN 2.0)}
 \subsection{Diagrama As-Is: Mapa de Calor y Cuellos de Botella Actuales}
+\label{sec:asis-loard}
+
+\subsubsection{Alcance, participantes y supuestos}
+Se representa el flujo actual de información operativa y documental desde el cierre de una jornada de trabajo hasta la radicación de actas y soportes de un corte de obra. El modelo integra reportes diarios que se acumulan hasta el corte; no supone que se prepara un dossier completo cada día. El fin corresponde a la radicación, no al pago ni a la aprobación del cliente.
+
+La base es el diagnóstico del grupo: reportes por WhatsApp y papel, consolidación manual en hojas de cálculo, conciliación tardía de consumibles, transcripción de ensayos, versionado manual y firmas manuscritas escaneadas. El orden detallado de las revisiones, las devoluciones por información incompleta y la asignación de la radicación al área administrativa son supuestos de modelado que deben confirmar los responsables del proceso. No se ha realizado observación directa ni medición de tiempos para este diagrama.
+
+Se utiliza un \textbf{pool} de Loard con cuatro carriles: cuadrilla, residente/supervisor, administración del proyecto y coordinación SIG/calidad con responsables de firma. WhatsApp, Excel y Dropbox son herramientas de las actividades actuales; no se representan como un motor ERP existente. Los ensayos de terceros se consideran entradas documentales; sus procesos internos quedan fuera del alcance.
+
+\subsubsection{Convenciones y mapa de calor}
+El círculo de borde fino indica el inicio y el de borde grueso, el fin. Los rectángulos redondeados son tareas según la notación BPMN~\cite{omg-bpmn}; los rombos con X son decisiones exclusivas, cuyas salidas Sí y No son alternativas. Las flechas continuas representan flujos de secuencia dentro de la empresa, incluso al cruzar carriles. Los colores constituyen una capa de análisis adicional y no modifican la semántica BPMN: rojo indica criticidad alta, naranja media y gris una actividad de contexto sin clasificación específica. No hay tiempos medidos ni una clasificación de riesgo formal.
+
+% Figura flotante: permite que la matriz ocupe el espacio restante de la página.
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}[
+ font=\sffamily\fontsize{8.5}{10}\selectfont,
+ tarea/.style={rectangle,rounded corners=3pt,draw=black!70,fill=gray!7,text width=3.1cm,minimum height=1.65cm,align=center,inner sep=3pt},
+ alta/.style={tarea,fill=red!12,draw=red!65!black},
+ media/.style={tarea,fill=orange!17,draw=orange!70!black},
+ xor/.style={diamond,draw=black!80,fill=white,minimum size=8mm,inner sep=0pt,font=\bfseries\small},
+ flujo/.style={-{Stealth[length=2mm,width=1.4mm]},thick,draw=black!80},
+ evento/.style={circle,draw=black!80,fill=white,minimum size=7mm,inner sep=0pt},
+ texto/.style={align=center,font=\sffamily\fontsize{8}{9.5}\selectfont,text width=3.3cm}]
+\fill[gray!3] (0,.45) rectangle (15.6,-18);
+\draw[thick] (0,1.25) rectangle (15.6,-18);
+\draw[thick] (0,.45) -- (15.6,.45);
+\node[font=\sffamily\bfseries\small] at (7.8,.85) {Loard Construcciones S.A.S. -- Proceso actual (As-Is)};
+\foreach \x in {3.9,7.8,11.7} {\draw[gray!65] (\x,.45) -- (\x,-18);}
+\draw[gray!65] (0,-1.05) -- (15.6,-1.05);
+\node[texto,font=\sffamily\bfseries\fontsize{8.5}{10}\selectfont] at (1.95,-.3) {Operario de campo /\\Cuadrilla};
+\node[texto,font=\sffamily\bfseries\fontsize{8.5}{10}\selectfont] at (5.85,-.3) {Ingeniero residente /\\Supervisor};
+\node[texto,font=\sffamily\bfseries\fontsize{8.5}{10}\selectfont] at (9.75,-.3) {Administración\\del proyecto};
+\node[texto,font=\sffamily\bfseries\fontsize{8.5}{10}\selectfont] at (13.65,-.3) {Coordinación SIG /\\Calidad y responsables\\de firma};
+\node[evento] (inicio) at (1.95,-1.75) {};
+\node[texto,text width=1.3cm,anchor=west] at (2.4,-1.75) {Jornada\\finalizada};
+\node[alta] (reporte) at (1.95,-3.2) {\textbf{CB-01}\\Registrar y enviar\\avance por papel /\\WhatsApp};
+\node[media] (revision) at (5.85,-4.6) {\textbf{CB-02}\\Revisar reporte\\y evidencias};
+\node[xor] (g1) at (5.85,-6.75) {X};
+\node[texto,anchor=south] at (5.85,-6.25) {¿Información suficiente?};
+\node[media] (corregir) at (1.95,-6.75) {Aclarar o completar\\el reporte};
+\node[alta] (consolidar) at (9.75,-8.2) {\textbf{CB-03}\\Consolidar reportes\\del corte en hojas\\de cálculo};
+\node[alta] (costos) at (9.75,-10.55) {\textbf{CB-04}\\Conciliar consumos\\y costos acumulados};
+\node[alta] (dossier) at (13.65,-10.55) {\textbf{CB-05}\\Transcribir ensayos y\\armar dossier del corte};
+\node[xor] (g2) at (13.65,-12.95) {X};
+\node[texto,anchor=south] at (13.65,-12.45) {¿Soportes completos\\y consistentes?};
+\node[alta] (buscar) at (9.75,-12.95) {\textbf{CB-06}\\Buscar / corregir\\soportes en carpetas\\y copias};
+\node[media] (firmar) at (13.65,-15.1) {\textbf{CB-07}\\Imprimir, obtener\\firmas y escanear actas};
+\node[tarea,minimum height=1.3cm] (radicar) at (9.75,-16.3) {Radicar actas\\y dossier del corte};
+\node[evento,line width=1.5pt] (fin) at (9.75,-17.5) {};
+\node[texto,text width=3cm,anchor=west] at (10.2,-17.5) {Actas y soportes\\radicados};
+\draw[flujo] (inicio.south) -- (reporte.north);
+\draw[flujo] (reporte.east) -- (3.75,-3.2) |- (revision.west);
+\draw[flujo] (revision.south) -- (g1.north);
+\draw[flujo] (g1.west) -- node[above,font=\scriptsize]{No} (corregir.east);
+\draw[flujo] (corregir.west) -- (.15,-6.75) |- (reporte.west);
+\draw[flujo] (g1.south) -- (5.85,-8.2) -- node[above,font=\scriptsize]{Sí} (consolidar.west);
+\draw[flujo] (consolidar.south) -- (costos.north);
+% Conector CB-04 -> CB-05: horizontal, con espacio libre entre las tareas.
+\draw[flujo] (costos.east) -- (dossier.west);
+\draw[flujo] (dossier.south) -- (g2.north);
+\draw[flujo] (g2.west) -- node[above,font=\scriptsize]{No} (buscar.east);
+% Retorno CB-06 -> CB-05: recorre el margen izquierdo y el hueco entre filas.
+\draw[flujo] (buscar.west) -- (8,-12.95) -- (8,-9.35) -- (13.65,-9.35) -- (dossier.north);
+\draw[flujo] (g2.south) -- node[right,font=\scriptsize]{Sí} (firmar.north);
+\draw[flujo] (firmar.south) -- (13.65,-16.3) -- (radicar.east);
+\draw[flujo] (radicar.south) -- (fin.north);
+\end{tikzpicture}
+\caption{Modelo BPMN del flujo actual. Rojo: criticidad alta; naranja: media; gris: contexto. Los códigos CB se explican en la Tabla~\ref{tab:cuellos-loard}. Modelo documental pendiente de validación con la empresa.}
+\label{fig:asis-loard}
+\end{figure}
+
+\subsubsection{Matriz de cuellos de botella}
+La criticidad se estima por el efecto sobre costos, trazabilidad y radicación. Es una valoración del equipo a partir de los síntomas descritos, no una medición del tiempo de ciclo.
+{\small
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}p{1.0cm}p{1.5cm}p{4.2cm}p{5.2cm}p{2.5cm}@{}}
+\caption{Mapa de calor cualitativo y relación con las necesidades.}\label{tab:cuellos-loard}\\
+\toprule\textbf{Código} & \textbf{Nivel} & \textbf{Causa o síntoma} & \textbf{Efecto en el proceso} & \textbf{Necesidades}\\\midrule\endfirsthead
+\toprule\textbf{Código} & \textbf{Nivel} & \textbf{Causa o síntoma} & \textbf{Efecto en el proceso} & \textbf{Necesidades}\\\midrule\endhead
+\bottomrule\endfoot
+CB-01 & Alta & Reportes dispersos en WhatsApp y papel. & La información debe recuperarse e interpretarse antes de consolidar avance y consumo. & NEC-01, 02.\\\addlinespace
+CB-02 & Media & Revisión dependiente de mensajes y soportes no estructurados. & Posibles aclaraciones y devoluciones; el recorrido exacto se debe validar. & NEC-01, 04.\\\addlinespace
+CB-03 & Alta & Consolidación manual de reportes de campo. & Desfase entre ejecución, avance físico y seguimiento administrativo. & NEC-04, 09.\\\addlinespace
+CB-04 & Alta & Conciliación tardía de consumibles y costos. & Desviaciones del margen detectadas cuando ya queda poca capacidad de corregir. & NEC-02, 09.\\\addlinespace
+CB-05 & Alta & Transcripción manual de ensayos y armado del dossier. & Reproceso y retraso de radicación; el cobro depende de continuar ese trámite. & NEC-05.\\\addlinespace
+CB-06 & Alta & Versiones en nombres, copias locales y búsqueda por carpetas. & Dificultad para recuperar evidencia vigente; riesgo de inconsistencias en la entrega. & NEC-12, 13, 14.\\\addlinespace
+CB-07 & Media & Impresión, firma manuscrita y escaneo. & Espera por disponibilidad de firmantes y circulación física de soportes. & NEC-16.\\
+\end{longtable}}
+
+\paragraph{Puntos de control transversales.}
+El control de acceso y la evidencia de modificaciones (NEC-15 y NEC-17) afectan la confiabilidad del flujo completo. Los vencimientos de competencias y las inducciones (NEC-18 y NEC-19) deben comprobarse en la preparación de la obra, antes del evento inicial aquí modelado. Las compras, las cotizaciones y la posventa se cubren en la cadena de valor, pero sus procesos detallados quedan fuera de este diagrama.
+
+\paragraph{Validación y línea base pendiente.}
+Para validar el modelo se debe recorrer un corte real con un residente, administración y calidad: confirmar responsables, secuencia, entradas de ensayos y motivos de devolución. Conviene registrar el tiempo entre cierre de jornada y reporte, el porcentaje de reportes devueltos, el tiempo de preparación del dossier y el tiempo entre dossier completo y radicación. Hasta contar con esas observaciones, no se asignan duraciones ni porcentajes de mejora al As-Is.
+
+\clearpage
 \subsection{Diagrama To-Be: Proceso Optimizado con el Sistema de Información}
 
 % =========================================================================
@@ -622,81 +1329,70 @@ Aprendizaje y Crecimiento & Tasa de adopción autónoma de la app móvil (Meta: 
 \definecolor{bpmnOrange}{HTML}{FEF3C7}
 \definecolor{bpmnOrangeBorder}{HTML}{D97706}
 
-El rediseño del proceso operativo y documental (\textit{To-Be}) para \textbf{Loard Construcciones S.A.S.} establece una arquitectura de información centralizada sustentada en un sistema ERP/SIG integrado[cite: 1, 4]. Este modelo erradica la dependencia de canales informales (gestión por WhatsApp), la fragmentación documental en carpetas locales o Dropbox con versionado manual, y la transcripción extemporánea de datos en hojas de cálculo[cite: 1, 4].
+El rediseño del proceso operativo y documental (\textit{To-Be}) para \textbf{Loard Construcciones S.A.S.} establece una arquitectura de información centralizada sustentada en un sistema ERP/SIG integrado. Este modelo erradica la dependencia de canales informales (gestión por WhatsApp), la fragmentación documental en carpetas locales o Dropbox con versionado manual, y la transcripción extemporánea de datos en hojas de cálculo.
 
-El flujo optimizado garantiza trazabilidad en tiempo real, integridad de la información documentada bajo la norma ISO 9001:2015, cumplimiento automatizado del SG-SST (Decreto 1072 de 2015) y control continuo del margen financiero por proyecto[cite: 1, 4, 8, 9].
+El flujo optimizado garantiza trazabilidad en tiempo real, integridad de la información documentada bajo la norma ISO 9001:2015, cumplimiento automatizado del SG-SST (Decreto 1072 de 2015) y control continuo del margen financiero por proyecto.
 
 \subsubsection{Delimitación de Carriles (Swimlanes) y Roles Funcionales}
 
 El proceso se estructura secuencialmente sobre cuatro carriles de responsabilidad (\textit{swimlanes}):
 
 \begin{enumerate}
-    \item \textbf{Operario de Campo / Cuadrilla:} Responsable de la captura primaria estandarizada mediante un aplicativo móvil estructurado con funcionalidad offline/online[cite: 1, 4, 9]. Registra en tiempo real el informe diario de actividades (\textbf{NEC-01}), el consumo de insumos y soldaduras por frente de obra (\textbf{NEC-02}) y las horas de operación de equipos y herramientas (\textbf{NEC-03})[cite: 1, 4, 5].
-    \item \textbf{Ingeniero Residente / Supervisor de Obra:} Actúa como el primer punto de control cualitativo y cuantitativo[cite: 1, 4, 5]. Revisa, valida y aprueba en su bandeja de entrada los reportes operativos diarios, supervisando la desviación del avance físico e insumos frente al presupuesto de Análisis de Precios Unitarios (APU) (\textbf{NEC-04}, \textbf{NEC-06})[cite: 1, 5, 6].
-    \item \textbf{Sistema de Información (Motor ERP/SIG):} Núcleo automatizado de reglas de negocio[cite: 1, 4]. Asigna automáticamente código, metadatos y versionado estandarizado a cada archivo (\textbf{NEC-12}, \textbf{NEC-14})[cite: 1, 7]; ejecuta el control de concurrencia y bloqueo (\textit{check-out/check-in}) (\textbf{NEC-13})[cite: 1, 7]; restringe accesos por perfil RBAC (\textbf{NEC-15})[cite: 1, 7]; consolida el Libro de Tubería / \textit{Weld Book} y ensayos NDT sin transcripción manual (\textbf{NEC-05})[cite: 1, 5]; dispara alertas preventivas de vencimientos SST a más de 30 días (\textbf{NEC-18})[cite: 1, 8] y alimenta dinámicamente el Tablero Gerencial (\textbf{NEC-09})[cite: 1, 7].
-    \item \textbf{Coordinación SIG / SST y Gerencia General:} Realiza la validación normativa final, firma digitalmente certificados y actas con validez legal e inmutabilidad (Ley 527 de 1999) (\textbf{NEC-16})[cite: 1, 7, 9], audita el registro inalterable de eventos (\textit{audit trail}) (\textbf{NEC-17})[cite: 1, 8] y autoriza facturación o entregas finales al cliente petrolero[cite: 1, 4].
+    \item \textbf{Operario de Campo / Cuadrilla:} Responsable de la captura primaria estandarizada mediante un aplicativo móvil estructurado con funcionalidad offline/online. Registra en tiempo real el informe diario de actividades (\textbf{NEC-01}), el consumo de insumos y soldaduras por frente de obra (\textbf{NEC-02}) y las horas de operación de equipos y herramientas (\textbf{NEC-03}).
+    \item \textbf{Ingeniero Residente / Supervisor de Obra:} Actúa como el primer punto de control cualitativo y cuantitativo. Revisa, valida y aprueba en su bandeja de entrada los reportes operativos diarios, supervisando la desviación del avance físico e insumos frente al presupuesto de Análisis de Precios Unitarios (APU) (\textbf{NEC-04}, \textbf{NEC-06}).
+    \item \textbf{Sistema de Información (Motor ERP/SIG):} Núcleo automatizado de reglas de negocio. Asigna automáticamente código, metadatos y versionado estandarizado a cada archivo (\textbf{NEC-12}, \textbf{NEC-14}); ejecuta el control de concurrencia y bloqueo (\textit{check-out/check-in}) (\textbf{NEC-13}); restringe accesos por perfil RBAC (\textbf{NEC-15}); consolida el Libro de Tubería / \textit{Weld Book} y ensayos NDT sin transcripción manual (\textbf{NEC-05})[cite: 1, 5]; dispara alertas preventivas de vencimientos SST a más de 30 días (\textbf{NEC-18}) y alimenta dinámicamente el Tablero Gerencial (\textbf{NEC-09}).
+    \item \textbf{Coordinación SIG / SST y Gerencia General:} Realiza la validación normativa final, firma digitalmente certificados y actas con validez legal e inmutabilidad (Ley 527 de 1999) (\textbf{NEC-16}), audita el registro inalterable de eventos (\textit{audit trail}) (\textbf{NEC-17}) y autoriza facturación o entregas finales al cliente petrolero.
 \end{enumerate}
 
 \subsubsection{Diagramación BPMN 2.0 del Proceso Optimizado}
 
-A continuación se presenta el flujo de trabajo en notación estándar BPMN 2.0:
+La Figura~\ref{fig:bpmn_tobe} presenta el flujo optimizado en notación BPMN 2.0. La actualización del tablero se integra al flujo después del registro y antes de la consolidación del dossier, de modo que todas las actividades tienen continuidad hasta el evento final.
 
-\begin{figure}[H]
+\begin{figure}[p]
 \centering
 \begin{tikzpicture}[
-    font=\sffamily\tiny,
-    start/.style={circle, draw=bpmnGreenBorder, fill=bpmnGreen, thick, minimum size=6.5mm, inner sep=0pt},
-    end/.style={circle, draw=bpmnRedBorder, fill=bpmnRed, ultra thick, minimum size=6.5mm, inner sep=0pt},
-    task/.style={rectangle, draw=bpmnBlueBorder, fill=bpmnBlue, rounded corners=3pt, thick, align=center, minimum width=2.5cm, minimum height=1.0cm},
-    systemtask/.style={rectangle, draw=bpmnTealBorder, fill=bpmnTeal, rounded corners=3pt, thick, align=center, minimum width=2.5cm, minimum height=1.0cm},
-    gateway/.style={diamond, draw=bpmnOrangeBorder, fill=bpmnOrange, thick, aspect=1.2, minimum size=7.5mm, inner sep=0pt},
-    arrow/.style={->, >=Stealth, thick, draw=black!75},
-    laneTitle/.style={rectangle, draw=gray!60, fill=gray!20, thick, minimum width=2.6cm, align=center, font=\sffamily\bfseries\tiny},
-    laneBox/.style={rectangle, draw=gray!40, fill=gray!3, thick, minimum width=14.0cm, anchor=west}
-]
-
-    % --- SWIMLANES ---
-    \node[laneTitle, minimum height=2.1cm] (l1t) at (0, 0) {Operario de Campo\\/ Cuadrilla};
-    \node[laneBox, minimum height=2.1cm] (l1b) at (1.3, 0) {};
-    
-    \node[laneTitle, minimum height=2.1cm] (l2t) at (0, -2.3) {Ingeniero Residente\\/ Supervisor};
-    \node[laneBox, minimum height=2.1cm] (l2b) at (1.3, -2.3) {};
-
-    \node[laneTitle, minimum height=3.5cm] (l3t) at (0, -5.3) {Sistema de Información\\(Motor ERP / SIG)};
-    \node[laneBox, minimum height=3.5cm] (l3b) at (1.3, -5.3) {};
-
-    \node[laneTitle, minimum height=2.1cm] (l4t) at (0, -8.3) {Coordinación SIG/SST\\/ Gerencia};
-    \node[laneBox, minimum height=2.1cm] (l4b) at (1.3, -8.3) {};
-
-    % --- NODOS ---
-    \node[start] (start) at (2.0, 0) {};
-    \node[task] (t1) at (4.3, 0) {Capturar Reporte Diario\\y Consumo Insumos\\(\textbf{NEC-01, NEC-02})};
-
-    \node[task] (t2) at (4.3, -2.3) {Revisar y Validar\\Reporte Operativo\\(\textbf{NEC-04})};
-    \node[gateway] (g1) at (7.5, -2.3) {};
-
-    \node[systemtask] (sys1) at (8.8, -4.5) {Registrar Avance,\\Actualizar Inventario\\y Metadatos (\textbf{NEC-14})};
-    \node[systemtask] (sys2) at (12.4, -4.5) {Consolidar Dossier\\y Control Versiones\\(\textbf{NEC-05, NEC-12})};
-    \node[systemtask] (sys3) at (8.8, -6.1) {Alimentar Tablero\\Gerencial en Vivo\\(\textbf{NEC-09})};
-
-    \node[task] (t3) at (12.4, -8.3) {Firmar Digitalmente\\Actas y Dossier\\(\textbf{NEC-16})};
-    \node[end] (end) at (14.2, -8.3) {};
-
-    % --- CONECTORES ---
-    \draw[arrow] (start) -- (t1);
-    \draw[arrow] (t1) -- (t2);
-    \draw[arrow] (t2) -- (g1);
-    
-    \draw[arrow] (g1) |- node[near start, right, font=\tiny\bfseries, color=green!40!black] {Aprobado} (sys1.west);
-    \draw[arrow] (g1) -- node[above, font=\tiny\bfseries, color=red!60!black] {Rechazado} ++(0, 1.3) -| (t1.north);
-
-    \draw[arrow] (sys1) -- (sys2);
-    \draw[arrow] (sys1) -- (sys3);
-    \draw[arrow] (sys2) -- (t3);
-    \draw[arrow] (t3) -- (end);
-
+ font=\sffamily\fontsize{8.5}{10}\selectfont,
+ tarea/.style={rectangle,rounded corners=3pt,draw=black!70,fill=gray!7,text width=3.1cm,minimum height=1.65cm,align=center,inner sep=3pt},
+ automatica/.style={tarea,fill=blue!7,draw=secondary},
+ xor/.style={diamond,draw=black!80,fill=white,minimum size=8mm,inner sep=0pt,font=\bfseries\small},
+ flujo/.style={-{Stealth[length=2mm,width=1.4mm]},thick,draw=black!80},
+ evento/.style={circle,draw=black!80,fill=white,minimum size=7mm,inner sep=0pt},
+ texto/.style={align=center,font=\sffamily\fontsize{8}{9.5}\selectfont,text width=3.3cm}]
+\fill[gray!3] (0,.45) rectangle (15.6,-17.8);
+\draw[thick] (0,1.25) rectangle (15.6,-17.8);
+\draw[thick] (0,.45) -- (15.6,.45);
+\node[font=\sffamily\bfseries\small] at (7.8,.85) {Loard Construcciones S.A.S. -- Proceso optimizado (To-Be)};
+\foreach \x in {3.9,7.8,11.7} {\draw[gray!65] (\x,.45) -- (\x,-17.8);}
+\draw[gray!65] (0,-1.05) -- (15.6,-1.05);
+\node[texto,font=\sffamily\bfseries\fontsize{8.5}{10}\selectfont] at (1.95,-.3) {Operario de campo /\\Cuadrilla};
+\node[texto,font=\sffamily\bfseries\fontsize{8.5}{10}\selectfont] at (5.85,-.3) {Ingeniero residente /\\Supervisor};
+\node[texto,font=\sffamily\bfseries\fontsize{8.5}{10}\selectfont] at (9.75,-.3) {Sistema de Información\\Motor ERP / SIG};
+\node[texto,font=\sffamily\bfseries\fontsize{8.5}{10}\selectfont] at (13.65,-.3) {Coordinación SIG/SST\\y Gerencia};
+\node[evento] (inicio) at (1.95,-1.7) {};
+\node[texto,text width=1.3cm,anchor=west] at (2.4,-1.7) {Jornada\\finalizada};
+\node[tarea] (captura) at (1.95,-3.2) {Capturar reporte\\diario y consumos\\\textbf{NEC-01, NEC-02}};
+\node[tarea] (revisar) at (5.85,-4.65) {Revisar y validar\\reporte operativo\\\textbf{NEC-04}};
+\node[xor] (decision) at (5.85,-6.8) {X};
+\node[texto,anchor=south] at (5.85,-6.3) {¿Reporte aprobado?};
+\node[automatica] (registrar) at (9.75,-8.4) {Registrar avance,\\actualizar inventario\\y metadatos\\\textbf{NEC-14}};
+\node[automatica] (tablero) at (9.75,-10.7) {Actualizar tablero\\gerencial\\\textbf{NEC-09}};
+\node[automatica] (dossier) at (9.75,-13) {Consolidar dossier\\y controlar versiones\\\textbf{NEC-05, NEC-12}};
+\node[tarea] (firmar) at (13.65,-15.1) {Firmar digitalmente\\actas y dossier\\\textbf{NEC-16}};
+\node[evento,line width=1.5pt] (fin) at (13.65,-17.1) {};
+\node[texto,text width=2.6cm,anchor=east] at (13.2,-17.1) {Actas y dossier\\firmados};
+\draw[flujo] (inicio.south) -- (captura.north);
+\draw[flujo] (captura.east) -- (3.75,-3.2) |- (revisar.west);
+\draw[flujo] (revisar.south) -- (decision.north);
+% La devolución vuelve al reporte por el margen, sin cruzar tareas ni etiquetas.
+\draw[flujo] (decision.west) -- node[above,font=\scriptsize]{Rechazado} (.15,-6.8) -- (.15,-3.2) -- (captura.west);
+\draw[flujo] (decision.south) -- (5.85,-8.4) -- node[above,font=\scriptsize]{Aprobado} (registrar.west);
+% Todas las tareas automáticas quedan conectadas hasta el evento final.
+\draw[flujo] (registrar.south) -- (tablero.north);
+\draw[flujo] (tablero.south) -- (dossier.north);
+\draw[flujo] (dossier.east) -- (11.55,-13) |- (firmar.west);
+\draw[flujo] (firmar.south) -- (fin.north);
 \end{tikzpicture}
-\caption{Diagrama BPMN 2.0 del Proceso Optimizado To-Be para Loard Construcciones S.A.S.}
+\caption{Proceso optimizado To-Be. Se conservan el formato de carriles, la tipografía y los símbolos del As-Is. Azul suave: tareas automáticas del sistema; gris: tareas de los responsables.}
 \label{fig:bpmn_tobe}
 \end{figure}
 
@@ -712,17 +1408,17 @@ La Tabla~\ref{tab:asis_tobe} resume los cambios en la arquitectura operativa y s
 \toprule
 \textbf{Dimensión} & \textbf{Estado Actual (As-Is)} & \textbf{Estado Optimizado (To-Be)} & \textbf{Impacto Esperado / Target} \\
 \midrule
-\textbf{Captura de Campo} & Mensajes dispersos en WhatsApp y formatos físicos en papel[cite: 1, 4]. & Formulario móvil estructurado con funcionalidad offline/online (\textbf{NEC-01})[cite: 1, 4]. & Captura digital $\ge 95\%$ el mismo día de operación[cite: 1, 4]. \\
+\textbf{Captura de Campo} & Mensajes dispersos en WhatsApp y formatos físicos en papel. & Formulario móvil estructurado con funcionalidad offline/online (\textbf{NEC-01}). & Captura digital $\ge 95\%$ el mismo día de operación. \\
 \addlinespace
-\textbf{Control de Consumibles} & Verificación al cierre de obra; hallazgo tardío de pérdidas o faltantes[cite: 1, 5]. & Imputación en tiempo real por frente de obra e hito de APU (\textbf{NEC-02})[cite: 1, 5]. & Reducción de desperdicio de insumos $\ge 15\%$[cite: 1, 4]. \\
+\textbf{Control de Consumibles} & Verificación al cierre de obra; hallazgo tardío de pérdidas o faltantes. & Imputación en tiempo real por frente de obra e hito de APU (\textbf{NEC-02}). & Reducción de desperdicio de insumos $\ge 15\%$. \\
 \addlinespace
-\textbf{Gestión Documental} & Versionado manual en Dropbox (\texttt{v1}, \texttt{v6}) y archivos en conflicto[cite: 1, 4, 7]. & Control automático de versiones, bloqueo (\textit{check-out}) y metadatos (\textbf{NEC-12, NEC-13})[cite: 1, 7]. & 0 no conformidades en auditorías por uso de versión obsoleta[cite: 1, 4]. \\
+\textbf{Gestión Documental} & Versionado manual en Dropbox (\texttt{v1}, \texttt{v6}) y archivos en conflicto. & Control automático de versiones, bloqueo (\textit{check-out}) y metadatos (\textbf{NEC-12, NEC-13}). & 0 no conformidades en auditorías por uso de versión obsoleta. \\
 \addlinespace
-\textbf{Dossier de Calidad} & Transcripción manual de ensayos NDT a hojas de cálculo al finalizar[cite: 1, 4, 6]. & Consolidación automatizada del Libro de Tubería / \textit{Weld Book} (\textbf{NEC-05})[cite: 1, 6]. & Reducción $\ge 50\%$ del tiempo de armado y entrega del dossier[cite: 1, 4]. \\
+\textbf{Dossier de Calidad} & Transcripción manual de ensayos NDT a hojas de cálculo al finalizar. & Consolidación automatizada del Libro de Tubería / \textit{Weld Book} (\textbf{NEC-05}). & Reducción $\ge 50\%$ del tiempo de armado y entrega del dossier. \\
 \addlinespace
-\textbf{Cumplimiento SST} & Control estático en plantillas; riesgo de vencimientos no detectados[cite: 1, 4, 8]. & Motor de alertas automáticas a más de 30 días de vencimiento (\textbf{NEC-18})[cite: 1, 4, 8]. & 100\% de certificaciones y exámenes médicos al día[cite: 1, 4]. \\
+\textbf{Cumplimiento SST} & Control estático en plantillas; riesgo de vencimientos no detectados. & Motor de alertas automáticas a más de 30 días de vencimiento (\textbf{NEC-18}). & 100\% de certificaciones y exámenes médicos al día. \\
 \addlinespace
-\textbf{Flujo de Aprobación} & Impresión de actas, firma física manuscrita y re-escaneo[cite: 1, 7]. & Flujo 100\% digital con firma electrónica y sello de tiempo (Ley 527) (\textbf{NEC-16})[cite: 1, 7, 9]. & Reducción del ciclo de aprobación de 5 días a $<$24 horas[cite: 1, 4]. \\
+\textbf{Flujo de Aprobación} & Impresión de actas, firma física manuscrita y re-escaneo. & Flujo 100\% digital con firma electrónica y sello de tiempo (Ley 527) (\textbf{NEC-16}). & Reducción del ciclo de aprobación de 5 días a $<$24 horas. \\
 \bottomrule
 \end{tabularx}
 \caption{Matriz Comparativa de Transformación Operativa: Estado As-Is vs. Estado To-Be.}
@@ -734,17 +1430,1426 @@ La Tabla~\ref{tab:asis_tobe} resume los cambios en la arquitectura operativa y s
 La efectividad del proceso optimizado descansa sobre cuatro controles sistémicos de ejecución obligatoria:
 
 \begin{itemize}
-    \item \textbf{Inmutabilidad y Audit Trail (\textbf{NEC-17}):} El motor del ERP/SIG registra automáticamente una bitácora inalterable para cada interacción con la información (creación, edición, consulta, descarga o aprobación), incluyendo identificación de usuario, estampa de tiempo UTC e IP de origen[cite: 1, 4, 8].
-    \item \textbf{Seguridad y Control de Acceso por Roles (\textbf{NEC-15}):} Arquitectura de seguridad RBAC que restringe la visibilidad de datos confidenciales (tarifas de APU, márgenes comerciales, historiales médicos SST y nómina de personal) según los privilegios asignados al rol[cite: 1, 6, 7].
-    \item \textbf{Consolidación Financiera en Tiempo Real (\textbf{NEC-09}):} Al sincronizarse el reporte de campo con el catálogo de insumos y APU, el sistema calcula de forma instantánea el porcentaje de avance físico-financiero y la desviación frente al margen proyectado, alertando desviaciones a la gerencia[cite: 1, 6, 7].
-    \item \textbf{Alineación Normativa y Contractual:} Respalda la estructura exigida por la norma ISO 9001:2015 para la gestión de información documentada, cumple con las exigencias del RUC para el sector hidrocarburos y protege los datos personales bajo la Ley 1581 de 2012[cite: 1, 4, 9].
+    \item \textbf{Inmutabilidad y Audit Trail (\textbf{NEC-17}):} El motor del ERP/SIG registra automáticamente una bitácora inalterable para cada interacción con la información (creación, edición, consulta, descarga o aprobación), incluyendo identificación de usuario, estampa de tiempo UTC e IP de origen.
+    \item \textbf{Seguridad y Control de Acceso por Roles (\textbf{NEC-15}):} Arquitectura de seguridad RBAC que restringe la visibilidad de datos confidenciales (tarifas de APU, márgenes comerciales, historiales médicos SST y nómina de personal) según los privilegios asignados al rol.
+    \item \textbf{Consolidación Financiera en Tiempo Real (\textbf{NEC-09}):} Al sincronizarse el reporte de campo con el catálogo de insumos y APU, el sistema calcula de forma instantánea el porcentaje de avance físico-financiero y la desviación frente al margen proyectado, alertando desviaciones a la gerencia.
+    \item \textbf{Alineación Normativa y Contractual:} Respalda la estructura exigida por la norma ISO 9001:2015 para la gestión de información documentada, cumple con las exigencias del RUC para el sector hidrocarburos y protege los datos personales bajo la Ley 1581 de 2012.
 \end{itemize}
 
+\clearpage
 \section{Especificación de requerimientos}
 \subsection{Product Backlog: Historias de Usuario bajo Criterios INVEST y Priorización MoSCoW}
+
+\label{sec:pb-loard}
+El backlog se construye a partir del catálogo de necesidades (\nec{01} a \nec{20}), los requerimientos funcionales RF-01 a RF-49 y los procesos As-Is y To-Be. Las historias se organizan por rol y épica. Un rol describe una responsabilidad, así que una misma persona puede asumir varios si la empresa lo autoriza.
+
+El backlog tiene 37 historias: 36 cubren los 49 requerimientos funcionales y una (HU-04) representa la revisión del residente que aparece en el To-Be. Sus criterios de aceptación son una propuesta que se validará con los responsables de cada proceso.
+
+Quedan fuera la integración contable, la facturación, los pagos, la nómina, los balances y las conciliaciones tributarias; los costos que aparecen en el backlog son registros operativos de obra. La inclusión de la gestión documental del SIG y de las funciones SST sigue sujeta a la validación del alcance (sección~\ref{sec:problema}).
+
+\begingroup
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.12}
+
+% Ficha local: ID, titulo, prioridad, rol, quiero, para, origen, criterios, dependencias.
+\newcommand{\pbFicha}[9]{%
+  \par\addvspace{0.7em}\noindent
+  \begin{minipage}{\linewidth}
+  \small
+  \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \multicolumn{2}{@{}p{\linewidth}@{}}{\textbf{\color{primary}#1: #2 [#3]}}\\
+    \midrule
+    \textbf{Como} & #4.\\
+    \textbf{Quiero} & #5.\\
+    \textbf{Para} & #6.\\
+    \midrule
+    \multicolumn{2}{@{}l@{}}{\textbf{Criterios de aceptación}}\\
+    #8
+    \bottomrule
+  \end{tabularx}
+  \par\vspace{0.15em}
+  \textbf{Origen:} #7.\par
+  \textbf{Dependencias:} #9.\par
+  \end{minipage}\par\addvspace{0.5em}
+}
+
+% Ficha detallada (formato modelo del curso): ID, titulo, prioridad, modulo, rol, quiero, para, criterios, pie.
+\newcommand{\pbFichaDet}[9]{%
+  \par\addvspace{0.7em}\noindent
+  \begin{minipage}{\linewidth}
+  \small
+  \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \multicolumn{2}{@{}p{\linewidth}@{}}{\textbf{\color{primary}#1: #2 [#3]}}\\
+    \midrule
+    \textbf{Módulo} & #4.\\
+    \midrule
+    \multicolumn{2}{@{}l@{}}{\textbf{Descripción de la historia de usuario}}\\
+    \textbf{Como} & #5.\\
+    \textbf{Quiero} & #6.\\
+    \textbf{Para} & #7.\\
+    #8
+    \bottomrule
+  \end{tabularx}
+  \par\vspace{0.15em}
+  #9\par
+  \end{minipage}\par\addvspace{0.5em}
+}
+\newcommand{\pbBloque}[1]{\midrule\multicolumn{2}{@{}l@{}}{\textbf{#1}}\\}
+\newcommand{\pbEsc}[5]{%
+  \multicolumn{2}{@{}l@{}}{\emph{#1}}\\
+  Contexto & #2\\
+  Dado & #3\\
+  Cuando & #4\\
+  Entonces & #5\\}
+
+\subsubsection{Historias de usuario}
+Dos historias funcionan como controles transversales: HU-34 controla el acceso y HU-23 conserva los eventos documentales. Cada ficha indica además sus dependencias específicas. Los proyectos, frentes, actividades, personas y contratos se cargan como datos de referencia antes de registrar operaciones, y esa carga inicial se acordará con los responsables del piloto.
+
+Las cuatro historias del recorrido principal del To-Be (HU-01, HU-04, HU-17 y HU-30) y la de mayor riesgo legal (HU-35) se detallan con el formato modelo del curso~\cite{garcia-formato-hu}: módulo, escenarios con contexto, dado, cuando y entonces, criterios de verificación y manejo de errores. Las demás historias conservan la ficha resumida.
+\paragraph{Historias de usuario: Operario de campo / cuadrilla.}\mbox{}\par\nopagebreak[4]
+\textbf{Épica: Registro de la jornada.}\par\nopagebreak[4]
+
+\pbFichaDet
+{HU-01}
+{Registrar el informe diario}
+{MUST}
+{Registro de la jornada (operación de campo)}
+{Operario de campo / cuadrilla}
+{diligenciar el informe diario GT-FR48 desde el celular}
+{dejar el avance de la jornada asociado al frente de obra}
+{
+    \pbBloque{Criterios de aceptación}
+    \pbEsc{Escenario 1: envío del informe}
+      {Terminó la jornada y el operario tiene un frente de obra asignado.}
+      {que el informe tiene proyecto, frente, cuadrilla, fecha y actividades con cantidad y unidad,}
+      {el operario lo envía a revisión,}
+      {el sistema le asigna un identificador, lo deja en estado \emph{pendiente de revisión} y lo muestra al residente del frente.}
+    \pbEsc{Escenario 2: jornada sin avance}
+      {La cuadrilla no ejecutó actividades por lluvia o por una parada de obra.}
+      {que el informe no tiene actividades registradas,}
+      {el operario intenta enviarlo,}
+      {el sistema le pide registrar una novedad que explique la jornada antes de enviarlo.}
+    \pbBloque{Criterios para verificación de funcionalidad}
+    1 & El formulario conserva los campos del formato GT-FR48.\\
+    2 & Se puede guardar un borrador y retomarlo después.\\
+    3 & El operario consulta el estado de los informes que envió.\\
+    \pbBloque{Manejo de errores}
+    1 & Falta un dato obligatorio: el sistema señala el campo y no envía el informe.\\
+    2 & El envío se repite por mala señal: el sistema reconoce el informe y no crea otro.\\
+}
+{\textbf{Origen:} RF-01, RF-02; NEC-01. \textbf{Tarea del To-Be:} capturar reporte diario y consumos (CB-01).\par
+\textbf{Dependencias:} catálogo de proyectos y frentes.}
+
+\pbFicha
+{HU-02}
+{Adjuntar fotografías del avance}
+{SHOULD}
+{Operario de campo / cuadrilla}
+{adjuntar fotografías al informe diario}
+{respaldar lo ejecutado sin dejar las evidencias dispersas en mensajes}
+{RF-03; NEC-01}
+{
+    1 & Cada fotografía queda vinculada al informe y conserva la identificación de quien la adjunta y la fecha de carga.\\
+    2 & Puedo previsualizarla y añadir una descripción de la actividad que muestra.\\
+    3 & Si una carga falla, el sistema informa qué archivo falta y permite reintentar sin duplicar los ya guardados.\\
+}
+{HU-01}
+
+\pbFicha
+{HU-03}
+{Guardar y sincronizar sin conexión}
+{SHOULD}
+{Operario de campo / cuadrilla}
+{capturar el informe cuando no tenga señal y sincronizarlo después}
+{continuar el registro de campo sin perder lo diligenciado}
+{RF-05; NEC-20}
+{
+    1 & Sin conexión puedo guardar un informe local y distinguirlo de uno ya sincronizado.\\
+    2 & Al recuperar la conexión, el informe se sincroniza con su identificador original; repetir el intento no duplica registros ni fotografías.\\
+    3 & Si existe una modificación concurrente, se conservan ambas versiones para revisión.\\
+}
+{HU-01; HU-02 cuando incluya fotografías}
+\paragraph{Historias de usuario: Ingeniero residente / supervisor.}\mbox{}\par\nopagebreak[4]
+\textbf{Épica: Revisión y seguimiento de obra.}\par\nopagebreak[4]
+
+\pbFichaDet
+{HU-04}
+{Revisar los informes de campo}
+{MUST}
+{Revisión y seguimiento de obra}
+{Ingeniero residente / supervisor}
+{aprobar o devolver los informes del frente}
+{consolidar información revisada antes de usarla en los reportes y el dossier}
+{
+    \pbBloque{Criterios de aceptación}
+    \pbEsc{Escenario 1: aprobación}
+      {Hay informes pendientes en los frentes asignados al residente.}
+      {que un informe está completo y coincide con lo ejecutado en obra,}
+      {el residente lo aprueba,}
+      {el informe queda bloqueado para edición y pasa a los consolidados de avance y al tablero.}
+    \pbEsc{Escenario 2: devolución}
+      {Las cantidades de un informe no coinciden con lo observado en obra.}
+      {que el residente encuentra un error,}
+      {devuelve el informe con una observación,}
+      {el operario lo recibe con la observación, lo corrige y lo reenvía.}
+    \pbBloque{Criterios para verificación de funcionalidad}
+    1 & El residente solo ve los informes de sus frentes.\\
+    2 & Una corrección después de la aprobación crea una revisión vinculada al informe original.\\
+    3 & Los consolidados usan la última versión aprobada.\\
+    \pbBloque{Manejo de errores}
+    1 & Devolución sin observación: el sistema no la registra hasta que se escriba el motivo.\\
+    2 & Intento de editar un informe aprobado: el sistema lo impide y ofrece crear una revisión.\\
+}
+{\textbf{Origen:} NEC-01, NEC-04 (sin RF propio). \textbf{Tarea del To-Be:} revisar y validar reporte operativo y decisión ``¿Reporte aprobado?'' (CB-02).\par
+\textbf{Dependencias:} HU-01.}
+
+\pbFicha
+{HU-05}
+{Consolidar el informe semanal}
+{SHOULD}
+{Ingeniero residente / supervisor}
+{generar el informe semanal GT-FR46 desde los diarios aprobados}
+{reducir la transcripción de información ya registrada}
+{RF-04; NEC-01}
+{
+    1 & Puedo seleccionar proyecto, frente e intervalo de fechas.\\
+    2 & Se incluyen los diarios aprobados en su última versión, agrupando cantidades por actividad y unidad sin sumar unidades incompatibles.\\
+    3 & Puedo exportar el consolidado con las referencias de los informes utilizados; los días sin reporte quedan identificados.\\
+}
+{HU-01 y HU-04}
+
+\pbFicha
+{HU-06}
+{Consultar el avance físico por actividad}
+{MUST}
+{Ingeniero residente / supervisor}
+{comparar las cantidades ejecutadas con las presupuestadas}
+{identificar diferencias de avance durante la obra}
+{RF-06; NEC-04}
+{
+    1 & Puedo registrar o cargar la cantidad presupuestada y la unidad de cada actividad del proyecto.\\
+    2 & El avance ejecutado se obtiene de los informes aprobados y el porcentaje se calcula como cantidad ejecutada dividida entre presupuestada, multiplicada por cien.\\
+    3 & Si no hay cantidad presupuestada o las unidades no coinciden, el sistema indica que no puede calcular el porcentaje.\\
+}
+{HU-04}
+
+\pbFicha
+{HU-07}
+{Comparar el rendimiento de las cuadrillas}
+{MUST}
+{Ingeniero residente / supervisor}
+{comparar el rendimiento registrado con el usado en la cotización}
+{detectar actividades cuya ejecución se aparta de lo previsto}
+{RF-07; NEC-04}
+{
+    1 & Para cada actividad registro cantidad ejecutada y horas de trabajo de la cuadrilla, junto con la unidad usada para el rendimiento.\\
+    2 & El sistema calcula cantidad por hora o su equivalencia acordada y la compara con el rendimiento cotizado en la misma unidad.\\
+    3 & Si faltan horas, cantidades o la referencia cotizada, el sistema muestra el dato pendiente y no calcula una desviación.\\
+}
+{HU-04 y referencia de rendimiento de HU-24/HU-25}
+\textbf{Épica: Abastecimiento del frente.}\par\nopagebreak[4]
+
+\pbFicha
+{HU-08}
+{Crear requisiciones de compra}
+{MUST}
+{Ingeniero residente / supervisor}
+{registrar solicitudes de materiales o servicios desde el frente}
+{dar seguimiento a lo que necesito para ejecutar la obra}
+{RF-26; NEC-08}
+{
+    1 & La requisición incluye proyecto, frente, descripción, especificación, cantidad, unidad, fecha requerida y monto estimado.\\
+    2 & Puedo marcar una solicitud como urgente únicamente si registro una justificación.\\
+    3 & Al enviarla se asignan identificador y estado solicitado; los campos obligatorios deben estar completos y las cantidades ser positivas.\\
+    4 & Puedo consultar el estado de las requisiciones que envié.\\
+}
+{Catálogo de proyectos y frentes}
+\textbf{Épica: Asignación segura de actividades.}\par\nopagebreak[4]
+
+\pbFicha
+{HU-09}
+{Consultar advertencias para tareas críticas}
+{SHOULD}
+{Ingeniero residente / supervisor}
+{recibir una advertencia al asignar una tarea crítica a una persona con certificación vencida}
+{revisar la habilitación antes de confirmar la asignación}
+{RF-48; NEC-18}
+{
+    1 & La asignación identifica trabajador, tarea crítica, fecha y certificaciones requeridas para esa tarea.\\
+    2 & Si una certificación está vencida o no tiene soporte, aparece una advertencia que identifica el requisito pendiente.\\
+    3 & La advertencia y la decisión del residente quedan registradas, sin mostrar contenido clínico.\\
+}
+{HU-35; condicionado a confirmar el alcance SST}
+\textbf{Épica: Aprendizaje entre proyectos.}\par\nopagebreak[4]
+
+\pbFicha
+{HU-10}
+{Registrar lecciones aprendidas}
+{COULD}
+{Ingeniero residente / supervisor}
+{registrar fallas, causas y acciones de mejora de una obra}
+{aprovechar esa experiencia al preparar nuevas cotizaciones}
+{RF-34; NEC-11}
+{
+    1 & Cada registro identifica proyecto, actividad, situación observada, causa analizada, acción propuesta y responsable.\\
+    2 & Puedo vincular la lección con uno o varios APU afectados.\\
+    3 & La consulta permite encontrarla por proyecto, actividad o APU.\\
+}
+{HU-24}
+\paragraph{Historias de usuario: Encargado de materiales.}\mbox{}\par\nopagebreak[4]
+\textbf{Épica: Control de consumibles.}\par\nopagebreak[4]
+
+\pbFicha
+{HU-11}
+{Registrar movimientos y consultar saldos}
+{MUST}
+{Encargado de materiales}
+{registrar entradas, salidas y devoluciones por frente}
+{conocer la cantidad disponible de cada consumible}
+{RF-08, RF-09; NEC-02}
+{
+    1 & Cada movimiento registra material, unidad, cantidad positiva, frente, fecha, responsable y soporte; el saldo inicial conserva su conteo y responsable.\\
+    2 & Una salida no puede superar el saldo disponible y una devolución de material no usado referencia la salida de origen.\\
+    3 & Al confirmar el movimiento se actualiza el saldo una sola vez. Las correcciones se registran con un movimiento compensatorio justificado, sin borrar el original.\\
+}
+{Catálogo de materiales y frentes}
+
+\pbFicha
+{HU-12}
+{Comparar consumo real y presupuestado}
+{MUST}
+{Encargado de materiales}
+{comparar el consumo acumulado con el presupuesto de materiales}
+{detectar desviaciones antes del cierre del proyecto}
+{RF-11; NEC-02}
+{
+    1 & Puedo registrar o cargar el presupuesto por material, proyecto y unidad, dejando identificada la versión de referencia.\\
+    2 & El consumo real corresponde a las salidas menos las devoluciones de material no usado; las entradas no se cuentan como consumo.\\
+    3 & La consulta muestra real, presupuestado y diferencia. Sin presupuesto positivo no se calcula desviación porcentual.\\
+}
+{HU-11}
+
+\pbFicha
+{HU-13}
+{Recibir avisos de reorden}
+{SHOULD}
+{Encargado de materiales}
+{configurar un punto de reorden por material y frente}
+{anticipar la reposición de insumos}
+{RF-10; NEC-03}
+{
+    1 & Puedo definir un mínimo no negativo en la misma unidad del inventario.\\
+    2 & Cuando el saldo sea menor o igual al mínimo, aparece un aviso con material, frente, saldo y umbral, sin avisos activos duplicados.\\
+    3 & El aviso se cierra cuando las existencias vuelven a superar el umbral.\\
+}
+{HU-11}
+\paragraph{Historias de usuario: Encargado de herramientas y equipos.}\mbox{}\par\nopagebreak[4]
+\textbf{Épica: Trazabilidad de herramientas.}\par\nopagebreak[4]
+
+\pbFicha
+{HU-14}
+{Mantener la hoja de vida y los movimientos}
+{SHOULD}
+{Encargado de herramientas y equipos}
+{consultar la hoja de vida, ubicación y responsable de cada herramienta o equipo}
+{asignar recursos disponibles y controlar su devolución}
+{RF-12, RF-13; NEC-03}
+{
+    1 & Cada recurso tiene código único, descripción, fecha de adquisición, estado y registros de mantenimiento con fecha y soporte.\\
+    2 & Las entregas, traslados y devoluciones conservan origen, destino, responsable y estado; una asignación no borra la anterior.\\
+    3 & Puedo consultar ubicación actual e historial. Un recurso entregado no se asigna a otra persona sin registrar un traslado o devolución.\\
+}
+{Catálogo de herramientas y equipos}
+\paragraph{Historias de usuario: Coordinación SIG / calidad.}\mbox{}\par\nopagebreak[4]
+\textbf{Épica: Preparación del dossier.}\par\nopagebreak[4]
+
+\pbFicha
+{HU-15}
+{Registrar ensayos y reportes de terceros}
+{MUST}
+{Coordinación SIG / calidad}
+{registrar resultados y adjuntar reportes de ensayos por actividad}
+{reunir las evidencias técnicas en el proyecto correspondiente}
+{RF-14, RF-15; NEC-05}
+{
+    1 & Cada ensayo identifica proyecto, actividad, tipo, fecha, responsable y resultado registrado.\\
+    2 & Puedo cargar el informe del tercero y vincularlo al ensayo sin transcribir su contenido completo.\\
+    3 & La consulta permite verificar la correspondencia entre registro y soporte. Un archivo ausente o ilegible queda pendiente de corrección.\\
+}
+{Ninguna}
+
+\pbFicha
+{HU-16}
+{Gestionar el libro de tubería}
+{MUST}
+{Coordinación SIG / calidad}
+{registrar cada junta en el libro GT-FR64}
+{conservar la relación entre soldadura, responsable y ensayos}
+{RF-16; NEC-05}
+{
+    1 & Cada junta tiene un identificador único dentro del proyecto y su ubicación o línea de tubería.\\
+    2 & Puedo relacionar soldador, electrodo y ensayos con sus soportes; las referencias deben existir y corresponder al proyecto.\\
+    3 & La consulta de una junta muestra sus datos y evidencias, y señala los soportes faltantes.\\
+}
+{HU-15}
+
+\pbFichaDet
+{HU-17}
+{Generar el dossier desde los registros}
+{MUST}
+{Preparación del dossier}
+{Coordinación SIG / calidad}
+{generar el dossier de un proyecto o corte de obra}
+{reunir los soportes sin repetir su transcripción}
+{
+    \pbBloque{Criterios de aceptación}
+    \pbEsc{Escenario 1: corte completo}
+      {El corte de obra tiene informes aprobados, ensayos y libro de tubería cargados.}
+      {que todos los registros del corte están completos,}
+      {el coordinador selecciona proyecto y corte y genera el dossier,}
+      {el sistema arma un paquete con índice y referencias a cada registro, con fecha, responsable y versión.}
+    \pbEsc{Escenario 2: soportes pendientes}
+      {Falta el reporte de un ensayo hecho por un tercero.}
+      {que el corte tiene registros incompletos,}
+      {el coordinador genera el dossier,}
+      {el sistema lo genera como borrador y lista los soportes pendientes.}
+    \pbBloque{Criterios para verificación de funcionalidad}
+    1 & El dossier solo incluye soportes del proyecto y del corte seleccionados.\\
+    2 & Cada generación queda en el historial con su versión.\\
+    3 & El índice enlaza cada soporte con su registro de origen.\\
+    \pbBloque{Manejo de errores}
+    1 & Archivo ilegible o ausente: queda señalado como pendiente en el índice.\\
+    2 & Falla durante la generación: el sistema descarta el paquete incompleto y permite reintentar.\\
+}
+{\textbf{Origen:} RF-17; NEC-05. \textbf{Tarea del To-Be:} consolidar dossier y controlar versiones (CB-05).\par
+\textbf{Dependencias:} HU-04, HU-15, HU-16, HU-19 y HU-21.}
+
+\pbFicha
+{HU-18}
+{Comprobar entregables contractuales}
+{SHOULD}
+{Coordinación SIG / calidad}
+{comparar el dossier con la lista de entregables del contrato}
+{identificar faltantes antes de exportar la entrega final}
+{RF-18; NEC-05}
+{
+    1 & Puedo definir por contrato los entregables obligatorios y los que no aplican al corte.\\
+    2 & Antes de exportar, la lista distingue soportes presentes, pendientes y observados.\\
+    3 & No puedo marcar como entrega final un expediente con obligatorios pendientes; sí puedo generar un borrador identificado para revisión.\\
+}
+{HU-17}
+\textbf{Épica: Control documental.}\par\nopagebreak[4]
+
+\pbFicha
+{HU-19}
+{Publicar y consultar versiones vigentes}
+{MUST}
+{Coordinación SIG / calidad}
+{conservar versiones y publicar una versión vigente por documento}
+{evitar el uso de formatos obsoletos en campo}
+{RF-35, RF-36; NEC-12}
+{
+    1 & Cada versión conserva código de documento, número de versión, fecha, responsable y archivo; no se repite la combinación de código y versión.\\
+    2 & Al publicar una nueva versión, la anterior se archiva como obsoleta y permanece en el historial autorizado.\\
+    3 & El usuario operativo accede a la vigente; los registros anteriores conservan la referencia a la versión con la que se elaboraron.\\
+}
+{Ninguna}
+
+\pbFicha
+{HU-20}
+{Reservar documentos durante la edición}
+{MUST}
+{Coordinación SIG / calidad}
+{reservar un documento mientras lo modifico}
+{evitar que dos cambios simultáneos generen copias en conflicto}
+{RF-37; NEC-13}
+{
+    1 & Cuando inicio la edición se registra una reserva con mi usuario y fecha; otros usuarios pueden consultar según su permiso, pero no editar.\\
+    2 & Al guardar la nueva versión o cancelar la edición, se libera la reserva.\\
+    3 & Una reserva abandonada solo puede liberarse mediante una acción autorizada y registrada, sin sobrescribir un cambio pendiente.\\
+}
+{HU-19}
+
+\pbFicha
+{HU-21}
+{Clasificar y buscar soportes}
+{MUST}
+{Coordinación SIG / calidad}
+{asignar metadatos y buscar documentos por atributos o contenido}
+{encontrar la evidencia sin recorrer carpetas}
+{RF-38, RF-39; NEC-14}
+{
+    1 & Al registrar un soporte indico proceso, tipo, cliente, sede, año, versión y estado según corresponda.\\
+    2 & Puedo combinar filtros y buscar texto en archivos con contenido extraíble; los archivos escaneados sin texto siguen siendo localizables por sus metadatos.\\
+    3 & Los resultados muestran proyecto, versión y estado y respetan mis permisos; si no hay coincidencias, el sistema lo informa.\\
+}
+{HU-19 para documentos controlados}
+\textbf{Épica: Aprobación documental.}\par\nopagebreak[4]
+
+\pbFicha
+{HU-22}
+{Firmar documentos con sello de tiempo}
+{SHOULD}
+{Coordinación SIG / calidad}
+{aprobar y firmar una versión documental con el mecanismo definido por la empresa}
+{conservar evidencia verificable de la aprobación}
+{RF-42; NEC-16}
+{
+    1 & Solo un firmante autorizado puede iniciar la firma de una versión identificada; si el servicio falla, el documento queda pendiente.\\
+    2 & La firma conserva identidad del firmante, versión, sello de tiempo y datos necesarios para verificar su integridad.\\
+    3 & Modificar el documento genera otra versión que requiere nueva firma.\\
+}
+{HU-19; mecanismo y proveedor por validar}
+\textbf{Épica: Auditoría documental.}\par\nopagebreak[4]
+
+\pbFicha
+{HU-23}
+{Consultar el registro de auditoría}
+{MUST}
+{Coordinación SIG / calidad}
+{consultar quién accedió o cambió cada documento}
+{reconstruir su trazabilidad durante una revisión}
+{RF-43, RF-44; NEC-17}
+{
+    1 & Las consultas, modificaciones y descargas registran usuario, fecha y hora, documento y acción; las aprobaciones conservan además su decisión.\\
+    2 & Los eventos no pueden editarse ni eliminarse desde los roles de la aplicación, incluido el administrador.\\
+    3 & Puedo filtrar y exportar eventos por documento, usuario e intervalo de fechas, respetando el permiso de auditoría.\\
+}
+{Ninguna}
+\paragraph{Historias de usuario: Encargado comercial.}\mbox{}\par\nopagebreak[4]
+\textbf{Épica: APU y cotizaciones.}\par\nopagebreak[4]
+
+\pbFicha
+{HU-24}
+{Mantener un catálogo único de APU}
+{MUST}
+{Encargado comercial}
+{crear y reutilizar análisis de precios unitarios}
+{usar una estructura común al preparar ofertas}
+{RF-19, RF-20; NEC-06}
+{
+    1 & Cada APU identifica actividad, unidad, materiales, equipos, mano de obra y rendimiento, con cantidades y tarifas.\\
+    2 & El costo unitario se obtiene de los componentes registrados y sus unidades; los datos incompletos se señalan antes de usar el APU.\\
+    3 & Puedo copiar un APU como base de otro sin modificar el original; se conserva el vínculo con su referencia.\\
+}
+{Ninguna}
+
+\pbFicha
+{HU-25}
+{Consultar históricos de tarifas y APU}
+{MUST}
+{Encargado comercial}
+{conservar y buscar tarifas y rendimientos anteriores}
+{usar referencias de precio con un origen identificable}
+{RF-21, RF-22; NEC-06}
+{
+    1 & Cada referencia conserva fecha, proyecto, cliente y sede, además de su actividad y valores.\\
+    2 & Puedo buscar por palabra clave, cliente, sede y año, y ver la fecha y el contexto de la tarifa.\\
+    3 & Una actualización crea una versión y no altera las cotizaciones ya emitidas con valores anteriores.\\
+}
+{HU-24}
+
+\pbFicha
+{HU-26}
+{Generar y seguir cotizaciones}
+{SHOULD}
+{Encargado comercial}
+{preparar cotizaciones con o sin AIU en el formato GC-FR04}
+{conservar una oferta consistente y conocer su estado}
+{RF-23, RF-24, RF-25; NEC-07, NEC-10}
+{
+    1 & Selecciono cliente, actividades, cantidades y precios unitarios; los subtotales muestran la multiplicación de cantidad por precio.\\
+    2 & Puedo elegir si la cotización lleva AIU.\\
+    3 & Puedo configurar los porcentajes de administración, imprevistos y utilidad, y el total muestra cada componente aplicado.\\
+    4 & La cotización conserva versión y estado (borrador, enviada, adjudicada o descartada), y corregir una oferta enviada crea otra versión.\\
+}
+{HU-24 y HU-25}
+\paragraph{Historias de usuario: Aprobador designado.}\mbox{}\par\nopagebreak[4]
+\textbf{Épica: Autorización de compras.}\par\nopagebreak[4]
+
+\pbFicha
+{HU-27}
+{Aprobar requisiciones según su monto}
+{MUST}
+{Aprobador designado}
+{recibir las requisiciones que correspondan a mi nivel de aprobación}
+{dejar una autorización trazable antes de gestionar la compra}
+{RF-27; NEC-08}
+{
+    1 & El sistema asigna la solicitud según el monto estimado y los rangos configurados; si no hay un responsable aplicable, la deja pendiente y lo informa.\\
+    2 & Puedo aprobar, rechazar o devolver para corrección dentro de mi autorización; rechazo y devolución requieren motivo.\\
+    3 & Quedan usuario, fecha y decisión. Cambiar el monto o el contenido de una solicitud aprobada exige una nueva revisión.\\
+}
+{HU-08; rangos y responsables por confirmar}
+\paragraph{Historias de usuario: Encargado de compras.}\mbox{}\par\nopagebreak[4]
+\textbf{Épica: Seguimiento del abastecimiento.}\par\nopagebreak[4]
+
+\pbFicha
+{HU-28}
+{Comparar cotizaciones de proveedores}
+{SHOULD}
+{Encargado de compras}
+{asociar cotizaciones de proveedores a una requisición}
+{consultar las alternativas y sus condiciones antes de comprar}
+{RF-28; NEC-08}
+{
+    1 & Cada alternativa identifica proveedor, ítems, cantidades, precios, plazo de entrega y soporte.\\
+    2 & Puedo consultar las alternativas vinculadas a la misma requisición y registrar la elegida con su justificación.\\
+}
+{HU-08}
+
+\pbFicha
+{HU-29}
+{Consultar el estado de las órdenes}
+{MUST}
+{Encargado de compras}
+{seguir una orden desde la solicitud hasta su recepción}
+{ubicar pendientes y retrasos del abastecimiento}
+{RF-29; NEC-08}
+{
+    1 & Cada orden conserva relación con su requisición y muestra los estados solicitada, cotizada, aprobada, despachada y recibida con fechas y responsables.\\
+    2 & No se confirma un despacho sin aprobación.\\
+    3 & Una entrega parcial registra la cantidad aceptada y el saldo pendiente; la orden queda recibida al completar lo autorizado y su entrada se registra en el inventario (HU-11).\\
+}
+{HU-08, HU-27 y HU-11}
+\paragraph{Historias de usuario: Gerencia general.}\mbox{}\par\nopagebreak[4]
+\textbf{Épica: Seguimiento operativo y comercial.}\par\nopagebreak[4]
+
+\pbFichaDet
+{HU-30}
+{Consultar el tablero del proyecto}
+{MUST}
+{Seguimiento operativo}
+{Gerencia general}
+{consultar el avance físico, los materiales y los costos directos registrados}
+{revisar la situación de las obras sin reunir información por llamadas}
+{
+    \pbBloque{Criterios de aceptación}
+    \pbEsc{Escenario 1: consulta del periodo}
+      {El gerente revisa el estado de las obras en curso.}
+      {que los informes del periodo están aprobados,}
+      {filtra por proyecto, frente y periodo,}
+      {el tablero muestra avance físico, consumo de materiales y costos directos, con la fecha de su última actualización.}
+    \pbEsc{Escenario 2: frente sin reporte}
+      {Un frente no ha reportado en el periodo consultado.}
+      {que faltan informes aprobados de ese frente,}
+      {el gerente consulta el tablero,}
+      {el frente aparece marcado con datos pendientes y con la fecha de su último informe.}
+    \pbBloque{Criterios para verificación de funcionalidad}
+    1 & Cada cifra muestra su origen: informe, movimiento o soporte.\\
+    2 & El total de costos no cuenta dos veces la recepción y el consumo de un mismo material.\\
+    3 & Las cifras corresponden a costos operativos de obra registrados en el sistema.\\
+    \pbBloque{Manejo de errores}
+    1 & No hay datos para el filtro: el tablero lo informa en lugar de mostrar valores en cero.\\
+    2 & Falla una fuente de datos: el tablero muestra el resto e indica cuál falló.\\
+}
+{\textbf{Origen:} RF-30; NEC-09. \textbf{Tarea del To-Be:} actualizar tablero gerencial (CB-03 y CB-04).\par
+\textbf{Dependencias:} HU-06 y HU-11.}
+
+\pbFicha
+{HU-31}
+{Comparar lo cotizado con lo ejecutado}
+{SHOULD}
+{Gerencia general}
+{comparar la referencia cotizada con los datos de ejecución}
+{identificar desviaciones que debamos revisar durante la obra}
+{RF-31; NEC-10}
+{
+    1 & Selecciono proyecto, corte y versión de la cotización que se usará como referencia.\\
+    2 & La comparación separa cantidades, rendimientos y costos operativos, cada uno con su base equivalente.\\
+    3 & Se muestran la diferencia y el porcentaje cuando existe una base positiva; si faltan datos, se señalan como pendientes.\\
+}
+{HU-07, HU-26 y HU-30}
+
+\pbFicha
+{HU-32}
+{Consultar concentración del valor contratado}
+{SHOULD}
+{Gerencia general}
+{consultar cómo se distribuye el valor de los contratos entre clientes}
+{identificar la dependencia comercial de un solo cliente}
+{RF-32; NEC-10}
+{
+    1 & Solo se incluyen contratos adjudicados, cada uno con cliente, valor, moneda y periodo de referencia.\\
+    2 & La consulta muestra el total y la participación de cada cliente; los valores en otra moneda se convierten con una tasa documentada.\\
+}
+{Registro de clientes y contratos}
+
+\pbFicha
+{HU-33}
+{Recibir alertas de desviación}
+{SHOULD}
+{Gerencia general}
+{configurar umbrales de desviación por proyecto}
+{priorizar los casos que requieren una revisión}
+{RF-33; NEC-09}
+{
+    1 & Puedo elegir indicador, umbral, sentido de la comparación y proyecto al que aplica.\\
+    2 & Si un indicador con datos completos cruza el umbral, se genera un aviso con valor, referencia y fecha, sin duplicar la misma condición activa.\\
+    3 & Puedo registrar responsable y estado de atención; si falta la base de cálculo, el sistema informa el dato pendiente.\\
+}
+{HU-12 y/o HU-31, según el indicador}
+\paragraph{Historias de usuario: Administrador del sistema.}\mbox{}\par\nopagebreak[4]
+\textbf{Épica: Administración de permisos.}\par\nopagebreak[4]
+
+\pbFicha
+{HU-34}
+{Asignar acceso por rol y proyecto}
+{MUST}
+{Administrador del sistema}
+{configurar usuarios, roles y acciones autorizadas}
+{proteger la información operativa, personal y comercial}
+{RF-40, RF-41; NEC-15}
+{
+    1 & Puedo definir permisos de consulta, edición, descarga y eliminación por rol y proyecto; la autenticación sigue los RNF definidos en el documento.\\
+    2 & Un usuario sin permiso no accede al documento ni a su contenido mediante búsquedas, enlaces directos o descargas.\\
+    3 & Al desactivar un usuario se bloquea su acceso y se conserva la autoría de sus registros.\\
+}
+{Ninguna}
+\paragraph{Historias de usuario: Responsable de SST.}\mbox{}\par\nopagebreak[4]
+\textbf{Épica: Vigencias y formación del personal.}\par\nopagebreak[4]
+
+\pbFichaDet
+{HU-35}
+{Controlar certificaciones y vencimientos}
+{MUST}
+{Vigencias y formación del personal}
+{Responsable de SST}
+{registrar certificaciones y anticipar sus vencimientos}
+{identificar renovaciones pendientes antes de las tareas críticas}
+{
+    \pbBloque{Criterios de aceptación}
+    \pbEsc{Escenario 1: vencimiento próximo}
+      {Un soldador tiene el curso de trabajo en alturas próximo a vencer.}
+      {que faltan 30 días o menos para el vencimiento (valor inicial configurable),}
+      {llega la fecha de aviso,}
+      {el responsable de SST y el residente del frente reciben un aviso con el trabajador, la certificación y la fecha de vencimiento.}
+    \pbEsc{Escenario 2: certificación vencida}
+      {Un trabajador no renovó su certificación a tiempo.}
+      {que la fecha de vencimiento ya pasó,}
+      {se consulta el estado del personal,}
+      {el trabajador aparece como \emph{vencido} y se señala al asignarle una tarea crítica (HU-09).}
+    \pbBloque{Criterios para verificación de funcionalidad}
+    1 & Cada certificación registra trabajador, tipo, fechas, entidad emisora y soporte.\\
+    2 & La consulta distingue vigente, próxima a vencer, vencida y sin soporte.\\
+    3 & Una renovación conserva la certificación anterior en el historial.\\
+    \pbBloque{Manejo de errores}
+    1 & Fecha de vencimiento anterior a la de expedición: el sistema rechaza el registro e indica el error.\\
+    2 & Certificación sin soporte adjunto: queda en estado \emph{sin soporte}.\\
+}
+{\textbf{Origen:} RF-45, RF-46; NEC-18.\par
+\textbf{Dependencias:} registro del personal. La inclusión de SST en el alcance está por validar con la empresa.}
+
+\pbFicha
+{HU-36}
+{Consultar vigencia de exámenes ocupacionales}
+{MUST}
+{Responsable de SST}
+{registrar la vigencia de los exámenes ocupacionales}
+{identificar revisiones pendientes con acceso restringido}
+{RF-47; NEC-18}
+{
+    1 & El registro identifica trabajador, tipo de examen, fecha y la vigencia que indica el soporte.\\
+    2 & La consulta operativa muestra únicamente el estado de vigencia necesario para la asignación; los roles no autorizados no ven contenido clínico.\\
+    3 & Puedo actualizar la vigencia conservando la referencia anterior y el registro de quién hizo el cambio.\\
+}
+{HU-34; condicionado a confirmar el alcance SST}
+
+\pbFicha
+{HU-37}
+{Registrar inducciones y capacitaciones}
+{SHOULD}
+{Responsable de SST}
+{registrar sesiones, asistentes y evidencias de formación}
+{consultar los soportes sin trasladar documentos físicos entre sedes}
+{RF-49; NEC-19}
+{
+    1 & Cada sesión identifica tema, fecha, sede o frente, responsable y lista de participantes.\\
+    2 & Puedo adjuntar los soportes y consultar la participación por trabajador o sesión; no se duplica una asistencia dentro de la misma sesión.\\
+    3 & Los registros conservan autoría e historial y solo pueden consultarse según los permisos asignados.\\
+}
+{HU-34; condicionado a confirmar el alcance SST}
+
+\subsubsection{Priorización MoSCoW}
+La prioridad de cada historia combina el riesgo operativo o de seguridad, el impacto sobre la trazabilidad y la dependencia con otras funciones. Por regla general, cada historia conserva la prioridad de su RF, y HU-04 es MUST porque el To-Be usa los informes revisados como entrada de sus consolidados. La Tabla~\ref{tab:pb-moscow} justifica cada caso. La prioridad se revisará con la empresa.
+
+\begin{itemize}
+  \item \textbf{MUST:} imprescindible para completar el dominio operativo
+  correspondiente con sus controles.
+  \item \textbf{SHOULD:} importante, pero admite una alternativa temporal
+  mientras se desarrolla.
+  \item \textbf{COULD:} mejora que se incorpora cuando haya datos y capacidad disponibles.
+  \item \textbf{WON'T en esta versión:} integración contable, facturación,
+  pagos, nómina, balances, conciliaciones tributarias y regularización de
+  licencias de software técnico.
+\end{itemize}
+
+{\small
+\begin{longtable}{@{}p{1.2cm}p{3.8cm}p{2.9cm}p{2.0cm}p{5.1cm}@{}}
+\caption{Priorización del Product Backlog por historia y rol.}\label{tab:pb-moscow}\\
+\toprule
+\textbf{ID} & \textbf{Título} & \textbf{Rol} & \textbf{MoSCoW} & \textbf{Justificación}\\
+\midrule\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Título} & \textbf{Rol} & \textbf{MoSCoW} & \textbf{Justificación}\\
+\midrule\endhead
+\midrule\multicolumn{5}{r@{}}{\footnotesize Continúa en la página siguiente}\\\endfoot
+\bottomrule\endlastfoot
+HU-01 & Registrar el informe diario & Operario de campo / cuadrilla & MUST & Entrada del To-Be: sin el informe no hay avance, consumo ni tablero.\\
+\addlinespace[2pt]
+HU-02 & Adjuntar fotografías del avance & Operario de campo / cuadrilla & SHOULD & Refuerza la evidencia, pero el informe funciona sin fotografías.\\
+\addlinespace[2pt]
+HU-03 & Guardar y sincronizar sin conexión & Operario de campo / cuadrilla & SHOULD & Necesaria en frentes aislados; la conectividad real está por confirmar.\\
+\addlinespace[2pt]
+HU-04 & Revisar los informes de campo & Ingeniero residente / supervisor & MUST & Control del To-Be: los consolidados solo usan informes aprobados.\\
+\addlinespace[2pt]
+HU-05 & Consolidar el informe semanal & Ingeniero residente / supervisor & SHOULD & Ahorra transcripción, pero el semanal puede armarse con los diarios.\\
+\addlinespace[2pt]
+HU-06 & Consultar el avance físico por actividad & Ingeniero residente / supervisor & MUST & Mide el avance real frente a lo presupuestado y protege el margen.\\
+\addlinespace[2pt]
+HU-07 & Comparar el rendimiento de las cuadrillas & Ingeniero residente / supervisor & MUST & Detecta a tiempo rendimientos por debajo de lo cotizado.\\
+\addlinespace[2pt]
+HU-08 & Crear requisiciones de compra & Ingeniero residente / supervisor & MUST & Inicia el flujo que evita compras urgentes con sobreprecio.\\
+\addlinespace[2pt]
+HU-09 & Consultar advertencias para tareas críticas & Ingeniero residente / supervisor & SHOULD & Refuerza el control SST; HU-35 cubre el riesgo principal.\\
+\addlinespace[2pt]
+HU-10 & Registrar lecciones aprendidas & Ingeniero residente / supervisor & COULD & Valor a largo plazo; requiere históricos limpios.\\
+\addlinespace[2pt]
+HU-11 & Registrar movimientos y consultar saldos & Encargado de materiales & MUST & Sin movimientos registrados no se controla el consumo (NEC-02).\\
+\addlinespace[2pt]
+HU-12 & Comparar consumo real y presupuestado & Encargado de materiales & MUST & Muestra la desviación de consumibles antes del cierre.\\
+\addlinespace[2pt]
+HU-13 & Recibir avisos de reorden & Encargado de materiales & SHOULD & Mejora la reposición; el saldo ya se consulta en HU-11.\\
+\addlinespace[2pt]
+HU-14 & Mantener la hoja de vida y los movimientos & Encargado de herramientas y equipos & SHOULD & Reduce pérdidas de herramientas sin bloquear la operación.\\
+\addlinespace[2pt]
+HU-15 & Registrar ensayos y reportes de terceros & Coordinación SIG / calidad & MUST & Alimenta el dossier: sin ensayos registrados no hay entrega.\\
+\addlinespace[2pt]
+HU-16 & Gestionar el libro de tubería & Coordinación SIG / calidad & MUST & Da la trazabilidad de juntas que exige el dossier de calidad.\\
+\addlinespace[2pt]
+HU-17 & Generar el dossier desde los registros & Coordinación SIG / calidad & MUST & Resuelve CB-05 y acelera la radicación de actas y el cobro.\\
+\addlinespace[2pt]
+HU-18 & Comprobar entregables contractuales & Coordinación SIG / calidad & SHOULD & Evita faltantes, pero al inicio la revisión puede ser manual.\\
+\addlinespace[2pt]
+HU-19 & Publicar y consultar versiones vigentes & Coordinación SIG / calidad & MUST & Evita usar formatos obsoletos (ISO 9001 y auditorías del cliente).\\
+\addlinespace[2pt]
+HU-20 & Reservar documentos durante la edición & Coordinación SIG / calidad & MUST & Evita las copias en conflicto que hoy hacen perder evidencia.\\
+\addlinespace[2pt]
+HU-21 & Clasificar y buscar soportes & Coordinación SIG / calidad & MUST & Permite ubicar la evidencia durante una auditoría.\\
+\addlinespace[2pt]
+HU-22 & Firmar documentos con sello de tiempo & Coordinación SIG / calidad & SHOULD & Agiliza la aprobación; depende de definir el mecanismo de firma.\\
+\addlinespace[2pt]
+HU-23 & Consultar el registro de auditoría & Coordinación SIG / calidad & MUST & Sustenta las auditorías de clientes y de certificación.\\
+\addlinespace[2pt]
+HU-24 & Mantener un catálogo único de APU & Encargado comercial & MUST & Base común para cotizar con consistencia (NEC-06).\\
+\addlinespace[2pt]
+HU-25 & Consultar históricos de tarifas y APU & Encargado comercial & MUST & Elimina la búsqueda manual de tarifas en carpetas antiguas.\\
+\addlinespace[2pt]
+HU-26 & Generar y seguir cotizaciones & Encargado comercial & SHOULD & Depende de HU-24 y HU-25; mientras tanto se cotiza con la plantilla actual.\\
+\addlinespace[2pt]
+HU-27 & Aprobar requisiciones según su monto & Aprobador designado & MUST & Crea el flujo formal de aprobación que hoy no existe.\\
+\addlinespace[2pt]
+HU-28 & Comparar cotizaciones de proveedores & Encargado de compras & SHOULD & Útil para comparar precios, pero la compra puede avanzar sin ella.\\
+\addlinespace[2pt]
+HU-29 & Consultar el estado de las órdenes & Encargado de compras & MUST & Muestra el ciclo completo de la compra (NEC-08).\\
+\addlinespace[2pt]
+HU-30 & Consultar el tablero del proyecto & Gerencia general & MUST & Salida gerencial del To-Be; reemplaza las llamadas a campo.\\
+\addlinespace[2pt]
+HU-31 & Comparar lo cotizado con lo ejecutado & Gerencia general & SHOULD & Depende de cotizaciones y costos ya registrados.\\
+\addlinespace[2pt]
+HU-32 & Consultar concentración del valor contratado & Gerencia general & SHOULD & Análisis estratégico (80\% en un cliente), no operativo diario.\\
+\addlinespace[2pt]
+HU-33 & Recibir alertas de desviación & Gerencia general & SHOULD & Prioriza la revisión, pero el tablero ya muestra la desviación.\\
+\addlinespace[2pt]
+HU-34 & Asignar acceso por rol y proyecto & Administrador del sistema & MUST & Protege datos personales y comerciales (Ley 1581, NEC-15).\\
+\addlinespace[2pt]
+HU-35 & Controlar certificaciones y vencimientos & Responsable de SST & MUST & Mayor riesgo legal y humano: alturas y espacios confinados.\\
+\addlinespace[2pt]
+HU-36 & Consultar vigencia de exámenes ocupacionales & Responsable de SST & MUST & Muestra la vigencia sin exponer datos de salud (Ley 1581).\\
+\addlinespace[2pt]
+HU-37 & Registrar inducciones y capacitaciones & Responsable de SST & SHOULD & Digitaliza soportes; el riesgo crítico lo cubre HU-35.\\
+\end{longtable}
+}
+El backlog tiene 22 historias MUST (59\%), 14 SHOULD y 1 COULD, cerca del límite del 60\% que recomienda DSDM para los MUST. La proporción se revisará cuando se estime el esfuerzo de cada historia.
+
+La prioridad de un requerimiento no siempre coincide con la de su necesidad. RF-37, RF-38 y RF-39 son M aunque \nec{13} y \nec{14} son S: HU-20 y HU-21 conservan M porque controlan e identifican los documentos de los que dependen el dossier y las auditorías. Esta diferencia se revisará con la empresa.
+
+\paragraph{Orden inicial de trabajo.}
+Se propone empezar por los permisos, la trazabilidad y los documentos identificables (HU-34, HU-23, HU-19 y HU-21); seguir con la captura y la revisión (HU-01 y HU-04), y continuar con ensayos, libro de tubería y dossier (HU-15 a HU-18). Esta secuencia conecta las oportunidades O1, O2 y O3 del OST y permite probar un corte de obra completo, por eso incluye HU-18 aunque sea SHOULD.
+
+Este recorrido es un piloto para evaluar las alternativas del OST. Las demás historias MUST (materiales, APU, compras y seguimiento) se desarrollan después; mientras tanto, el piloto carga sus datos de referencia de forma controlada.
+
+\subsubsection{Matriz de requerimientos funcionales y trazabilidad}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}l X l l@{}}
+\toprule
+\textbf{Módulo} & \textbf{Alcance} & \textbf{Rango} & \textbf{Total} \\
+\midrule
+M1. Operación de campo & Reportes de obra, avance y productividad. & RF-01 a RF-07 & 7 \\
+M2. Inventario y herramientas & Consumibles, equipos y herramientas. & RF-08 a RF-13 & 6 \\
+M3. Dossier de calidad & Ensayos, libro de tubería y entrega técnica. & RF-14 a RF-18 & 5 \\
+M4. Costeo y cotización & APU, históricos y cotizaciones. & RF-19 a RF-25 & 7 \\
+M5. Compras & Requisición, aprobación y seguimiento. & RF-26 a RF-29 & 4 \\
+M6. Tablero gerencial & Indicadores, alertas y lecciones aprendidas. & RF-30 a RF-34 & 5 \\
+M7. Gestión documental & Versiones, búsqueda, seguridad y auditoría. & RF-35 a RF-44 & 10 \\
+M8. Talento y SST & Certificaciones, exámenes e inducciones. & RF-45 a RF-49 & 5 \\
+\midrule
+\multicolumn{3}{@{}l}{\textbf{Total de requerimientos funcionales}} & \textbf{49} \\
+\bottomrule
+\end{tabularx}
+\caption{Resumen de requerimientos funcionales por módulo.}\label{tab:rf-modulos}
+\end{table}
+
+\begin{longtable}{@{}p{1.4cm} p{9.6cm} p{2.4cm} p{1.2cm}@{}}
+\caption{Requerimientos del módulo M1, operación de campo.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RF-01 & El sistema debe permitir diligenciar el informe diario de actividades (GT-FR48) desde un dispositivo móvil. & NEC-01 & M \\
+RF-02 & El sistema debe exigir que cada informe diario indique proyecto, frente de obra, cuadrilla y fecha. & NEC-01 & M \\
+RF-03 & El sistema debe permitir adjuntar fotografías como evidencia del avance. & NEC-01 & S \\
+RF-04 & El sistema debe consolidar los informes diarios en el informe semanal (GT-FR46). & NEC-01 & S \\
+RF-05 & El sistema debe permitir registrar información sin conexión y sincronizarla cuando se recupere la señal. & NEC-20 & S \\
+RF-06 & El sistema debe registrar el avance físico por actividad frente a la cantidad presupuestada. & NEC-04 & M \\
+RF-07 & El sistema debe calcular el rendimiento real de cada cuadrilla y compararlo con el rendimiento cotizado. & NEC-04 & M \\
+\end{longtable}
+
+\begin{longtable}{@{}p{1.4cm} p{9.6cm} p{2.4cm} p{1.2cm}@{}}
+\caption{Requerimientos del módulo M2, inventario y herramientas.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RF-08 & El sistema debe registrar los movimientos de consumibles (entradas, salidas y devoluciones) por frente de obra. & NEC-02 & M \\
+RF-09 & El sistema debe calcular el saldo de cada consumible en tiempo real. & NEC-02 & M \\
+RF-10 & El sistema debe alertar cuando un consumible llegue a su punto de reorden. & NEC-03 & S \\
+RF-11 & El sistema debe comparar el consumo real con el consumo presupuestado de cada proyecto. & NEC-02 & M \\
+RF-12 & El sistema debe mantener la hoja de vida de cada herramienta o equipo con fecha de adquisición, estado e historial de mantenimiento. & NEC-03 & S \\
+RF-13 & El sistema debe registrar la asignación, la ubicación actual y la devolución de cada herramienta. & NEC-03 & S \\
+\end{longtable}
+
+\begin{longtable}{@{}p{1.4cm} p{9.6cm} p{2.4cm} p{1.2cm}@{}}
+\caption{Requerimientos del módulo M3, dossier de calidad.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RF-14 & El sistema debe registrar resultados de ensayos (NDT, pruebas hidrostáticas, cilindros de concreto) asociados a una actividad del proyecto. & NEC-05 & M \\
+RF-15 & El sistema debe permitir cargar el reporte emitido por el tercero que ejecutó el ensayo. & NEC-05 & M \\
+RF-16 & El sistema debe gestionar el libro de tubería (GT-FR64). Cada junta soldada debe vincularse con su soldador, su electrodo y sus ensayos. & NEC-05 & M \\
+RF-17 & El sistema debe generar el dossier de calidad de un proyecto a partir de los registros cargados. & NEC-05 & M \\
+RF-18 & El sistema debe verificar que el dossier contenga los entregables exigidos por el contrato antes de exportarlo. & NEC-05 & S \\
+\end{longtable}
+
+\begin{longtable}{@{}p{1.4cm} p{9.6cm} p{2.4cm} p{1.2cm}@{}}
+\caption{Requerimientos del módulo M4, costeo y cotización.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RF-19 & El sistema debe mantener un catálogo único de APU. Cada APU debe incluir materiales, equipos, mano de obra y rendimiento. & NEC-06 & M \\
+RF-20 & El sistema debe permitir copiar un APU existente como base de uno nuevo. & NEC-06 & M \\
+RF-21 & El sistema debe conservar el histórico de tarifas unitarias con fecha, proyecto y cliente. & NEC-06 & M \\
+RF-22 & El sistema debe permitir buscar APU e históricos por palabra clave, cliente, sede y año. & NEC-06 & M \\
+RF-23 & El sistema debe generar cotizaciones con AIU o sin AIU desde una plantilla única (GC-FR04). & NEC-07 & S \\
+RF-24 & El sistema debe registrar el estado de cada cotización (borrador, enviada, adjudicada o descartada). & NEC-07 & S \\
+RF-25 & El sistema debe permitir configurar los porcentajes de administración, imprevistos y utilidad de cada cotización. & NEC-07, NEC-10 & S \\
+\end{longtable}
+
+\begin{longtable}{@{}p{1.4cm} p{9.6cm} p{2.4cm} p{1.2cm}@{}}
+\caption{Requerimientos del módulo M5, compras.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RF-26 & El sistema debe permitir crear requisiciones de compra desde el frente de obra y marcarlas como urgentes con una justificación obligatoria. & NEC-08 & M \\
+RF-27 & El sistema debe enrutar cada requisición por un flujo de aprobación según el monto. & NEC-08 & M \\
+RF-28 & El sistema debe asociar las cotizaciones de proveedores a su requisición. & NEC-08 & S \\
+RF-29 & El sistema debe mostrar el estado de cada orden (solicitada, cotizada, aprobada, despachada y recibida). & NEC-08 & M \\
+\end{longtable}
+
+\begin{longtable}{@{}p{1.4cm} p{9.6cm} p{2.4cm} p{1.2cm}@{}}
+\caption{Requerimientos del módulo M6, tablero gerencial.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RF-30 & El sistema debe mostrar por proyecto el avance físico, el consumo de materiales y los costos directos registrados. & NEC-09 & M \\
+RF-31 & El sistema debe comparar lo cotizado con lo ejecutado en cada proyecto. & NEC-10 & S \\
+RF-32 & El sistema debe mostrar la distribución del valor contratado por cliente. & NEC-10 & S \\
+RF-33 & El sistema debe emitir alertas cuando una desviación supere un umbral configurable. & NEC-09 & S \\
+RF-34 & El sistema debe permitir registrar lecciones aprendidas por proyecto y vincularlas con los APU afectados. & NEC-11 & C \\
+\end{longtable}
+
+\begin{longtable}{@{}p{1.4cm} p{9.6cm} p{2.4cm} p{1.2cm}@{}}
+\caption{Requerimientos del módulo M7, gestión documental.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RF-35 & El sistema debe versionar cada documento controlado y conservar el historial completo de versiones. & NEC-12 & M \\
+RF-36 & El sistema debe mostrar solo la versión vigente a los usuarios operativos y archivar de forma automática las versiones obsoletas. & NEC-12 & M \\
+RF-37 & El sistema debe bloquear la edición de un documento mientras otro usuario lo modifica. & NEC-13 & M \\
+RF-38 & El sistema debe asignar metadatos a cada documento (proceso, tipo, cliente, sede, año, versión y estado). & NEC-14 & M \\
+RF-39 & El sistema debe permitir búsquedas por metadatos o por texto del contenido. & NEC-14 & M \\
+RF-40 & El sistema debe restringir el acceso por rol y controlar las acciones de ver, editar, descargar y eliminar. & NEC-15 & M \\
+RF-41 & El sistema debe ocultar a los roles no autorizados los documentos de nómina, salud ocupacional y tarifas. & NEC-15 & M \\
+RF-42 & El sistema debe permitir aprobar documentos con firma digital que incluya sello de tiempo. & NEC-16 & S \\
+RF-43 & El sistema debe registrar de forma inmutable cada consulta, modificación y descarga de un documento. & NEC-17 & M \\
+RF-44 & El sistema debe generar reportes de auditoría filtrables por documento, usuario y fecha. & NEC-17 & M \\
+\end{longtable}
+
+\begin{longtable}{@{}p{1.4cm} p{9.6cm} p{2.4cm} p{1.2cm}@{}}
+\caption{Requerimientos del módulo M8, talento humano y SST.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RF-45 & El sistema debe registrar las certificaciones del personal (alturas, espacios confinados y calificación de soldador) con su fecha de vencimiento. & NEC-18 & M \\
+RF-46 & El sistema debe alertar con antelación configurable cada vencimiento próximo. & NEC-18 & M \\
+RF-47 & El sistema debe registrar la vigencia de los exámenes médicos ocupacionales sin mostrar el contenido clínico a roles no autorizados. & NEC-18 & M \\
+RF-48 & El sistema debe advertir al asignar una tarea crítica a una persona con certificación vencida. & NEC-18 & S \\
+RF-49 & El sistema debe registrar inducciones y capacitaciones con la lista de asistentes y adjuntar la evidencia. & NEC-19 & S \\
+\end{longtable}
+
+\paragraph{Relación con las historias.}
+La Tabla~\ref{tab:pb-trazabilidad} relaciona cada RF con la historia que lo cubre y con su necesidad de origen.
+
+{\small
+\begin{longtable}{@{}p{2.4cm}p{4.6cm}p{1.7cm}p{3.8cm}p{1.9cm}@{}}
+\caption{Relación entre RF existentes, historias y necesidades.}\label{tab:pb-trazabilidad}\\
+\toprule
+\textbf{RF existente} & \textbf{Función cubierta} & \textbf{Historia} & \textbf{Necesidad u origen} & \textbf{MoSCoW}\\
+\midrule\endfirsthead
+\toprule
+\textbf{RF existente} & \textbf{Función cubierta} & \textbf{Historia} & \textbf{Necesidad u origen} & \textbf{MoSCoW}\\
+\midrule\endhead
+\midrule\multicolumn{5}{r@{}}{\footnotesize Continúa en la página siguiente}\\\endfoot
+\bottomrule\endlastfoot
+RF-01, RF-02 & Registrar el informe diario & HU-01 & NEC-01 & MUST\\
+\addlinespace[2pt]
+RF-03 & Adjuntar fotografías del avance & HU-02 & NEC-01 & SHOULD\\
+\addlinespace[2pt]
+RF-04 & Consolidar el informe semanal & HU-05 & NEC-01 & SHOULD\\
+\addlinespace[2pt]
+RF-05 & Guardar y sincronizar sin conexión & HU-03 & NEC-20 & SHOULD\\
+\addlinespace[2pt]
+RF-06 & Consultar el avance físico por actividad & HU-06 & NEC-04 & MUST\\
+\addlinespace[2pt]
+RF-07 & Comparar el rendimiento de las cuadrillas & HU-07 & NEC-04 & MUST\\
+\addlinespace[2pt]
+RF-08, RF-09 & Registrar movimientos y consultar saldos & HU-11 & NEC-02 & MUST\\
+\addlinespace[2pt]
+RF-10 & Recibir avisos de reorden & HU-13 & NEC-03 & SHOULD\\
+\addlinespace[2pt]
+RF-11 & Comparar consumo real y presupuestado & HU-12 & NEC-02 & MUST\\
+\addlinespace[2pt]
+RF-12, RF-13 & Mantener la hoja de vida y los movimientos & HU-14 & NEC-03 & SHOULD\\
+\addlinespace[2pt]
+RF-14, RF-15 & Registrar ensayos y reportes de terceros & HU-15 & NEC-05 & MUST\\
+\addlinespace[2pt]
+RF-16 & Gestionar el libro de tubería & HU-16 & NEC-05 & MUST\\
+\addlinespace[2pt]
+RF-17 & Generar el dossier desde los registros & HU-17 & NEC-05 & MUST\\
+\addlinespace[2pt]
+RF-18 & Comprobar entregables contractuales & HU-18 & NEC-05 & SHOULD\\
+\addlinespace[2pt]
+RF-19, RF-20 & Mantener un catálogo único de APU & HU-24 & NEC-06 & MUST\\
+\addlinespace[2pt]
+RF-21, RF-22 & Consultar históricos de tarifas y APU & HU-25 & NEC-06 & MUST\\
+\addlinespace[2pt]
+RF-23, RF-24, RF-25 & Generar y seguir cotizaciones & HU-26 & NEC-07, NEC-10 & SHOULD\\
+\addlinespace[2pt]
+RF-26 & Crear requisiciones de compra & HU-08 & NEC-08 & MUST\\
+\addlinespace[2pt]
+RF-27 & Aprobar requisiciones según su monto & HU-27 & NEC-08 & MUST\\
+\addlinespace[2pt]
+RF-28 & Comparar cotizaciones de proveedores & HU-28 & NEC-08 & SHOULD\\
+\addlinespace[2pt]
+RF-29 & Consultar el estado de las órdenes & HU-29 & NEC-08 & MUST\\
+\addlinespace[2pt]
+RF-30 & Consultar el tablero del proyecto & HU-30 & NEC-09 & MUST\\
+\addlinespace[2pt]
+RF-31 & Comparar lo cotizado con lo ejecutado & HU-31 & NEC-10 & SHOULD\\
+\addlinespace[2pt]
+RF-32 & Consultar concentración del valor contratado & HU-32 & NEC-10 & SHOULD\\
+\addlinespace[2pt]
+RF-33 & Recibir alertas de desviación & HU-33 & NEC-09 & SHOULD\\
+\addlinespace[2pt]
+RF-34 & Registrar lecciones aprendidas & HU-10 & NEC-11 & COULD\\
+\addlinespace[2pt]
+RF-35, RF-36 & Publicar y consultar versiones vigentes & HU-19 & NEC-12 & MUST\\
+\addlinespace[2pt]
+RF-37 & Reservar documentos durante la edición & HU-20 & NEC-13 & MUST\\
+\addlinespace[2pt]
+RF-38, RF-39 & Clasificar y buscar soportes & HU-21 & NEC-14 & MUST\\
+\addlinespace[2pt]
+RF-40, RF-41 & Asignar acceso por rol y proyecto & HU-34 & NEC-15 & MUST\\
+\addlinespace[2pt]
+RF-42 & Firmar documentos con sello de tiempo & HU-22 & NEC-16 & SHOULD\\
+\addlinespace[2pt]
+RF-43, RF-44 & Consultar el registro de auditoría & HU-23 & NEC-17 & MUST\\
+\addlinespace[2pt]
+RF-45, RF-46 & Controlar certificaciones y vencimientos & HU-35 & NEC-18 & MUST\\
+\addlinespace[2pt]
+RF-47 & Consultar vigencia de exámenes ocupacionales & HU-36 & NEC-18 & MUST\\
+\addlinespace[2pt]
+RF-48 & Consultar advertencias para tareas críticas & HU-09 & NEC-18 & SHOULD\\
+\addlinespace[2pt]
+RF-49 & Registrar inducciones y capacitaciones & HU-37 & NEC-19 & SHOULD\\
+\addlinespace[2pt]
+\emph{Sin RF propio} & Revisar los informes de campo & HU-04 & NEC-01, NEC-04; As-Is CB-02 y To-Be & MUST\\
+\end{longtable}
+}
+
+HU-04 no tiene un RF propio: proviene de la revisión del residente descrita en el As-Is (CB-02) y en el To-Be. Se propone formalizarla como un requerimiento del módulo M1 durante la validación con la empresa.
+
+\subsubsection{Revisión de las historias con INVEST}
+Las historias se revisaron con los criterios INVEST para que describan valor para un usuario y puedan discutirse y comprobarse (Tabla~\ref{tab:pb-invest}). La revisión la hizo el equipo; la validación con la empresa está pendiente.
+
+{\small
+\begin{longtable}{@{}p{2.9cm}p{11.9cm}@{}}
+\caption{Aplicación de INVEST al backlog.}\label{tab:pb-invest}\\
+\toprule\textbf{Criterio} & \textbf{Aplicación}\\\midrule\endfirsthead
+\toprule\textbf{Criterio} & \textbf{Aplicación}\\\midrule\endhead
+\bottomrule\endfoot
+Independiente & Se separan resultados como registrar, revisar y consolidar, y cada ficha declara sus dependencias de datos para reducir el acoplamiento.\\\addlinespace
+Negociable & Los campos y las reglas son propuestas que pueden ajustarse con cada responsable sin cambiar el beneficio que busca la historia.\\\addlinespace
+Valiosa & Cada historia expresa para qué sirve y conserva su relación con una necesidad, un RF o un paso del proceso.\\\addlinespace
+Estimable & Cada historia tiene alcance y criterios definidos; la estimación se hará cuando se resuelvan las dudas sobre datos, responsables, firma y conectividad.\\\addlinespace
+Pequeña & Las funciones complementarias, como las fotografías y el trabajo sin conexión, van en historias separadas. HU-14, HU-17, HU-26 y HU-30 son las más grandes y se dividirán si superan la capacidad de un sprint.\\\addlinespace
+Comprobable & Cada ficha incluye condiciones observables con casos de error o excepción, y las cinco historias detalladas añaden escenarios con dado, cuando y entonces. Los RNF complementan las pruebas de rendimiento, disponibilidad y seguridad.\\
+\end{longtable}
+}
+
+\paragraph{Estado de validación.}
+El backlog está pendiente de revisión con residentes, materiales, compras, comercial, calidad, SST y gerencia. Para cada historia se registrarán el responsable, la fecha, los acuerdos y los ajustes, y antes del desarrollo se confirmarán el beneficio, las reglas, los datos de entrada, las dependencias y una estimación con el equipo. En SIG y SST se confirmará además su inclusión en el alcance, y en HU-22, el mecanismo de firma.
+
+\endgroup
+
+
+
 \subsection{Matriz de Requerimientos No Funcionales (RNF) y Restricciones Técnicas y Legales (Ley 1581)}
+\label{sec:rnf}
+
+\subsubsection{Convenciones}
+
+Los requerimientos no funcionales (\texttt{RNF}) definen cómo debe comportarse el sistema. Se organizan según las características de calidad de la norma ISO/IEC 25010 y cada uno incluye un criterio de verificación medible. Los valores objetivo son propuestas iniciales que deben validarse con la empresa antes de cerrar la especificación. La columna \emph{Origen} enlaza con el requerimiento funcional o la necesidad que lo motiva, y \emph{Transversal} indica que el requisito aplica a todo el sistema. La prioridad usa la escala MoSCoW: \textbf{M} (debe), \textbf{S} (debería) y \textbf{C} (podría).
 
 
-\section{Consideraciones etica: AI:}
+\subsubsection{Rendimiento}
+
+{\small
+\begin{longtable}{@{}p{1.5cm} p{4.9cm} p{5.0cm} p{2.1cm} p{1.0cm}@{}}
+\caption{Requerimientos no funcionales de rendimiento.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Criterio de verificación} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Criterio de verificación} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RNF-01 & El sistema debe responder con rapidez a las búsquedas documentales. & El 95 \% de las búsquedas por metadatos responde en menos de 3 s con 50.000 documentos indexados. & RF-39 & M \\
+RNF-02 & El registro de un informe diario no debe generar esperas perceptibles. & Guardado en menos de 2 s con conexión estable. & RF-01 & M \\
+RNF-03 & El sistema debe atender el uso simultáneo de las cinco sedes. & Con 100 usuarios concurrentes el tiempo de respuesta no aumenta más del 20 \%. & Transversal & S \\
+RNF-04 & La generación del dossier de calidad debe completarse en un tiempo razonable. & Un dossier de hasta 300 soportes se genera en menos de 5 min. & RF-17 & S \\
+\end{longtable}
+}
+
+\subsubsection{Disponibilidad y confiabilidad}
+
+{\small
+\begin{longtable}{@{}p{1.5cm} p{4.9cm} p{5.0cm} p{2.1cm} p{1.0cm}@{}}
+\caption{Requerimientos no funcionales de disponibilidad y confiabilidad.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Criterio de verificación} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Criterio de verificación} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RNF-05 & El sistema debe estar disponible durante la jornada de trabajo. & Disponibilidad mensual del 99,5 \% entre las 6:00 a.\,m. y las 8:00 p.\,m. & Transversal & S \\
+RNF-06 & La información debe poder recuperarse ante una falla. & Copias de seguridad diarias con retención de 30 días, pérdida máxima de datos de 24 h y recuperación en menos de 4 h. & Transversal & M \\
+RNF-07 & El modo sin conexión no debe perder datos. & Los registros capturados se conservan hasta 72 h sin red. Al sincronizar no se descarta ninguna versión en conflicto. & RF-05, NEC-20 & S \\
+RNF-08 & Los movimientos de inventario deben ser consistentes. & Una falla a mitad de una operación no deja saldos inconsistentes. La prueba de fallo arroja 0 discrepancias. & RF-08, RF-09 & M \\
+\end{longtable}
+}
+
+\subsubsection{Usabilidad}
+
+{\small
+\begin{longtable}{@{}p{1.5cm} p{4.9cm} p{5.0cm} p{2.1cm} p{1.0cm}@{}}
+\caption{Requerimientos no funcionales de usabilidad.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Criterio de verificación} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Criterio de verificación} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RNF-09 & Un supervisor de campo debe poder usar el sistema con poca capacitación. & Tras una inducción de 1 h un supervisor completa un informe diario en menos de 5 min. & RF-01 & M \\
+RNF-10 & La interfaz debe estar en español y conservar los códigos documentales vigentes. & El 100 \% de etiquetas y mensajes aparece en español. Los códigos (por ejemplo GT-FR48) se muestran sin alterar. & NEC-14 & S \\
+RNF-11 & La interfaz debe cumplir criterios básicos de accesibilidad. & Contraste y tamaño de texto conformes con WCAG 2.1 nivel AA. & Transversal & C \\
+RNF-12 & Los mensajes de error deben indicar la causa y proponer una acción. & Revisión heurística: el 100 \% de los errores críticos incluye la causa de la falla y una acción sugerida. & Transversal & S \\
+\end{longtable}
+}
+
+\subsubsection{Seguridad}
+
+{\small
+\begin{longtable}{@{}p{1.5cm} p{4.9cm} p{5.0cm} p{2.1cm} p{1.0cm}@{}}
+\caption{Requerimientos no funcionales de seguridad.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Criterio de verificación} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Criterio de verificación} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RNF-13 & El acceso debe protegerse con autenticación robusta. & Política de complejidad de contraseñas y doble factor obligatorio para los roles de gerencia o administración. & RF-40 & M \\
+RNF-14 & Los datos sensibles deben cifrarse. & TLS 1.2 o superior en tránsito. AES-256 en reposo para datos de personal, salud ocupacional y tarifas. & RF-41, RF-47 & M \\
+RNF-15 & Los permisos deben seguir el principio de mínimo privilegio. & Cada rol accede solo a lo que necesita y los permisos se revisan cada seis meses. & RF-40 & M \\
+RNF-16 & El registro de auditoría no debe poder alterarse. & Ningún rol (incluido el administrador) edita o borra entradas. Los intentos de alteración quedan registrados. & RF-43 & M \\
+RNF-17 & Las sesiones inactivas deben cerrarse. & Cierre automático tras 30 min de inactividad en equipos de escritorio. & RF-40 & S \\
+RNF-18 & El tratamiento de datos personales debe cumplir la Ley 1581 de 2012~\cite{ley1581}. & Autorización previa y registrada del titular, con finalidad definida (art. 9). Acceso a datos de salud solo para roles autorizados (art. 5). Respuesta a consultas en máximo 10 días hábiles y a reclamos en máximo 15 (arts. 14 y 15). & RF-41, RF-47 & M \\
+\end{longtable}
+}
+
+\subsubsection{Cumplimiento normativo}
+
+{\small
+\begin{longtable}{@{}p{1.5cm} p{4.9cm} p{5.0cm} p{2.1cm} p{1.0cm}@{}}
+\caption{Requerimientos no funcionales de cumplimiento normativo.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Criterio de verificación} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Criterio de verificación} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RNF-19 & La firma digital debe tener validez probatoria conforme a la Ley 527 de 1999. & Cada firma incluye sello de tiempo y la integridad del documento firmado es verificable. & RF-42 & S \\
+RNF-20 & El control documental debe cumplir ISO 9001:2015 (numeral 7.5). & Identificación, revisión, aprobación, disponibilidad y control de cambios. El piloto no genera no conformidades documentales en auditoría interna. & RF-35, RF-36 & M \\
+RNF-21 & La conservación de registros de SST debe respetar el plazo legal. & Los registros del SG-SST se conservan al menos 20 años desde que termina la relación laboral del trabajador (Decreto 1072 de 2015, art. 2.2.4.6.13~\cite{decreto1072}). Ningún registro se elimina antes de ese plazo. & NEC-18, NEC-19 & M \\
+\end{longtable}
+}
+
+\subsubsection{Compatibilidad e interoperabilidad}
+
+{\small
+\begin{longtable}{@{}p{1.5cm} p{4.9cm} p{5.0cm} p{2.1cm} p{1.0cm}@{}}
+\caption{Requerimientos no funcionales de compatibilidad e interoperabilidad.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Criterio de verificación} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Criterio de verificación} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RNF-22 & El sistema debe funcionar en los navegadores actuales. & Chrome, Edge, Firefox y Safari en escritorio; Chrome o Safari en Android o iOS. & Transversal & M \\
+RNF-23 & El acceso debe ser posible desde el navegador sin instalar software. & Todas las funciones operativas están disponibles por navegador; la aplicación instalable (PWA) es opcional. & RF-01 & S \\
+RNF-24 & El sistema debe importar los formatos que la empresa usa hoy y exportar los entregables. & Importación de Excel, Word y PDF, y exportación a PDF, Excel y CSV sin pérdida de datos en una muestra de 20 documentos. & RF-17, RF-19 & M \\
+RNF-25 & La migración desde Dropbox no debe perder información. & Los más de 23.000 archivos migran con su código, versión y estructura. El conteo de archivos y la suma de verificación coinciden en un 100 \%. & NEC-12, NEC-14 & M \\
+RNF-26 & El sistema debe ofrecer una API documentada. & Permite integrar un sistema contable o de planeación futuro sin modificar el núcleo. & NEC-09 & S \\
+\end{longtable}
+}
+
+\subsubsection{Mantenibilidad y escalabilidad}
+
+{\small
+\begin{longtable}{@{}p{1.5cm} p{4.9cm} p{5.0cm} p{2.1cm} p{1.0cm}@{}}
+\caption{Requerimientos no funcionales de mantenibilidad y escalabilidad.}\\
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Criterio de verificación} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Criterio de verificación} & \textbf{Origen} & \textbf{Prior.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RNF-27 & La arquitectura debe ser modular por dominios. & Un cambio en un módulo no exige modificar otros. Cobertura de pruebas automatizadas de al menos 70 \% en la lógica de negocio. & Transversal & S \\
+RNF-28 & El sistema debe escalar sin rediseño. & Soporta duplicar el volumen de documentos o de usuarios sin cambios de arquitectura. & Transversal & S \\
+RNF-29 & El sistema debe contar con documentación para cada audiencia. & Manual técnico, manual de usuario por rol y guía de despliegue. & Transversal & S \\
+RNF-30 & El sistema debe usar solo software con licencia legítima o de código abierto. & Inventario de componentes con licencia verificada y cero software sin licencia. & Cadena de valor & M \\
+\end{longtable}
+}
+
+\subsubsection{Restricciones técnicas y legales}
+
+Las restricciones son condiciones que el sistema debe cumplir y que el equipo no puede negociar. La Tabla~\ref{tab:restricciones} parte de las restricciones de la formulación del problema (sección~\ref{sec:problema}) y precisa qué exige cada una y con qué RNF o historia se atiende.
+
+{\small
+\begin{longtable}{@{}L{1.4cm} L{1.8cm} L{3.3cm} L{5.0cm} L{3.2cm}@{}}
+\caption{Restricciones técnicas y legales del sistema.}\label{tab:restricciones}\\
+\toprule
+\textbf{ID} & \textbf{Tipo} & \textbf{Norma o condición} & \textbf{Qué exige al sistema} & \textbf{Cómo se atiende} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Tipo} & \textbf{Norma o condición} & \textbf{Qué exige al sistema} & \textbf{Cómo se atiende} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{5}{r@{}}{\footnotesize\emph{Continúa en la página siguiente}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+RES-01 & Legal & Ley 1581 de 2012, protección de datos personales~\cite{ley1581} & Autorización previa del titular (art. 9). Los datos de salud son sensibles (art. 5). Las consultas se responden en máximo 10 días hábiles y los reclamos en 15 (arts. 14 y 15). La información se conserva con condiciones de seguridad (art. 17, lit. d). & RNF-14, RNF-15 y RNF-18; HU-34 y HU-36. \\
+\addlinespace
+RES-02 & Legal & Decreto 1072 de 2015, SG-SST~\cite{decreto1072} & Conservar los registros del SG-SST que señala el art. 2.2.4.6.13 durante al menos 20 años desde que termina la relación laboral. Se admite la conservación electrónica si se garantiza la preservación de la información. & RNF-06 y RNF-21; HU-35 y HU-37. \\
+\addlinespace
+RES-03 & Legal & Ley 527 de 1999, mensajes de datos y firma digital & El documento firmado debe conservar su integridad y la firma debe poder verificarse y atribuirse a su firmante. & RNF-19; HU-22. \\
+\addlinespace
+RES-04 & Legal & Resolución 4272 de 2021 (trabajo en alturas) y Resolución 0491 de 2020 (espacios confinados) & Solo el personal con capacitación certificada y reentrenamiento vigente ejecuta trabajos en alturas o en espacios confinados. & RF-45 y RF-48; HU-35 y HU-09. \\
+\addlinespace
+RES-05 & Normativa & ISO 9001:2015 (numeral 7.5) y RUC & La información documentada debe estar identificada, aprobada, con control de cambios y disponible para las auditorías del cliente. & RNF-16 y RNF-20; HU-19 y HU-23. \\
+\addlinespace
+RES-06 & Técnica & Conectividad intermitente en los frentes aislados & La captura de campo debe funcionar sin señal y sincronizar sin perder datos. & RNF-07; HU-03; \nec{20}. \\
+\addlinespace
+RES-07 & Técnica & Usuarios de campo con distinta familiaridad tecnológica & El informe diario debe poder diligenciarse desde el celular con poca capacitación. & RNF-09 y RNF-23; HU-01. \\
+\addlinespace
+RES-08 & Técnica & Repositorio actual en Dropbox (más de 23.000 archivos) & La migración debe conservar el código, la versión y la estructura de cada archivo. & RNF-25. \\
+\addlinespace
+RES-09 & Alcance & El área financiera y contable no participa & El sistema no se integra con la contabilidad, la facturación ni la nómina. & Queda en WON'T (Tabla~\ref{tab:pb-moscow}); RNF-26 deja una API para una integración futura. \\
+\end{longtable}
+}
+
+\subsubsection{Supuestos y puntos por validar}
+
+\begin{itemize}
+    \item Las cifras de concurrencia (RNF-03) y de volumen documental (RNF-01) son estimaciones que dependen de la cantidad real de usuarios por sede.
+    \item El modo sin conexión (RNF-07) responde a una hipótesis sobre la conectividad en sedes remotas como Buenaventura (\nec{20}) y debe confirmarse con la empresa.
+    \item El plazo mínimo de conservación de RNF-21 lo fija el Decreto 1072 de 2015; la política interna de retención se define con el responsable de SST.
+    \item La disponibilidad (RNF-05) y los tiempos de recuperación (RNF-06) deben acordarse con la gerencia según el costo de infraestructura aceptable.
+\end{itemize}
+
+
+\section{Consideraciones éticas: IA}
+\begin{itemize}
+    \item Para la consolidación y refinamiento de las secciones correspondientes al Modelo de Alineación Estratégica (SAM), el Análisis de Gobernanza y el \textit{Balanced Scorecard}, se empleó el modelo de inteligencia artificial Gemini 3.8 Flash como herramienta de soporte orientada a la redacción técnica, la identificación de incongruencias conceptuales frente a la propuesta de valor del proyecto y la optimización de la estética y formato del documento.
+\end{itemize}
+
+\clearpage
+\addcontentsline{toc}{section}{Referencias}
+\renewcommand{\refname}{Referencias}
+\begin{thebibliography}{99}
+\bibitem{hbs-cinco-fuerzas}
+Institute for Strategy and Competitiveness, Harvard Business School.
+\emph{The Five Forces}. Sin fecha.
+\url{https://www.isc.hbs.edu/strategy/business-strategy/Pages/the-five-forces.aspx}.
+Consultado el 10 de octubre de 2026.
+
+\bibitem{hbs-cadena-valor}
+Institute for Strategy and Competitiveness, Harvard Business School.
+\emph{The Value Chain}. Sin fecha.
+\url{https://www.isc.hbs.edu/strategy/business-strategy/Pages/the-value-chain.aspx}.
+Consultado el 10 de octubre de 2026.
+
+\bibitem{chan-reich-2007}
+Chan, Y. E., \& Reich, B. H. (2007).
+\emph{IT Alignment: What Have We Learned?}
+Journal of Information Technology, 22(4), 297--315.
+\url{https://doi.org/10.1057/palgrave.jit.2000109}.
+
+\bibitem{torres-ost}
+Torres, T. (2021).
+\emph{Continuous Discovery Habits: Discover Products that Create Customer Value and Business Value}.
+Product Talk LLC.
+
+\bibitem{omg-bpmn}
+Object Management Group. (2011).
+\emph{Business Process Model and Notation (BPMN), Version 2.0}.
+\url{https://www.omg.org/spec/BPMN/2.0/About-BPMN}.
+Consultado el 10 de octubre de 2026.
+
+\bibitem{garcia-formato-hu}
+Garcia Camargo, J. A. (2026).
+\emph{Formato modelo de historias de usuario}.
+Material del curso Sistemas de Información, sesión 5. Universidad Nacional de Colombia.
+
+\bibitem{ley1581}
+Congreso de Colombia. (2012).
+\emph{Ley Estatutaria 1581 de 2012, por la cual se dictan disposiciones generales para la protección de datos personales}.
+\url{https://www.saludcapital.gov.co/Normo/gsp/ley_1581_de_2012.pdf}.
+Consultado el 11 de octubre de 2026.
+
+\bibitem{decreto1072}
+Ministerio del Trabajo de Colombia. (2015).
+\emph{Decreto 1072 de 2015, Decreto Único Reglamentario del Sector Trabajo}.
+\url{https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=72173}.
+\end{thebibliography}
 
 \end{document}

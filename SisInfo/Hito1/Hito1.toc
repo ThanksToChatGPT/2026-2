@@ -1,36 +1,97 @@
 \babel@toc {spanish}{}\relax 
-\contentsline {section}{\numberline {1}Diagnóstico y alineación estratégica}{3}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Análisis de las 5 Fuerzas de Porter}{3}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Mapeo de la Cadena de Valor identificando puntos de dolor tecnológicos.}{3}{subsection.1.2}%
-\contentsline {subsection}{\numberline {1.3}Definición inicial del problema bajo el estándar de Diseño de Ingeniería.}{3}{subsection.1.3}%
-\contentsline {subsubsection}{\numberline {1.3.1}Identificación de necesidades}{3}{subsubsection.1.3.1}%
-\contentsline {paragraph}{Enfoque y metodología.}{3}{paragraph*.1}%
-\contentsline {paragraph}{Del síntoma a la necesidad.}{4}{paragraph*.2}%
-\contentsline {paragraph}{Partes interesadas.}{5}{paragraph*.3}%
-\contentsline {paragraph}{Catálogo de necesidades.}{5}{paragraph*.4}%
-\contentsline {paragraph}{Priorización.}{8}{paragraph*.5}%
-\contentsline {subsubsection}{\numberline {1.3.2}Formulación del problema}{9}{subsubsection.1.3.2}%
-\contentsline {paragraph}{Consideraciones de diseño.}{10}{paragraph*.6}%
-\contentsline {paragraph}{Restricciones y supuestos.}{10}{paragraph*.7}%
-\contentsline {paragraph}{Preguntas por validar con la empresa.}{11}{paragraph*.8}%
-\contentsline {subsection}{\numberline {1.4}Modelo de Alineación Estratégica (SAM)}{12}{subsection.1.4}%
-\contentsline {subsubsection}{\numberline {1.4.1}Estrategia de Negocio (\textit {Business Strategy})}{12}{subsubsection.1.4.1}%
-\contentsline {subsubsection}{\numberline {1.4.2}Estrategia de TI (\textit {IT Strategy})}{13}{subsubsection.1.4.2}%
-\contentsline {subsubsection}{\numberline {1.4.3}Operación del Negocio (\textit {Business Operation})}{13}{subsubsection.1.4.3}%
-\contentsline {subsubsection}{\numberline {1.4.4}Operación de TI (\textit {IT Operation})}{14}{subsubsection.1.4.4}%
-\contentsline {subsection}{\numberline {1.5}Análisis de Gobernanza y Marco de Decisión}{15}{subsection.1.5}%
-\contentsline {subsection}{\numberline {1.6}Balanced Scorecard: Definición del Problema mediante KPI y KRI}{15}{subsection.1.6}%
-\contentsline {section}{\numberline {2}Discovery de producto}{17}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Opportunity Solution Tree (OST)}{17}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Customer Journey Map y Definición de Roles de Usuario}{17}{subsection.2.2}%
-\contentsline {section}{\numberline {3}Ingeniería de procesos (BPMN 2.0)}{17}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Diagrama As-Is: Mapa de Calor y Cuellos de Botella Actuales}{17}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Diagrama To-Be: Proceso Optimizado con el Sistema de Información}{17}{subsection.3.2}%
-\contentsline {subsubsection}{\numberline {3.2.1}Delimitación de Carriles (Swimlanes) y Roles Funcionales}{18}{subsubsection.3.2.1}%
-\contentsline {subsubsection}{\numberline {3.2.2}Diagramación BPMN 2.0 del Proceso Optimizado}{18}{subsubsection.3.2.2}%
-\contentsline {subsubsection}{\numberline {3.2.3}Matriz de Impacto y Transformación Operativa (As-Is vs. To-Be)}{19}{subsubsection.3.2.3}%
-\contentsline {subsubsection}{\numberline {3.2.4}Mecanismos de Control Automatizado y Reglas de Negocio}{20}{subsubsection.3.2.4}%
-\contentsline {section}{\numberline {4}Especificación de requerimientos}{21}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Product Backlog: Historias de Usuario bajo Criterios INVEST y Priorización MoSCoW}{21}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Matriz de Requerimientos No Funcionales (RNF) y Restricciones Técnicas y Legales (Ley 1581)}{21}{subsection.4.2}%
-\contentsline {section}{\numberline {5}Consideraciones etica: AI:}{21}{section.5}%
+\contentsline {section}{\numberline {1}Diagnóstico y alineación estratégica}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Análisis de las 5 Fuerzas de Porter}{4}{subsection.1.1}%
+\contentsline {paragraph}{Alcance y base del análisis.}{4}{paragraph*.1}%
+\contentsline {subsubsection}{\numberline {1.1.1}Poder de negociación de los clientes: alto}{4}{subsubsection.1.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.2}Poder de negociación de los proveedores: medio, con presión alta en compras urgentes}{4}{subsubsection.1.1.2}%
+\contentsline {subsubsection}{\numberline {1.1.3}Rivalidad entre competidores existentes: media-alta, por validar}{5}{subsubsection.1.1.3}%
+\contentsline {subsubsection}{\numberline {1.1.4}Amenaza de nuevos entrantes: media-baja, por validar}{5}{subsubsection.1.1.4}%
+\contentsline {subsubsection}{\numberline {1.1.5}Amenaza de productos o servicios sustitutos: baja-media, por validar}{5}{subsubsection.1.1.5}%
+\contentsline {paragraph}{Síntesis del diagnóstico externo.}{5}{paragraph*.2}%
+\contentsline {subsection}{\numberline {1.2}Mapeo de la Cadena de Valor identificando puntos de dolor tecnológicos}{6}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Actividades primarias}{6}{subsubsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2}Actividades de apoyo}{7}{subsubsection.1.2.2}%
+\contentsline {subsubsection}{\numberline {1.2.3}Mapa sintético de la cadena de valor}{8}{subsubsection.1.2.3}%
+\contentsline {paragraph}{Relación entre los puntos de dolor.}{8}{paragraph*.3}%
+\contentsline {subsection}{\numberline {1.3}Definición inicial del problema bajo el estándar de Diseño de Ingeniería.}{8}{subsection.1.3}%
+\contentsline {subsubsection}{\numberline {1.3.1}Identificación de necesidades}{9}{subsubsection.1.3.1}%
+\contentsline {paragraph}{Enfoque y metodología.}{9}{paragraph*.4}%
+\contentsline {paragraph}{Del síntoma a la necesidad.}{9}{paragraph*.5}%
+\contentsline {paragraph}{Partes interesadas.}{10}{paragraph*.6}%
+\contentsline {paragraph}{Catálogo de necesidades.}{11}{paragraph*.7}%
+\contentsline {paragraph}{Priorización.}{14}{paragraph*.8}%
+\contentsline {subsubsection}{\numberline {1.3.2}Formulación del problema}{14}{subsubsection.1.3.2}%
+\contentsline {paragraph}{Consideraciones de diseño.}{15}{paragraph*.9}%
+\contentsline {paragraph}{Restricciones y supuestos.}{16}{paragraph*.10}%
+\contentsline {paragraph}{Preguntas por validar con la empresa.}{17}{paragraph*.11}%
+\contentsline {subsection}{\numberline {1.4}Modelo de Alineación Estratégica (SAM)}{17}{subsection.1.4}%
+\contentsline {subsubsection}{\numberline {1.4.1}Estrategia de Negocio (\textit {Business Strategy})}{18}{subsubsection.1.4.1}%
+\contentsline {subsubsection}{\numberline {1.4.2}Estrategia de TI (\textit {IT Strategy})}{18}{subsubsection.1.4.2}%
+\contentsline {subsubsection}{\numberline {1.4.3}Operación del Negocio (\textit {Business Operation})}{19}{subsubsection.1.4.3}%
+\contentsline {subsubsection}{\numberline {1.4.4}Operación de TI (\textit {IT Operation})}{19}{subsubsection.1.4.4}%
+\contentsline {subsubsection}{\numberline {1.4.5}Alineación Causal: Impacto del Sistema Propuesto en los Objetivos de Negocio}{20}{subsubsection.1.4.5}%
+\contentsline {subsection}{\numberline {1.5}Análisis de Gobernanza y Marco de Decisión}{21}{subsection.1.5}%
+\contentsline {subsubsection}{\numberline {1.5.1}Marco de Decisión Ágil: Integración COBIT y TOGAF}{21}{subsubsection.1.5.1}%
+\contentsline {subsubsection}{\numberline {1.5.2}Instancias Ágiles de Decisión}{22}{subsubsection.1.5.2}%
+\contentsline {subsubsection}{\numberline {1.5.3}Mapeo Ágil de Stakeholders (Matriz RACI)}{22}{subsubsection.1.5.3}%
+\contentsline {subsubsection}{\numberline {1.5.4}Reglas de Decisión para la Agilidad del Proyecto}{23}{subsubsection.1.5.4}%
+\contentsline {subsection}{\numberline {1.6}Balanced Scorecard: Definición del Problema mediante KPI y KRI}{24}{subsection.1.6}%
+\contentsline {section}{\numberline {2}Discovery de producto}{26}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Opportunity Solution Tree (OST)}{26}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Propósito y resultado esperado}{26}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Oportunidades identificadas}{27}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}Árbol de oportunidades y soluciones}{27}{subsubsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.4}Pruebas de supuestos y criterios de evaluación}{27}{subsubsection.2.1.4}%
+\contentsline {subsubsection}{\numberline {2.1.5}Priorización y decisión de producto}{29}{subsubsection.2.1.5}%
+\contentsline {paragraph}{Estado del Discovery.}{30}{paragraph*.12}%
+\contentsline {subsection}{\numberline {2.2}Customer Journey Map y Definición de Roles de Usuario}{30}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Alcance del mapa}{30}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Matriz de Análisis del Viaje del Cliente}{30}{subsubsection.2.2.2}%
+\contentsline {paragraph}{Actor 1: cliente petrolero.}{30}{paragraph*.13}%
+\contentsline {paragraph}{Actor 2: ingeniero residente.}{31}{paragraph*.14}%
+\contentsline {subsubsection}{\numberline {2.2.3}Análisis de la matriz}{32}{subsubsection.2.2.3}%
+\contentsline {section}{\numberline {3}Ingeniería de procesos (BPMN 2.0)}{32}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Diagrama As-Is: Mapa de Calor y Cuellos de Botella Actuales}{33}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Alcance, participantes y supuestos}{33}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Convenciones y mapa de calor}{33}{subsubsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.3}Matriz de cuellos de botella}{33}{subsubsection.3.1.3}%
+\contentsline {paragraph}{Puntos de control transversales.}{34}{paragraph*.15}%
+\contentsline {paragraph}{Validación y línea base pendiente.}{34}{paragraph*.16}%
+\contentsline {subsection}{\numberline {3.2}Diagrama To-Be: Proceso Optimizado con el Sistema de Información}{36}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Delimitación de Carriles (Swimlanes) y Roles Funcionales}{36}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Diagramación BPMN 2.0 del Proceso Optimizado}{36}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Matriz de Impacto y Transformación Operativa (As-Is vs. To-Be)}{37}{subsubsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.4}Mecanismos de Control Automatizado y Reglas de Negocio}{37}{subsubsection.3.2.4}%
+\contentsline {section}{\numberline {4}Especificación de requerimientos}{40}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Product Backlog: Historias de Usuario bajo Criterios INVEST y Priorización MoSCoW}{40}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Historias de usuario}{40}{subsubsection.4.1.1}%
+\contentsline {paragraph}{Historias de usuario: Operario de campo / cuadrilla.}{41}{paragraph*.17}%
+\contentsline {paragraph}{Historias de usuario: Ingeniero residente / supervisor.}{43}{paragraph*.18}%
+\contentsline {paragraph}{Historias de usuario: Encargado de materiales.}{46}{paragraph*.19}%
+\contentsline {paragraph}{Historias de usuario: Encargado de herramientas y equipos.}{48}{paragraph*.20}%
+\contentsline {paragraph}{Historias de usuario: Coordinación SIG / calidad.}{48}{paragraph*.21}%
+\contentsline {paragraph}{Historias de usuario: Encargado comercial.}{53}{paragraph*.22}%
+\contentsline {paragraph}{Historias de usuario: Aprobador designado.}{55}{paragraph*.23}%
+\contentsline {paragraph}{Historias de usuario: Encargado de compras.}{55}{paragraph*.24}%
+\contentsline {paragraph}{Historias de usuario: Gerencia general.}{57}{paragraph*.25}%
+\contentsline {paragraph}{Historias de usuario: Administrador del sistema.}{59}{paragraph*.26}%
+\contentsline {paragraph}{Historias de usuario: Responsable de SST.}{60}{paragraph*.27}%
+\contentsline {subsubsection}{\numberline {4.1.2}Priorización MoSCoW}{61}{subsubsection.4.1.2}%
+\contentsline {paragraph}{Orden inicial de trabajo.}{64}{paragraph*.28}%
+\contentsline {subsubsection}{\numberline {4.1.3}Matriz de requerimientos funcionales y trazabilidad}{65}{subsubsection.4.1.3}%
+\contentsline {paragraph}{Relación con las historias.}{69}{paragraph*.29}%
+\contentsline {subsubsection}{\numberline {4.1.4}Revisión de las historias con INVEST}{71}{subsubsection.4.1.4}%
+\contentsline {paragraph}{Estado de validación.}{72}{paragraph*.30}%
+\contentsline {subsection}{\numberline {4.2}Matriz de Requerimientos No Funcionales (RNF) y Restricciones Técnicas y Legales (Ley 1581)}{72}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Convenciones}{72}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Rendimiento}{72}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}Disponibilidad y confiabilidad}{73}{subsubsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.4}Usabilidad}{73}{subsubsection.4.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.5}Seguridad}{74}{subsubsection.4.2.5}%
+\contentsline {subsubsection}{\numberline {4.2.6}Cumplimiento normativo}{74}{subsubsection.4.2.6}%
+\contentsline {subsubsection}{\numberline {4.2.7}Compatibilidad e interoperabilidad}{75}{subsubsection.4.2.7}%
+\contentsline {subsubsection}{\numberline {4.2.8}Mantenibilidad y escalabilidad}{76}{subsubsection.4.2.8}%
+\contentsline {subsubsection}{\numberline {4.2.9}Restricciones técnicas y legales}{76}{subsubsection.4.2.9}%
+\contentsline {subsubsection}{\numberline {4.2.10}Supuestos y puntos por validar}{78}{subsubsection.4.2.10}%
+\contentsline {section}{\numberline {5}Consideraciones éticas: IA}{78}{section.5}%
+\contentsline {section}{Referencias}{79}{section.5}%
