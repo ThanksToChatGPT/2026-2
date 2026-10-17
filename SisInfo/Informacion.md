@@ -74,7 +74,7 @@
 
 ## 9. Roles y Personal Clave de la Organización
 * La empresa cuenta con una nómina aproximada de 40 trabajadores.
-* Dilan es el que tiene mas conocimiento sobre como estructurar los dossieres de calidad.
+* Dilan es un residente de obra con experiencia y es quien tiene mayor conocimiento sobre cómo estructurar los dossieres de calidad.
 * Yonny es el Director de Proyectos, responsable de validar cotizaciones, avances e informes de obra.
 * Edward y Johana son los Coordinadores de Gestión, encargados de la administración del SIG y de la gestión de SST y conceptos médicos.
 * Olga es la Auxiliar Administrativa, responsable de las órdenes de compra y de custodiar los archivos físicos del personal.
