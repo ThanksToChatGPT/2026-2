@@ -16,6 +16,7 @@
 - [06. Algoritmo de Work-Stealing (Parte 1 de 5)](./Apuntes/06_Work_Stealing_Parte1.md): `work stealing`, `work sharing`, `blumofe-leiserson`, `cormen clrs`, `mimd`, `activation frame`, `stack depth`, `expansion lineal del espacio`, `spawn tree`, `arcos de continuacion`, `arcos de creacion`, `arcos de juntura`, `hilos vivos`, `hilos postergados`, `hilos ready`, `complejidad asintotica`, `cota de tiempo esperado`, `cota de espacio`, `greedy scheduling`, `online algorithm`, `busy leaves`.
 - [06. Algoritmo de Work-Stealing (Parte 2 de 5)](./Apuntes/06_Work_Stealing_Parte2.md): `programa vs computacion multihilo`, `determinismo`, `computacion estricta`, `computacion completamente estricta`, `work`, `span`, `trayecto critico`, `planificador codicioso`, `greedy scheduler`, `teorema 1 de greedy`, `speedup lineal`, `propiedad de hojas ocupadas`, `busy leaves`, `algoritmo online`, `pool global centralizado`, `reglas de transicion`, `spawns stalls dies`, `lema 2 cota de espacio`, `teorema 3 tiempo y espacio`, `induccion de hojas ocupadas`, `cuello de botella centralizado`.
 - [06. Algoritmo de Work-Stealing (Parte 3 de 5)](./Apuntes/06_Work_Stealing_Parte3.md): `work stealing aleatorizado`, `ready deque`, `bottom`, `top`, `lifo vs fifo`, `thief`, `victim`, `reglas de ejecucion`, `spawn`, `stall`, `die`, `enable`, `computacion completamente estricta`, `lema 4`, `propiedad de ser hilo padre`, `hilo padre no procesado`, `deque edges`, `teorema 5 cota de espacio`, `preservacion de hojas ocupadas`, `expansion lineal del espacio`.
+- [06. Algoritmo de Work-Stealing (Parte 4 de 5)](./Apuntes/06_Work_Stealing_Parte4.md): `acceso atomico`, `mensaje atomico`, `juego de reciclaje`, `recycling game`, `balls and bins`, `balotas y urnas`, `adversario`, `cola fifo`, `retraso total`, `total delay`, `cubeta wait`, `lema 6`, `cota con alta probabilidad`, `cota en esperanza`, `linealidad de la esperanza`, `desigualdad de boole`, `greg plaxton`, `descomposicion en indicadoras`, `formula de stirling`.
 
 # Preguntas parcial 1:
 Algo del video: https://www.youtube.com/watch?v=oV9rvDllKEg
@@ -49,8 +50,17 @@ Reglas de Work-Stealing (Ready Deques distribuidas):
 3. Dies: Igual que la regla 2 (Stalls).
 4. Enable: Si a habilita un hilo postergado b (que en computación completamente estricta es su padre), b se coloca en el bottom de la deque local (solo ocurre con deque vacía, k=0).
 * Si un hilo habilita y se posterga/muere en el mismo paso: primero se aplica Enable (Regla 4) y luego Stall/Die (Regla 2 o 3).
-Lema 4: En la ready deque de un procesador, Γ1 (bottom) a Γk (top) son ancestros de Γ0 (en ejecución); cada Γi es padre de Γi-1 y ninguno (salvo posiblemente Γk) ha sido procesado tras crearlo.
-Teorema 5: Ninguna hoja viva reside en una ready deque (todas tienen procesador asignado), preservando Busy-Leaves y garantizando espacio S <= S1 * P.
+
+Prueba del lema 4?
+
+
+
+
+
+
+# Segunda sustentacion:
+Paralelismo funcional
+
 
 
 
@@ -76,9 +86,3 @@ Mostrar como el helper hace el calculo del speedup y comparar con la teoria
 
 Recursive Action javadoc
 Hermana de recursive action = RecursiveTask, RecursiveTask retorna algo
-
-
-
-# Segunda sustentacion:
-Paralelismo funcional
-
