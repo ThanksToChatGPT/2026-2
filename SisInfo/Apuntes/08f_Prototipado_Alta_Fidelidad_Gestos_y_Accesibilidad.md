@@ -1,4 +1,4 @@
-[← Anterior: 08e. Feedback de Diseño e Iteración de Mockups](./08e_Feedback_de_Diseno_Critica_e_Iteracion.md) | [Volver a Curso.md](../Curso.md)
+[← Anterior: 08e. Feedback de Diseño e Iteración de Mockups](./08e_Feedback_de_Diseno_Critica_e_Iteracion.md) | [Volver a Curso.md](../Curso.md) | [Siguiente: 09. Sistemas de Diseño de Interfaz →](./09_Sistemas_de_Diseno_de_Interfaz.md)
 
 # 08f. Prototipado de Alta Fidelidad, Gestos y Accesibilidad UX
 
@@ -257,5 +257,5 @@ graph TD
 ---
 
 > **Navegación Semana 8**:  
-> [← Anterior: 08e. Feedback de Diseño e Iteración de Mockups](./08e_Feedback_de_Diseno_Critica_e_Iteracion.md) | [Volver a Curso.md](../Curso.md) | `Fin Semana 8`
+> [← Anterior: 08e. Feedback de Diseño e Iteración de Mockups](./08e_Feedback_de_Diseno_Critica_e_Iteracion.md) | [Volver a Curso.md](../Curso.md) | [Siguiente: 09. Sistemas de Diseño de Interfaz →](./09_Sistemas_de_Diseno_de_Interfaz.md) | `Fin Semana 8`
 
