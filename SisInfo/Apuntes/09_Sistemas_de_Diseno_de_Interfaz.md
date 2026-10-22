@@ -1,4 +1,4 @@
-[← Anterior: 08f. Prototipado de Alta Fidelidad, Gestos y Accesibilidad UX](./08f_Prototipado_Alta_Fidelidad_Gestos_y_Accesibilidad.md) | [Volver a Curso.md](../Curso.md)
+[← Anterior: 08f. Prototipado de Alta Fidelidad, Gestos y Accesibilidad UX](./08f_Prototipado_Alta_Fidelidad_Gestos_y_Accesibilidad.md) | [Siguiente: 09.5a. Compresión del Proceso de Diseño en la Era de la IA](./09.5a_Compresion_del_Proceso_de_Diseno_en_IA.md) | [Volver a Curso.md](../Curso.md)
 
 # 09. Sistemas de Diseño de Interfaz
 
