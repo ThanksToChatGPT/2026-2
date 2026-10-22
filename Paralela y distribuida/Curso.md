@@ -17,6 +17,7 @@
 - [06. Algoritmo de Work-Stealing (Parte 2 de 5)](./Apuntes/06_Work_Stealing_Parte2.md): `programa vs computacion multihilo`, `determinismo`, `computacion estricta`, `computacion completamente estricta`, `work`, `span`, `trayecto critico`, `planificador codicioso`, `greedy scheduler`, `teorema 1 de greedy`, `speedup lineal`, `propiedad de hojas ocupadas`, `busy leaves`, `algoritmo online`, `pool global centralizado`, `reglas de transicion`, `spawns stalls dies`, `lema 2 cota de espacio`, `teorema 3 tiempo y espacio`, `induccion de hojas ocupadas`, `cuello de botella centralizado`.
 - [06. Algoritmo de Work-Stealing (Parte 3 de 5)](./Apuntes/06_Work_Stealing_Parte3.md): `work stealing aleatorizado`, `ready deque`, `bottom`, `top`, `lifo vs fifo`, `thief`, `victim`, `reglas de ejecucion`, `spawn`, `stall`, `die`, `enable`, `computacion completamente estricta`, `lema 4`, `propiedad de ser hilo padre`, `hilo padre no procesado`, `deque edges`, `teorema 5 cota de espacio`, `preservacion de hojas ocupadas`, `expansion lineal del espacio`.
 - [06. Algoritmo de Work-Stealing (Parte 4 de 5)](./Apuntes/06_Work_Stealing_Parte4.md): `acceso atomico`, `mensaje atomico`, `juego de reciclaje`, `recycling game`, `balls and bins`, `balotas y urnas`, `adversario`, `cola fifo`, `retraso total`, `total delay`, `cubeta wait`, `lema 6`, `cota con alta probabilidad`, `cota en esperanza`, `linealidad de la esperanza`, `desigualdad de boole`, `greg plaxton`, `descomposicion en indicadoras`, `formula de stirling`.
+- [07. Paralelismo Funcional](./Apuntes/07_Paralelismo_Funcional.md): `programacion funcional`, `funciones puras`, `efectos secundarios`, `transparencia referencial`, `calculo lambda`, `futuros y promesas`, `future task`, `blocking read`, `completablefuture`, `recursivetask vs recursiveaction`, `thread starvation`, `memoizacion`, `donald michie`, `binomio de newton`, `triangulo de pascal`, `putifabsent`, `java streams`, `analogia del rebano`, `gatherers`, `windowfixed`, `mapconcurrent`, `scan`, `windowsliding`, `fold`, `determinismo funcional`, `determinismo estructural`, `data race`, `drf`, `no-determinismo benigno`.
 
 # Preguntas parcial 1:
 Algo del video: https://www.youtube.com/watch?v=oV9rvDllKEg
@@ -60,7 +61,15 @@ Prueba del lema 4?
 
 # Segunda sustentacion:
 Paralelismo funcional
+Como ocurrio lo de la esquilada de las ovejas de java - streams
 
+
+# Segundo parcial
+Determinismo y condiciones de carrera:
+Determinismo funcional: Siemnpre a la misma entrada le corresponde la misma salida
+Determinismo estructural: Siempre, a la misma entrada le corresponde el mismo grafo computacional (la misma eestructura del programa en paralelo)
+Problema de data race: Read-Write, Write-Write, no hay problema con read read.
+SI SE CUMPLEN AMBAS, NO VA A HABER PROBLEMA DE RACE CONDITIONS
 
 
 
