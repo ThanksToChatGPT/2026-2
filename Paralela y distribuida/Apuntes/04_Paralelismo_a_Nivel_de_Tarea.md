@@ -87,7 +87,7 @@ graph LR
 | Métrica | Expresión Matemática | Significado / Propiedad |
 |---|---|---|
 | **Speedup ($S_p$)** | $S_p = \frac{T_1}{T_p}$ | Factor de aceleración frente al caso secuencial. Si $S_p = p$, es **speedup lineal perfecto**. |
-| **Paralelismo Ideal** | $\frac{WORK(G)}{SPAN(G)} = \frac{T_1}{T_\infty}$ | **Límite superior absoluto** del Speedup. No depende del hardware físico, sino del algoritmo. |
+| **Paralelismo Ideal** | $S_P \le \frac{WORK(G)}{SPAN(G)}$ | **Límite superior absoluto** del Speedup. No depende del hardware físico, sino del algoritmo. |
 | **Eficiencia ($E_p$)** | $E_p = \frac{S_p}{p} = \frac{T_1}{p \cdot T_p}$ | Fracción de uso productivo de los núcleos ($0 \le E_p \le 1$). |
 | **Inconstancia / Holgura (*Slackness*)** | $\frac{T_1}{p \cdot T_\infty}$ | Si $\text{Slackness} < 1$, es **imposible** alcanzar speedup lineal perfecto sobre $p$ núcleos. |
 
@@ -168,7 +168,7 @@ graph TD
 
 ### 2. Ley de Amdahl (Carga de Trabajo Fija)
 Modela la ganancia al mejorar recursos manteniendo constante el tamaño del problema:
-$$S_p = \frac{1}{(1-P) + \frac{P}{p}} = \frac{1}{q + \frac{1-q}{p}} \le \frac{1}{q}$$
+$$S_p = \frac{1}{(q + \frac{P}{p}} = \frac{1}{q + \frac{1-q}{p}} \le \frac{1}{q}$$
 - $q$: Fracción estrictamente secuencial ($q = 1-P$).
 - $P$: Fracción paralelizable.
 - $p$: Número de procesadores.

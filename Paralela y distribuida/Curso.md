@@ -12,6 +12,11 @@
 - [03. Patrones Paralelos - McCool et al.](./Apuntes/03_Patrones_Paralelos.md): `fork-join`, `barrier`, `map`, `stencil`, `reduction`, `scan`, `recurrence`, `scatter`, `gather`, `pipeline`, `nesting pattern`.
 - [04. Paralelismo a Nivel de Tarea](./Apuntes/04_Paralelismo_a_Nivel_de_Tarea.md): `grafo computacional`, `work`, `span`, `speedup`, `costo`, `slackness`, `ley de amdahl`, `ley de gustafson-barsis`, `deadlock`, `condiciones de coffman`, `livelock`, `data race`.
 - [05. Hilos y Cerrojos (Dia 1) - Paul Butcher](./Apuntes/05_Hilos_y_Cerrojos_Dia1.md): `hilos vs procesos`, `exclusion mutua`, `synchronized`, `jmm`, `reordenamiento`, `visibilidad`, `cena de los filosofos`, `metodos alienigenas`.
+- [05. Hilos y Cerrojos (Dia 2) - Paul Butcher](./Apuntes/05_Hilos_y_Cerrojos_Dia2.md): `reentrantlock`, `lockinterruptibly`, `trylock`, `timeouts`, `livelock`, `hand-over-hand locking`, `lock coupling`, `condition variables`, `await`, `signal`, `atomicinteger`, `cas`, `spurious wakeup`, `fairness`, `reentrantreadwritelock`, `atomicintegerfieldupdater`.
+- [06. Algoritmo de Work-Stealing (Parte 1 de 5)](./Apuntes/06_Work_Stealing_Parte1.md): `work stealing`, `work sharing`, `blumofe-leiserson`, `cormen clrs`, `mimd`, `activation frame`, `stack depth`, `expansion lineal del espacio`, `spawn tree`, `arcos de continuacion`, `arcos de creacion`, `arcos de juntura`, `hilos vivos`, `hilos postergados`, `hilos ready`, `complejidad asintotica`, `cota de tiempo esperado`, `cota de espacio`, `greedy scheduling`, `online algorithm`, `busy leaves`.
+- [06. Algoritmo de Work-Stealing (Parte 2 de 5)](./Apuntes/06_Work_Stealing_Parte2.md): `programa vs computacion multihilo`, `determinismo`, `computacion estricta`, `computacion completamente estricta`, `work`, `span`, `trayecto critico`, `planificador codicioso`, `greedy scheduler`, `teorema 1 de greedy`, `speedup lineal`, `propiedad de hojas ocupadas`, `busy leaves`, `algoritmo online`, `pool global centralizado`, `reglas de transicion`, `spawns stalls dies`, `lema 2 cota de espacio`, `teorema 3 tiempo y espacio`, `induccion de hojas ocupadas`, `cuello de botella centralizado`.
+- [06. Algoritmo de Work-Stealing (Parte 3 de 5)](./Apuntes/06_Work_Stealing_Parte3.md): `work stealing aleatorizado`, `ready deque`, `bottom`, `top`, `lifo vs fifo`, `thief`, `victim`, `reglas de ejecucion`, `spawn`, `stall`, `die`, `enable`, `computacion completamente estricta`, `lema 4`, `propiedad de ser hilo padre`, `hilo padre no procesado`, `deque edges`, `teorema 5 cota de espacio`, `preservacion de hojas ocupadas`, `expansion lineal del espacio`.
+- [06. Algoritmo de Work-Stealing (Parte 4 de 5)](./Apuntes/06_Work_Stealing_Parte4.md): `acceso atomico`, `mensaje atomico`, `juego de reciclaje`, `recycling game`, `balls and bins`, `balotas y urnas`, `adversario`, `cola fifo`, `retraso total`, `total delay`, `cubeta wait`, `lema 6`, `cota con alta probabilidad`, `cota en esperanza`, `linealidad de la esperanza`, `desigualdad de boole`, `greg plaxton`, `descomposicion en indicadoras`, `formula de stirling`.
 
 # Preguntas parcial 1:
 Algo del video: https://www.youtube.com/watch?v=oV9rvDllKEg
@@ -33,6 +38,29 @@ Condiciones de coofman?
 Paul Butcher libro de carreteras y carros (2.0 Siete modelos de concurrencia)
 Ley de ahmdal
 Sobrecarga, lo amarillo es el trabajo adicional para iniciar y sincronizar tareas
+Que es online?: antes del paso t, el algoritmo ha computado y ejecutado los pasos hasta t-1, y solo usa esa informacion, no usa nada del futuro
+Reglas de hojas ocupadas:
+1. Spawns: si el hilo a genera a b, el procesador regresa "a" a la pool y agarra b en el siguiente paso
+2. Stalls: Si a se posterga o suspende, el procesador retorna a al pool e inicia el siguiente paso ocioso
+3. Dies: Si b muere, el prosesador revisa si el padre a tiene algun otro hijo vivo. Si no hay hermanos y ningun procesador tiene a a, sigue con a. En otro caso, el siguiente paso oscioso 
+
+Reglas de Work-Stealing (Ready Deques distribuidas):
+1. Spawns: Si a genera a b, el padre a va al bottom de la ready deque local; el procesador ejecuta b.
+2. Stalls: Si a se posterga, saca del bottom de la deque local; si está vacía, pasa a ladrón (thief) y roba del top de una víctima al azar.
+3. Dies: Igual que la regla 2 (Stalls).
+4. Enable: Si a habilita un hilo postergado b (que en computación completamente estricta es su padre), b se coloca en el bottom de la deque local (solo ocurre con deque vacía, k=0).
+* Si un hilo habilita y se posterga/muere en el mismo paso: primero se aplica Enable (Regla 4) y luego Stall/Die (Regla 2 o 3).
+
+Prueba del lema 4?
+
+
+
+
+
+
+# Segunda sustentacion:
+Paralelismo funcional
+
 
 
 
@@ -58,9 +86,3 @@ Mostrar como el helper hace el calculo del speedup y comparar con la teoria
 
 Recursive Action javadoc
 Hermana de recursive action = RecursiveTask, RecursiveTask retorna algo
-
-
-
-# Segunda sustentacion:
-Paralelismo funcional
-
