@@ -1,0 +1,92 @@
+; ==============================================================================
+; Gramática Sintáctica LL(1) para el Lenguaje Lua (Alcance Práctica 2)
+; ==============================================================================
+
+chunk ::= block EOF
+
+block ::= { stat } [ retstat ]
+
+stat ::= ';'
+       | break
+       | goto Name
+       | '::' Name '::'
+       | while exp do block end
+       | repeat block until exp
+       | if exp then block { elseif exp then block } [ else block ] end
+       | for Name '=' exp ',' exp [ ',' exp ] do block end
+       | for namelist in explist do block end
+       | function funcname funcbody
+       | local function Name funcbody
+       | local namelist [ '=' explist ]
+       | global function Name funcbody
+       | global namelist [ '=' explist ]
+       | var_or_call_stat
+
+retstat ::= return [ explist ] [ ';' ]
+
+funcname ::= Name { '.' Name } [ ':' Name ]
+
+funcbody ::= '(' [ parlist ] ')' block end
+
+parlist ::= namelist [ ',' '...' ] | '...'
+
+namelist ::= Name { ',' Name }
+
+explist ::= exp_or_func { ',' exp_or_func }
+
+exp_or_func ::= functiondef | exp
+
+functiondef ::= function funcbody
+
+var_or_call_stat ::= Name stat_suffix
+
+stat_suffix ::= '=' explist
+              | ',' varlist_tail '=' explist
+              | '[' exp ']' stat_suffix
+              | '.' Name stat_suffix
+              | '(' [ explist ] ')' call_tail
+              | ':' Name '(' [ explist ] ')' call_tail
+
+call_tail ::= { '(' [ explist ] ')' | ':' Name '(' [ explist ] ')' | '[' exp ']' | '.' Name }
+
+varlist_tail ::= var { ',' var }
+
+var ::= Name { '[' exp ']' | '.' Name }
+
+exp ::= atom { binop atom }
+
+atom ::= unop atom
+       | valor_numerico
+       | cadena_de_caracteres
+       | nil
+       | true
+       | false
+       | tableconstructor
+       | '(' exp ')' { prefix_suffix }
+       | Name { prefix_suffix }
+
+prefix_suffix ::= '[' exp ']'
+                | '.' Name
+                | '(' [ explist ] ')'
+                | ':' Name '(' [ explist ] ')'
+
+tableconstructor ::= '{' [ fieldlist ] '}'
+
+fieldlist ::= field { fieldsep field } [ fieldsep ]
+
+fieldsep ::= ',' | ';'
+
+field ::= '[' exp ']' '=' exp_or_func
+        | Name '=' exp_or_func
+        | functiondef
+        | exp
+
+unop ::= 'not' | '#' | '-'
+
+binop ::= '+' | '-' | '*' | '/' | '//' | '^' | '%'
+        | '&' | '~' | '|' | '>>' | '<<' | '..'
+        | '<' | '<=' | '>' | '>=' | '==' | '~='
+        | 'and' | 'or'
+
+Name ::= id | error | pcall | print | warn | xpcall
+

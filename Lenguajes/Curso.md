@@ -14,3 +14,14 @@ Proyecto final:
 
 
 
+
+
+STAT -> tkn_semicolon
+      | do BLOCK end
+
+GLOBAL_TAIL
+             | tkn_times
+
+
+TERM -> 
+      | FUNCTIONDEF

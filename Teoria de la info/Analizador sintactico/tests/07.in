@@ -1,0 +1,6 @@
+miTabla = {10, 20, 30};
+print(miTabla[1]); -- 1
+warn(miTabla[2]); -- 2
+imprimir(miTabla[3]); -- 3
+--[[ :v ]]
+-- (ups, tengo que indicar el comentario :v)
