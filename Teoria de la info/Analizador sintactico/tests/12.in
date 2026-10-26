@@ -1,0 +1,5 @@
+if entrada == nil then
+ print("Valor indefinido")
+else
+ print("Valor definido")
+end

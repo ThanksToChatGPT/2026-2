@@ -49,9 +49,8 @@ function draw() {
 
   // Draw background
   background(20);
-  if (bgImg.complete) {
-    drawingContext.drawImage(bgImg, 0, 0, width, height);
-  }
+  drawingContext.drawImage(bgImg, 0, 0, width, height);
+  
 
   // Draw hoops, players, and ball
   leftHoop.draw();

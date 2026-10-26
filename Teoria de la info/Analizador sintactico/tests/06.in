@@ -1,0 +1,11 @@
+local READ = 1
+local WRITE = 2
+local EXECUTE = 4 
+local function combinarPermisos(...)
+ local resultado = 0
+ resultado = resultado | permiso
+ return resultado
+end
+local permisosUsuario = combinarPermisos(READ, WRITE)
+local tieneEscritura = (permisosUsuario & WRITE) ~= 0
+print("¿Tiene permiso de escritura?", tieneEscritura)

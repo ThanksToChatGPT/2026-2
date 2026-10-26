@@ -153,19 +153,18 @@ class Player {
     }
 
     // Draw character image
-    if (this.img.complete) {
-      drawingContext.drawImage(
-        this.img,
-        this.cropX,
-        this.cropY,
-        this.cropWidth,
-        this.cropHeight,
-        -this.renderWidth / 2,
-        this.radius - this.renderHeight,
-        this.renderWidth,
-        this.renderHeight
-      );
-    }
+    drawingContext.drawImage(
+      this.img,
+      this.cropX,
+      this.cropY,
+      this.cropWidth,
+      this.cropHeight,
+      -this.renderWidth / 2,
+      this.radius - this.renderHeight,
+      this.renderWidth,
+      this.renderHeight
+    );
+    
     pop();
 
     // Draw player label ('P1' or 'P2') above player's head

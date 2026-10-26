@@ -1,0 +1,2 @@
+-- acceso incorrecto a una clave numérica
+warn(arr.1)
