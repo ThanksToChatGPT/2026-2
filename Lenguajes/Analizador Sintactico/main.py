@@ -50,9 +50,9 @@ MAPA_SIMBOLOS = {
 }
 
 GRAMATICA_TEXTO = """
-CHUNK -> BLOCK final_de_archivo
+CHUNK -> STAT_LIST final_de_archivo
 
-BLOCK -> STAT_LIST RETSTAT_OPCIONAL
+BLOCK -> STAT_LIST
 
 STAT_LIST -> STAT STAT_LIST
            | epsilon
@@ -68,6 +68,7 @@ STAT -> tkn_semicolon
       | break
       | goto NAME
       | LABEL
+      | RETSTAT
       | NAME STAT_IDENT_TAIL
 
 IF_TAIL -> elseif EXP then BLOCK IF_TAIL
@@ -104,15 +105,12 @@ ATTNAMELIST_TAIL -> ATTRIB_OPCIONAL ATTNAMELIST_TAIL_RESTO
 ATTNAMELIST_TAIL_RESTO -> tkn_comma NAME ATTNAMELIST_TAIL
                         | epsilon
 
-ATTRIB -> tkn_less NAME tkn_greater
+ATTRIB -> tkn_opening_bra NAME tkn_closing_bra
 
 ATTRIB_OPCIONAL -> ATTRIB
                  | epsilon
 
 RETSTAT -> return EXPLIST_OPCIONAL SEMICOLON_OPCIONAL
-
-RETSTAT_OPCIONAL -> RETSTAT
-                  | epsilon
 
 SEMICOLON_OPCIONAL -> tkn_semicolon
                     | epsilon
@@ -141,7 +139,6 @@ NAMELIST_TAIL -> tkn_comma NAME NAMELIST_TAIL
 
 ASIGN_EXP -> EXP
            | FUNCTIONDEF
-           | tkn_varargs
 
 ASIGN_EXPLIST -> ASIGN_EXP ASIGN_EXPLIST_TAIL
 
@@ -153,14 +150,34 @@ EXPLIST -> EXP EXPLIST_TAIL
 EXPLIST_TAIL -> tkn_comma EXP EXPLIST_TAIL
               | epsilon
 
-EXPLIST_OPCIONAL -> EXPLIST
-                  | epsilon
+EXPLIST_OPCIONAL -> epsilon
+                  | EXPLIST
 
 EXP -> UNOP EXP
      | TERM EXP_TAIL
 
-EXP_TAIL -> BINOP EXP
-          | epsilon
+EXP_TAIL -> EXP_SIMPLE_TAIL EXP_REL_TAIL EXP_AND_TAIL EXP_OR_TAIL
+
+EXP_OR_TAIL -> or EXP_AND EXP_OR_TAIL
+             | epsilon
+
+EXP_AND -> UNOP EXP_AND
+         | TERM EXP_SIMPLE_TAIL EXP_REL_TAIL EXP_AND_TAIL
+
+EXP_AND_TAIL -> and EXP_REL EXP_AND_TAIL
+              | epsilon
+
+EXP_REL -> UNOP EXP_REL
+         | TERM EXP_SIMPLE_TAIL EXP_REL_TAIL
+
+EXP_REL_TAIL -> RELOP EXP_SIMPLE
+              | epsilon
+
+EXP_SIMPLE -> UNOP EXP_SIMPLE
+            | TERM EXP_SIMPLE_TAIL
+
+EXP_SIMPLE_TAIL -> ARITH_OP EXP_SIMPLE
+                 | epsilon
 
 TERM -> nil
       | false
@@ -189,23 +206,23 @@ FUNCTIONDEF -> function FUNCBODY
 
 FUNCBODY -> tkn_opening_par PARLIST_OPCIONAL tkn_closing_par BLOCK_FUNC end
 
-BLOCK_FUNC -> STAT_LIST RETSTAT_OPCIONAL
+BLOCK_FUNC -> STAT_LIST
 
 PARLIST_OPCIONAL -> PARLIST
                   | epsilon
 
 PARLIST -> VARARGPARAM
-         | NAME PARLIST_TAIL
+         | id PARLIST_TAIL
 
 PARLIST_TAIL -> tkn_comma PARLIST_RESTO
               | epsilon
 
 PARLIST_RESTO -> VARARGPARAM
-               | NAME PARLIST_TAIL
+               | id PARLIST_TAIL
 
 VARARGPARAM -> tkn_varargs VARARG_NAME_OPCIONAL
 
-VARARG_NAME_OPCIONAL -> NAME
+VARARG_NAME_OPCIONAL -> id
                       | epsilon
 
 TABLECONSTRUCTOR -> tkn_opening_key FIELDLIST_OPCIONAL tkn_closing_key
@@ -240,27 +257,26 @@ FIELD_IDENT_TAIL -> tkn_assign ASIGN_EXP
 FIELDSEP -> tkn_comma
           | tkn_semicolon
 
-BINOP -> tkn_plus
-       | tkn_minus
-       | tkn_times
-       | tkn_div
-       | tkn_floor_div
-       | tkn_power
-       | tkn_mod
-       | tkn_bit_and
-       | tkn_bitex_or
-       | tkn_bit_or
-       | tkn_right_shift
-       | tkn_left_shift
-       | tkn_concat
-       | tkn_less
+RELOP -> tkn_less
        | tkn_leq
        | tkn_greater
        | tkn_geq
        | tkn_equal
        | tkn_neq
-       | and
-       | or
+
+ARITH_OP -> tkn_plus
+          | tkn_minus
+          | tkn_times
+          | tkn_div
+          | tkn_floor_div
+          | tkn_power
+          | tkn_mod
+          | tkn_bit_and
+          | tkn_bitex_or
+          | tkn_bit_or
+          | tkn_right_shift
+          | tkn_left_shift
+          | tkn_concat
 
 UNOP -> tkn_minus
       | not

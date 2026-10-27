@@ -68,10 +68,10 @@ LOCAL_TAIL -> function NAME FUNCBODY
 GLOBAL_TAIL -> function NAME FUNCBODY
              | NAME ATTNAMELIST_TAIL GLOBAL_ASIGNACION_OPCIONAL
 
-LOCAL_ASIGNACION_OPCIONAL -> tkn_assign ASIGN_EXPLIST
+LOCAL_ASIGNACION_OPCIONAL -> tkn_assign EXPLIST
                            | epsilon
 
-GLOBAL_ASIGNACION_OPCIONAL -> tkn_assign ASIGN_EXPLIST
+GLOBAL_ASIGNACION_OPCIONAL -> tkn_assign EXPLIST
                             | epsilon
 
 STAT_IDENT_TAIL -> tkn_period NAME STAT_IDENT_TAIL
@@ -79,7 +79,7 @@ STAT_IDENT_TAIL -> tkn_period NAME STAT_IDENT_TAIL
                  | tkn_opening_par EXPLIST_OPCIONAL tkn_closing_par CALL_TAIL
                  | tkn_colon NAME tkn_opening_par EXPLIST_OPCIONAL tkn_closing_par CALL_TAIL
                  | tkn_comma VARLIST_ASSIGN
-                 | tkn_assign ASIGN_EXPLIST
+                 | tkn_assign EXPLIST
 ```
 
 ### 2.4 ATTNAMELIST_TAIL
@@ -128,7 +128,7 @@ FUNCNAME_TAIL -> tkn_period NAME FUNCNAME_TAIL
 VARLIST_ASSIGN -> VAR VARLIST_ASSIGN_TAIL
 
 VARLIST_ASSIGN_TAIL -> tkn_comma VARLIST_ASSIGN
-                     | tkn_assign ASIGN_EXPLIST
+                     | tkn_assign EXPLIST
 ```
 
 ### 2.10 VAR
@@ -146,23 +146,18 @@ NAMELIST_TAIL -> tkn_comma NAME NAMELIST_TAIL
                | epsilon
 ```
 
-### 2.12 ASIGN_EXP y ASIGN_EXPLIST
+### 2.12 ASIGN_EXP
 ```ebnf
 ASIGN_EXP -> EXP
            | FUNCTIONDEF
            | tkn_varargs
-
-ASIGN_EXPLIST -> ASIGN_EXP ASIGN_EXPLIST_TAIL
-
-ASIGN_EXPLIST_TAIL -> tkn_comma ASIGN_EXP ASIGN_EXPLIST_TAIL
-                    | epsilon
 ```
 
 ### 2.13 EXPLIST
 ```ebnf
-EXPLIST -> EXP EXPLIST_TAIL
+EXPLIST -> ASIGN_EXP EXPLIST_TAIL
 
-EXPLIST_TAIL -> tkn_comma EXP EXPLIST_TAIL
+EXPLIST_TAIL -> tkn_comma ASIGN_EXP EXPLIST_TAIL
               | epsilon
 
 EXPLIST_OPCIONAL -> EXPLIST

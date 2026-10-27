@@ -50,7 +50,6 @@ class AnalizadorSintactico:
         self.fin_cadena = fin_cadena
         self.mapa_simbolos = mapa_simbolos or {}
         self.primeros = primeros
-    
 
     def display(self, simbolo):
         """Devuelve la representación legible del símbolo según el mapa configurado."""
@@ -93,8 +92,18 @@ class AnalizadorSintactico:
 
             if simbolo_actual in self.no_terminales:
                 if tipo in self.predicciones[simbolo_actual]:
-                    cadena.pop(0)
                     produccion = self.predicciones[simbolo_actual][tipo]
+                    if produccion == "epsilon":
+                        esperados_resto = (
+                            self._calcular_esperados(cadena[1:])
+                            if cadena[1:]
+                            else {self.fin_cadena}
+                        )
+                        if tipo not in esperados_resto:
+                            mensaje = self._formatear_error(token, cadena)
+                            print(mensaje, end="")
+                            return mensaje
+                    cadena.pop(0)
                     simbolos_nuevos = descomponer_produccion(produccion)
                     cadena = simbolos_nuevos + cadena
                 else:
