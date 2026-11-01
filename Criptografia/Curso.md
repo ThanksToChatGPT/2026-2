@@ -1,6 +1,6 @@
 # Criptografia
 
-- Pagina: https://sites.google.com/view/crypto20231
+- Pagina: https://sites.google.com/view/crypto-2026-2
 - Diapositivas: https://drive.google.com/drive/folders/1mosIUshNXGZx8aqj9hnr-jDt2JkVdOKr
 
 ## Evaluacion

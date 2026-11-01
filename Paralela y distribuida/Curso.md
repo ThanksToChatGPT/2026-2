@@ -21,7 +21,6 @@
 
 # Preguntas parcial 1:
 Algo del video: https://www.youtube.com/watch?v=oV9rvDllKEg
-¿Por que movilidad?
 El código: Los programas viajan por internet para ejecutarse en tu equipo o se adaptan automáticamente si la conexión se pone lenta.
 Los datos: La información nace lejos (como en sensores de un camión) y el sistema debe guardarla y sincronizarla en cuanto recupere la señal.
 Los dispositivos: Aparatos como celulares o autos que a cada rato entran y salen de la red, cambian de Wi-Fi a datos, o se quedan sin batería de golpe.
@@ -70,6 +69,12 @@ Determinismo funcional: Siemnpre a la misma entrada le corresponde la misma sali
 Determinismo estructural: Siempre, a la misma entrada le corresponde el mismo grafo computacional (la misma eestructura del programa en paralelo)
 Problema de data race: Read-Write, Write-Write, no hay problema con read read.
 SI SE CUMPLEN AMBAS, NO VA A HABER PROBLEMA DE RACE CONDITIONS
+
+https://youtu.be/e-5obm1G_FY?si=UFNbiCRKM6x6otkC min 19 aprox
+
+Compartiendo estructura-Capitulo1_inmutabilidad
+
+Como se gestiona la inmutabilidad si se requiere hacer un cambio
 
 
 
