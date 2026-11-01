@@ -1,17 +1,21 @@
 """
 test_sintactico.py
-Ejecuta las pruebas del analizador sintáctico y muestra ÚNICAMENTE los tests que fallaron.
+Ejecuta las pruebas del analizador sintáctico a partir de 'tests/tests.txt'
+y muestra ÚNICAMENTE los tests que fallaron.
 Muestra: Input, Esperado y Obtenido con colores en terminal.
 
 Uso:
     py test_sintactico.py
     py test_sintactico.py 13 14
+    py test_sintactico.py "campuswire 1" "campuswire 2"
     py test_sintactico.py --cli
+    py test_sintactico.py --file ruta/a/tests.txt
 """
 
 import os
 import sys
 import io
+import re
 import subprocess
 
 # Habilitar soporte de colores ANSI en terminales de Windows
@@ -29,7 +33,11 @@ COLOR_FAIL = "\033[1;91m"      # Rojo brillante
 RESET = "\033[0m"
 
 DIRECTORIO_ACTUAL = os.path.dirname(os.path.abspath(__file__))
-CARPETA_TESTS = os.path.join(DIRECTORIO_ACTUAL, "tests")
+ARCHIVO_TESTS_DEFECTO = os.path.join(DIRECTORIO_ACTUAL, "tests", "tests.txt")
+if not os.path.exists(ARCHIVO_TESTS_DEFECTO):
+    _alt = os.path.join(DIRECTORIO_ACTUAL, "tests.txt")
+    if os.path.exists(_alt):
+        ARCHIVO_TESTS_DEFECTO = _alt
 
 if DIRECTORIO_ACTUAL not in sys.path:
     sys.path.insert(0, DIRECTORIO_ACTUAL)
@@ -41,20 +49,99 @@ from main import GRAMATICA_TEXTO, MAPA_SIMBOLOS
 
 # Inicializar motor sintáctico en memoria
 _gramatica = parsear_gramatica(GRAMATICA_TEXTO)
+_simbolo_inicial = next(iter(_gramatica)) if _gramatica else "chunk"
 _primeros = calcular_primeros(_gramatica)
 _predicciones = conjuntos_de_prediccion(
     _gramatica,
-    simbolo_inicial="CHUNK",
+    simbolo_inicial=_simbolo_inicial,
     fin_cadena="final_de_archivo",
     primeros=_primeros
 )
+
+
+def cargar_pruebas(ruta_archivo: str) -> list[dict]:
+    """
+    Carga pruebas desde un archivo de texto unificado.
+    Soporta bloques con encabezados de ID (ej. '=== 01 ===' o '# Test 01')
+    y secciones 'Entrada:' y 'Salida:'.
+    """
+    if not os.path.exists(ruta_archivo):
+        return []
+
+    with open(ruta_archivo, "r", encoding="utf-8") as f:
+        contenido = f.read()
+
+    pruebas = []
+    lineas = contenido.splitlines()
+
+    id_actual = None
+    modo = None  # None, 'entrada', 'salida'
+    lineas_entrada = []
+    lineas_salida = []
+    contador_auto = 1
+
+    def guardar_prueba_actual():
+        nonlocal id_actual, modo, lineas_entrada, lineas_salida, contador_auto
+        if lineas_entrada or lineas_salida:
+            nombre = id_actual if id_actual else f"{contador_auto:02d}"
+            entrada_str = "\n".join(lineas_entrada).rstrip("\r\n")
+            salida_str = "\n".join(lineas_salida).strip()
+            if entrada_str.strip() or salida_str:
+                pruebas.append({
+                    "id": nombre,
+                    "entrada": entrada_str,
+                    "esperado": salida_str
+                })
+                contador_auto += 1
+        id_actual = None
+        modo = None
+        lineas_entrada = []
+        lineas_salida = []
+
+    for linea in lineas:
+        linea_strip = linea.strip()
+
+        # Separador de test tipo: === 01 === o --- test_name ---
+        m_sep = re.match(r"^[=\-]{3,}\s*(?:Test\s*:?\s*)?(.*?)\s*[=\-]{3,}$", linea_strip, re.IGNORECASE)
+        if m_sep:
+            guardar_prueba_actual()
+            nombre_capturado = m_sep.group(1).strip()
+            if nombre_capturado:
+                id_actual = nombre_capturado
+            continue
+
+        # Encabezado Entrada:
+        if re.match(r"^Entrada\s*:", linea_strip, re.IGNORECASE):
+            if modo == "salida":
+                guardar_prueba_actual()
+            modo = "entrada"
+            resto = linea_strip.split(":", 1)[1].strip()
+            if resto:
+                lineas_entrada.append(resto)
+            continue
+
+        # Encabezado Salida:
+        if re.match(r"^Salida\s*:", linea_strip, re.IGNORECASE):
+            modo = "salida"
+            resto = linea_strip.split(":", 1)[1].strip()
+            if resto:
+                lineas_salida.append(resto)
+            continue
+
+        if modo == "entrada":
+            lineas_entrada.append(linea)
+        elif modo == "salida":
+            lineas_salida.append(linea)
+
+    guardar_prueba_actual()
+    return pruebas
 
 
 def ejecutar_analizador_memoria(codigo: str) -> str:
     analizador = AnalizadorSintactico(
         predicciones=_predicciones,
         primeros=_primeros,
-        simbolo_inicial="CHUNK",
+        simbolo_inicial=_simbolo_inicial,
         fin_cadena="final_de_archivo",
         mapa_simbolos=MAPA_SIMBOLOS
     )
@@ -81,37 +168,32 @@ def ejecutar_analizador_cli(codigo: str) -> str:
     return proc.stdout.strip()
 
 
-def ejecutar_pruebas(filtro_ids=None, modo_cli=False):
-    if not os.path.exists(CARPETA_TESTS):
-        print(f"{COLOR_FAIL}Error: No existe la carpeta {CARPETA_TESTS}{RESET}")
+def ejecutar_pruebas(filtro_ids=None, modo_cli=False, ruta_tests=None):
+    ruta_archivo = ruta_tests or ARCHIVO_TESTS_DEFECTO
+
+    if not os.path.exists(ruta_archivo):
+        print(f"{COLOR_FAIL}Error: No existe el archivo de tests: {ruta_archivo}{RESET}")
         return
 
-    archivos_in = sorted([f for f in os.listdir(CARPETA_TESTS) if f.endswith(".in")])
+    pruebas = cargar_pruebas(ruta_archivo)
+
     if filtro_ids:
-        archivos_in = [
-            f for f in archivos_in
-            if any(f.startswith(fid) or f == f"{fid}.in" for fid in filtro_ids)
+        pruebas = [
+            p for p in pruebas
+            if any(p["id"] == fid or p["id"].startswith(fid) for fid in filtro_ids)
         ]
 
-    if not archivos_in:
-        print(f"{COLOR_FAIL}No se encontraron pruebas.{RESET}")
+    if not pruebas:
+        print(f"{COLOR_FAIL}No se encontraron pruebas para ejecutar.{RESET}")
         return
 
-    total = len(archivos_in)
+    total = len(pruebas)
     fallidos = 0
 
-    for nombre_in in archivos_in:
-        test_id = nombre_in[:-3]
-        ruta_in = os.path.join(CARPETA_TESTS, nombre_in)
-        ruta_out = os.path.join(CARPETA_TESTS, f"{test_id}.out")
-
-        with open(ruta_in, "r", encoding="utf-8") as f:
-            input_codigo = f.read()
-
-        esperado = ""
-        if os.path.exists(ruta_out):
-            with open(ruta_out, "r", encoding="utf-8") as f:
-                esperado = f.read().strip()
+    for prueba in pruebas:
+        test_id = prueba["id"]
+        input_codigo = prueba["entrada"]
+        esperado = prueba["esperado"]
 
         if modo_cli:
             obtenido = ejecutar_analizador_cli(input_codigo)
@@ -123,7 +205,6 @@ def ejecutar_pruebas(filtro_ids=None, modo_cli=False):
             fallidos += 1
             print(f"{COLOR_TEST}=== Test: {test_id} ==={RESET}")
             print(f"{COLOR_INPUT_HDR}Input:{RESET}")
-            # Mostrar input con indentación limpia
             for linea in input_codigo.rstrip("\n").split("\n"):
                 print(f"  {linea}")
             print(f"{COLOR_EXP_HDR}Esperado:{RESET}")
@@ -141,5 +222,15 @@ def ejecutar_pruebas(filtro_ids=None, modo_cli=False):
 if __name__ == "__main__":
     args = sys.argv[1:]
     usar_cli = "--cli" in args
+
+    ruta_custom = None
+    if "--file" in args:
+        idx = args.index("--file")
+        if idx + 1 < len(args):
+            ruta_custom = args[idx + 1]
+            args = args[:idx] + args[idx + 2:]
+        else:
+            args = args[:idx]
+
     filtros = [a for a in args if not a.startswith("--")]
-    ejecutar_pruebas(filtro_ids=filtros if filtros else None, modo_cli=usar_cli)
+    ejecutar_pruebas(filtro_ids=filtros if filtros else None, modo_cli=usar_cli, ruta_tests=ruta_custom)

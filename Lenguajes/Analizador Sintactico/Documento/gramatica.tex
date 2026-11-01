@@ -1,0 +1,492 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noquoting,es-nodecimaldot]{babel}
+\usepackage[margin=1.2cm, top=1.2cm, bottom=1.2cm, left=1.2cm, right=1.2cm]{geometry}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{amsmath,amssymb}
+
+% Formato compacto de secciones para maximizar aprovechamiento de espacio
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{0.4em}{}
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+\titlespacing*{\subsection}{0pt}{6pt}{2pt}
+\setlist{nosep, leftmargin=1.3em, topsep=2pt, itemsep=2pt}
+
+% Configuración de listings para código de gramáticas
+\definecolor{codebg}{rgb}{0.97,0.97,0.97}
+\lstdefinestyle{grammarstyle}{
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\scriptsize,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=flexible,
+  keepspaces=true,
+  showstringspaces=false,
+  frame=single,
+  rulecolor=\color{black!15},
+  framerule=0.5pt,
+  framesep=2pt,
+  aboveskip=2pt,
+  belowskip=2pt
+}
+
+\begin{document}
+\pagestyle{plain}
+
+% Encabezado técnico compacto (sin gran título ni márgenes desperdiciados)
+\noindent
+\begin{minipage}[t]{0.70\textwidth}
+  {\Large \textbf{Gramática para Analizador Sintáctico -- Lua 5.5}} \\
+  \footnotesize Lenguajes de Programación \textbullet{} Práctica 2: Analizador Sintáctico Predictivo LL(1)
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.28\textwidth}
+  \raggedleft
+  \normalsize \textbf{Jonathan Felipe López Núñez} \\
+  \footnotesize Especificación
+\end{minipage}
+
+\vspace{3pt}
+\hrule height 0.8pt
+\vspace{6pt}
+
+% ==============================================================================
+% SECCIÓN 1: GRAMÁTICA DE GRAMATICA.TXT (SOLO LA GRAMÁTICA, SIN EXPLICACIÓN)
+% ==============================================================================
+\section{Gramática usada para el analizador sintáctico}
+
+\begin{multicols}{2}
+\begin{lstlisting}[style=grammarstyle]
+CHUNK ::= BLOCK
+
+BLOCK ::= STAT_LIST
+
+STAT_LIST ::= STAT STAT_LIST
+           | epsilon
+
+STAT ::= ID_NAME PRIMARY_STAT_TAIL
+       | local VAR_OR_FUNC_DECL
+       | global VAR_OR_FUNC_DECL
+       | function FUNC_NAME FUNC_BODY
+       | while EXP do BLOCK end
+       | repeat BLOCK until EXP
+       | if EXP then BLOCK ELSEIF_LIST ELSE_OPT end
+       | for ID_NAME FOR_TAIL
+       | goto ID_NAME
+       | tkn_goto ID_NAME tkn_goto
+       | break
+       # Segun el test Campuswire 6, se debe tener return aqui
+       | return RET_TAIL
+       | tkn_semicolon
+
+ID_NAME ::= id
+          | print
+          | warn
+          | pcall
+          | xpcall
+          | error
+
+ELSEIF_LIST ::= elseif EXP then BLOCK ELSEIF_LIST
+             | epsilon
+
+ELSE_OPT ::= else BLOCK
+          | epsilon
+
+RET_TAIL ::= epsilon
+          | VAL_EXP_LIST
+
+VAR_OR_FUNC_DECL ::= function ID_NAME FUNC_BODY
+                  | NAME_DECL_LIST OPT_ASSIGN
+
+NAME_DECL_LIST ::= NAME_DECL NAME_DECL_LIST_TAIL
+
+NAME_DECL_LIST_TAIL ::= tkn_comma NAME_DECL NAME_DECL_LIST_TAIL
+                     | epsilon
+
+NAME_DECL ::= ID_NAME NAME_DECL_TAIL
+
+NAME_DECL_TAIL ::= tkn_opening_bra EXP tkn_closing_bra
+                | epsilon
+
+OPT_ASSIGN ::= tkn_assign VAL_EXP_LIST
+            | epsilon
+
+PRIMARY_STAT_TAIL ::= tkn_assign VAL_EXP_LIST
+                   | tkn_comma VAR_LIST tkn_assign VAL_EXP_LIST
+                   | tkn_colon ID_NAME CALL_TAIL
+                   | tkn_opening_par ARGS_OPT tkn_closing_par CALL_STAT_TAIL
+                   | tkn_period ID_NAME PRIMARY_STAT_TAIL
+                   | tkn_opening_bra EXP tkn_closing_bra PRIMARY_STAT_TAIL
+
+CALL_TAIL ::= tkn_opening_par ARGS_OPT tkn_closing_par CALL_STAT_TAIL
+
+CALL_STAT_TAIL ::= tkn_opening_par ARGS_OPT tkn_closing_par CALL_STAT_TAIL
+                | tkn_colon ID_NAME CALL_TAIL
+                | tkn_period ID_NAME PRIMARY_STAT_TAIL
+                | tkn_opening_bra EXP tkn_closing_bra PRIMARY_STAT_TAIL
+                | epsilon
+
+VAR_LIST ::= VAR_ITEM VAR_LIST_TAIL
+
+VAR_LIST_TAIL ::= tkn_comma VAR_ITEM VAR_LIST_TAIL
+               | epsilon
+
+VAR_ITEM ::= ID_NAME VAR_SUFFIX
+
+VAR_SUFFIX ::= tkn_period ID_NAME VAR_SUFFIX
+            | tkn_opening_bra EXP tkn_closing_bra VAR_SUFFIX
+            | epsilon
+
+FOR_TAIL ::= tkn_assign EXP tkn_comma EXP FOR_STEP_OPT do BLOCK end
+          | tkn_comma ID_NAME FOR_NAME_LIST in EXP_LIST do BLOCK end
+          | in EXP_LIST do BLOCK end
+
+FOR_STEP_OPT ::= tkn_comma EXP
+              | epsilon
+
+FOR_NAME_LIST ::= tkn_comma ID_NAME FOR_NAME_LIST
+               | epsilon
+
+FUNC_NAME ::= ID_NAME FUNC_NAME_TAIL
+
+FUNC_NAME_TAIL ::= tkn_period ID_NAME FUNC_NAME_TAIL
+                | tkn_colon ID_NAME
+                | epsilon
+
+FUNC_BODY ::= tkn_opening_par PAR_LIST_OPT tkn_closing_par BLOCK end
+
+PAR_LIST_OPT ::= PAR_LIST
+              | epsilon
+
+PAR_LIST ::= id PAR_LIST_TAIL
+          | tkn_varargs
+
+PAR_LIST_TAIL ::= tkn_comma PAR_ITEM
+               | epsilon
+
+PAR_ITEM ::= id PAR_LIST_TAIL
+          | tkn_varargs
+
+VAL_EXP ::= function FUNC_BODY
+          | EXP
+
+VAL_EXP_LIST ::= VAL_EXP VAL_EXP_LIST_TAIL
+
+VAL_EXP_LIST_TAIL ::= tkn_comma VAL_EXP VAL_EXP_LIST_TAIL
+                   | epsilon
+
+EXP_LIST ::= EXP EXP_LIST_TAIL
+
+EXP_LIST_TAIL ::= tkn_comma EXP EXP_LIST_TAIL
+               | epsilon
+
+ARGS_OPT ::= VAL_EXP_LIST
+          | epsilon
+
+EXP ::= AND_EXP EXP_TAIL
+
+EXP_TAIL ::= or AND_EXP EXP_TAIL
+          | epsilon
+
+AND_EXP ::= REL_EXP AND_EXP_TAIL
+
+AND_EXP_TAIL ::= and REL_EXP AND_EXP_TAIL
+              | epsilon
+
+REL_EXP ::= BIT_OR_EXP REL_EXP_TAIL
+
+REL_EXP_TAIL ::= REL_OP BIT_OR_EXP
+              | epsilon
+
+REL_OP ::= tkn_less
+        | tkn_greater
+        | tkn_leq
+        | tkn_geq
+        | tkn_neq
+        | tkn_equal
+
+BIT_OR_EXP ::= BIT_XOR_EXP BIT_OR_EXP_TAIL
+
+BIT_OR_EXP_TAIL ::= tkn_bit_or BIT_XOR_EXP BIT_OR_EXP_TAIL
+                 | epsilon
+
+BIT_XOR_EXP ::= BIT_AND_EXP BIT_XOR_EXP_TAIL
+
+BIT_XOR_EXP_TAIL ::= tkn_bitex_or BIT_AND_EXP BIT_XOR_EXP_TAIL
+                  | epsilon
+
+BIT_AND_EXP ::= SHIFT_EXP BIT_AND_EXP_TAIL
+
+BIT_AND_EXP_TAIL ::= tkn_bit_and SHIFT_EXP BIT_AND_EXP_TAIL
+                  | epsilon
+
+SHIFT_EXP ::= CONCAT_EXP SHIFT_EXP_TAIL
+
+SHIFT_EXP_TAIL ::= tkn_left_shift CONCAT_EXP SHIFT_EXP_TAIL
+                | tkn_right_shift CONCAT_EXP SHIFT_EXP_TAIL
+                | epsilon
+
+CONCAT_EXP ::= ADD_EXP CONCAT_EXP_TAIL
+
+CONCAT_EXP_TAIL ::= tkn_concat CONCAT_EXP
+                 | epsilon
+
+ADD_EXP ::= MUL_EXP ADD_EXP_TAIL
+
+ADD_EXP_TAIL ::= tkn_plus MUL_EXP ADD_EXP_TAIL
+              | tkn_minus MUL_EXP ADD_EXP_TAIL
+              | epsilon
+
+MUL_EXP ::= UNARY_EXP MUL_EXP_TAIL
+
+MUL_EXP_TAIL ::= tkn_times UNARY_EXP MUL_EXP_TAIL
+              | tkn_div UNARY_EXP MUL_EXP_TAIL
+              | tkn_floor_div UNARY_EXP MUL_EXP_TAIL
+              | tkn_mod UNARY_EXP MUL_EXP_TAIL
+              | epsilon
+
+UNARY_EXP ::= not UNARY_EXP
+           | tkn_length UNARY_EXP
+           | tkn_minus UNARY_EXP
+           | POW_EXP
+
+POW_EXP ::= ATOM POW_EXP_TAIL
+
+POW_EXP_TAIL ::= tkn_power UNARY_EXP
+              | epsilon
+
+ATOM ::= ID_NAME SUFFIX_EXP
+      | valor_numerico
+      | cadena_de_caracteres
+      | nil
+      | true
+      | false
+      | TABLE_CONSTRUCTOR
+      | tkn_opening_par EXP tkn_closing_par
+
+SUFFIX_EXP ::= tkn_period ID_NAME SUFFIX_EXP
+            | tkn_opening_bra EXP tkn_closing_bra SUFFIX_EXP
+            | tkn_opening_par ARGS_OPT tkn_closing_par SUFFIX_EXP
+            | tkn_colon ID_NAME tkn_opening_par ARGS_OPT tkn_closing_par SUFFIX_EXP
+            | epsilon
+
+TABLE_CONSTRUCTOR ::= tkn_opening_key FIELD_LIST_OPT tkn_closing_key
+
+FIELD_LIST_OPT ::= FIELD FIELD_LIST_TAIL
+                | epsilon
+
+FIELD_LIST_TAIL ::= FIELD_SEP FIELD_OPT
+                 | epsilon
+
+FIELD_OPT ::= FIELD FIELD_LIST_TAIL
+           | epsilon
+
+FIELD_SEP ::= tkn_comma
+           | tkn_semicolon
+
+FIELD ::= tkn_opening_bra EXP tkn_closing_bra tkn_assign VAL_EXP
+       | ID_NAME FIELD_ID_TAIL
+       | function FUNC_BODY
+       | EXP_NON_ID
+
+FIELD_ID_TAIL ::= tkn_assign VAL_EXP
+               | SUFFIX_EXP POW_EXP_TAIL MUL_EXP_TAIL ADD_EXP_TAIL SHIFT_EXP_TAIL BIT_AND_EXP_TAIL BIT_XOR_EXP_TAIL BIT_OR_EXP_TAIL REL_EXP_TAIL AND_EXP_TAIL EXP_TAIL
+
+EXP_NON_ID ::= AND_EXP_NON_ID EXP_TAIL
+
+AND_EXP_NON_ID ::= REL_EXP_NON_ID AND_EXP_TAIL
+
+REL_EXP_NON_ID ::= BIT_OR_EXP_NON_ID REL_EXP_TAIL
+
+BIT_OR_EXP_NON_ID ::= BIT_XOR_EXP_NON_ID BIT_OR_EXP_TAIL
+
+BIT_XOR_EXP_NON_ID ::= BIT_AND_EXP_NON_ID BIT_XOR_EXP_TAIL
+
+BIT_AND_EXP_NON_ID ::= SHIFT_EXP_NON_ID BIT_AND_EXP_TAIL
+
+SHIFT_EXP_NON_ID ::= CONCAT_EXP_NON_ID SHIFT_EXP_TAIL
+
+CONCAT_EXP_NON_ID ::= ADD_EXP_NON_ID CONCAT_EXP_TAIL
+
+ADD_EXP_NON_ID ::= MUL_EXP_NON_ID ADD_EXP_TAIL
+
+MUL_EXP_NON_ID ::= UNARY_EXP_NON_ID MUL_EXP_TAIL
+
+UNARY_EXP_NON_ID ::= not UNARY_EXP
+                  | tkn_length UNARY_EXP
+                  | tkn_minus UNARY_EXP
+                  | POW_EXP_NON_ID
+
+POW_EXP_NON_ID ::= ATOM_NON_ID POW_EXP_TAIL
+
+ATOM_NON_ID ::= valor_numerico
+             | cadena_de_caracteres
+             | nil
+             | true
+             | false
+             | TABLE_CONSTRUCTOR
+             | tkn_opening_par EXP tkn_closing_par
+\end{lstlisting}
+\end{multicols}
+
+\vspace{6pt}
+
+% ==============================================================================
+% SECCIÓN 2: GRAMÁTICA BNF DE LUA 5.5 REFERENCE MANUAL Y ANÁLISIS DE CAMBIOS
+% ==============================================================================
+\section{Gramática BNF base usada para la creación de la gramática}
+
+\subsection{Gramática BNF Oficial Extraída de Lua 5.5 Reference Manual}
+
+A continuación se presentan todas las producciones sintácticas extraídas del manual de referencia oficial:
+
+\begin{multicols}{2}
+\begin{lstlisting}[style=grammarstyle]
+chunk ::= block
+
+block ::= {stat}
+
+stat ::= ';'
+       | varlist '=' explist
+       | functioncall
+       | label
+       | break
+       | goto Name
+       | do block end
+       | while exp do block end
+       | repeat block until exp
+       | if exp then block {elseif exp then block} [else block] end
+       | for Name '=' exp ',' exp [',' exp] do block end
+       | for namelist in explist do block end
+       | function funcname funcbody
+       | local function Name funcbody
+       | global function Name funcbody
+       | local attnamelist ['=' explist]
+       | global attnamelist ['=' explist]
+       | global [attrib] '*'
+       | return [explist] [';']
+
+label ::= '::' Name '::'
+
+funcname ::= Name {'.' Name} [':' Name]
+
+varlist ::= var {',' var}
+
+var ::= Name
+      | prefixexp '[' exp ']'
+      | prefixexp '.' Name
+
+namelist ::= Name {',' Name}
+
+explist ::= exp {',' exp}
+
+exp ::= nil | false | true | Numeral | LiteralString | '...' | functiondef
+      | prefixexp | tableconstructor | exp binop exp | unop exp
+
+prefixexp ::= var | functioncall | '(' exp ')'
+
+functioncall ::= prefixexp args
+               | prefixexp ':' Name args
+
+args ::= '(' [explist] ')'
+       | tableconstructor
+       | LiteralString
+
+functiondef ::= function funcbody
+
+funcbody ::= '(' [parlist] ')' block end
+
+parlist ::= namelist [',' varargparam] | varargparam
+
+varargparam ::= '...' [Name]
+
+tableconstructor ::= '{' [fieldlist] '}'
+
+fieldlist ::= field {fieldsep field} [fieldsep]
+
+field ::= '[' exp ']' '=' exp | Name '=' exp | exp
+
+fieldsep ::= ',' | ';'
+
+attnamelist ::= [attrib] Name [attrib] {',' Name [attrib]}
+
+attrib ::= '<' Name '>'
+\end{lstlisting}
+\end{multicols}
+
+\subsection{Cambios Realizados a la Gramática Original y Justificación Técnica}
+
+Para adaptar la gramática formal de Lua 5.5 a un analizador sintáctico predictivo descendente \textbf{LL(1)} y cumplir con los requerimientos de UNcode, se implementaron los siguientes cambios:
+
+\begin{enumerate}
+  \item \textbf{Eliminación de recursión por la izquierda y estratificación de expresiones (Diseño LL(1)):}
+  \begin{itemize}
+    \item \textit{Original:} La regla \texttt{exp ::= exp binop exp | unop exp} y la recursión mutua entre \texttt{prefixexp}, \texttt{var} y \texttt{functioncall} poseen recursión por la izquierda directa e indirecta, además de ambigüedad en precedencia y asociatividad.
+    \item \textit{Cambio:} Se descompuso \texttt{exp} en 12 niveles de precedencia jerárquica: \texttt{EXP} (\texttt{or}), \texttt{AND\_EXP} (\texttt{and}), \texttt{REL\_EXP} (relacionales), \texttt{BIT\_OR\_EXP} (\texttt{|}), \texttt{BIT\_XOR\_EXP} (\texttt{\textasciitilde{}}), \texttt{BIT\_AND\_EXP} (\texttt{\&}), \texttt{SHIFT\_EXP} (\texttt{<{}<}, \texttt{>{}>}), \texttt{CONCAT\_EXP} (\texttt{..}), \texttt{ADD\_EXP} (\texttt{+}, \texttt{-}), \texttt{MUL\_EXP} (\texttt{*}, \texttt{/}, \texttt{//}, \texttt{\%}), \texttt{UNARY\_EXP} (\texttt{not}, \texttt{\#}, \texttt{-}) y \texttt{POW\_EXP} (\texttt{\textasciicircum{}}).
+    \item \textit{Asociatividad:} Para operadores asociativos a derecha (\texttt{..} y \texttt{\textasciicircum{}}), la recursión gramatical se mantiene a la derecha; para asociatividad a izquierda, se introdujeron no terminales auxiliares de cola (\texttt{*\_TAIL}) con derivación a \texttt{epsilon}.
+  \end{itemize}
+
+  \item \textbf{Factorización del conflicto en sentencias: Asignación vs Llamada a Función:}
+  \begin{itemize}
+    \item \textit{Original:} \texttt{stat ::= varlist '=' explist | functioncall}. Ambas sentencias inician mediante \texttt{prefixexp} (típicamente un identificador \texttt{Name}), lo que genera un conflicto First/First irresoluble con un solo token de anticipación.
+    \item \textit{Cambio:} Se unificaron bajo la regla factorizada \texttt{STAT ::= ID\_NAME PRIMARY\_STAT\_TAIL}. En \texttt{PRIMARY\_STAT\_TAIL} se procesan de forma uniforme accesos a campos (\texttt{.}), índices (\texttt{[...]}), llamadas (\texttt{(...)}) y métodos (\texttt{:}), bifurcando deterministamente entre llamada consumida o sentencia de asignación (\texttt{tkn\_assign} o continuación de lista con \texttt{tkn\_comma}).
+  \end{itemize}
+
+  \item \textbf{Exclusividad del token \texttt{do} para estructuras de ciclo:}
+  \begin{itemize}
+    \item \textit{Original:} \texttt{stat ::= do block end}.
+    \item \textit{Cambio:} Se eliminó la sentencia de bloque explícito independiente. El token \texttt{do} queda reservado única y exclusivamente como delimitador en los ciclos \texttt{while ... do} y \texttt{for ... do}. Por tanto, \texttt{do} no pertenece a $\text{First}(\texttt{STAT})$ ni es esperado al inicio de una sentencia.
+  \end{itemize}
+
+  \item \textbf{Restricción de funciones anónimas en ciclo \texttt{for} numérico:}
+  \begin{itemize}
+    \item \textit{Original:} \texttt{stat ::= for Name '=' exp ',' exp [',' exp] do block end}.
+    \item \textit{Cambio:} En la expresión inicial tras el signo \texttt{=} en la cabecera del ciclo numérico, se restringe la posibilidad de definir closures anónimos (\texttt{function funcbody}). Por ello se evalúa directamente con \texttt{EXP} (cuyo First no incluye \texttt{function}). En asignaciones estándar o retornos sí se admite función anónima mediante \texttt{VAL\_EXP ::= function FUNC\_BODY | EXP}.
+  \end{itemize}
+
+  \item \textbf{Unificación y simplificación de declaraciones \texttt{local} y \texttt{global}:}
+  \begin{itemize}
+    \item \textit{Original:} \texttt{stat ::= local attnamelist ['=' explist] | global attnamelist ['=' explist]} \\
+    \hspace*{1.2em} $\mid$ \texttt{global [attrib] '*'}, soportando atributos como \texttt{<const>} o \texttt{<close>}.
+    \item \textit{Cambio:} Se eliminaron los atributos y el comodín \texttt{global *}, unificando ambas sentencias bajo \texttt{VAR\_OR\_FUNC\_DECL}. Tras \texttt{local} o \texttt{global} únicamente se permite una definición de función (\texttt{function ID\_NAME FUNC\_BODY}) o una lista de nombres de variables con inicialización opcional (\texttt{NAME\_DECL\_LIST OPT\_ASSIGN}).
+  \end{itemize}
+
+  \item \textbf{Resolución de ambigüedad en constructores de tabla:}
+  \begin{itemize}
+    \item \textit{Original:} \texttt{field ::= '[' exp ']' '=' exp | Name '=' exp | exp}.
+    \item \textit{Cambio:} Cuando un campo inicia con un identificador, existe un conflicto First/First entre la asignación \texttt{Name = exp} y una expresión que comience por dicho nombre (ej. \texttt{x + 1} o \texttt{f(x)}). Se resolvió factorizando mediante \texttt{FIELD ::= ID\_NAME FIELD\_ID\_TAIL}, distinguiendo de inmediato si continúa una asignación (\texttt{tkn\_assign}) o la evaluación de una expresión general (\texttt{SUFFIX\_EXP ...}). Para expresiones que inician con otros términos se utiliza \texttt{EXP\_NON\_ID}.
+  \end{itemize}
+
+  \item \textbf{Validación estricta de parámetros en funciones y varargs:}
+  \begin{itemize}
+    \item \textit{Original:} \texttt{parlist ::= namelist [',' varargparam] | varargparam}, con \texttt{varargparam ::= '...' [Name]}.
+    \item \textit{Cambio:} Se eliminó el nombre opcional en varargs (\texttt{... [Name]} $\rightarrow$ \texttt{tkn\_varargs}). Además, en \texttt{PAR\_LIST}, toda coma debe ir obligatoriamente seguida de un nuevo parámetro o \texttt{tkn\_varargs}, no admitiéndose comas flotantes finales.
+  \end{itemize}
+
+  \item \textbf{Reutilización de funciones nativas como identificadores:}
+  \begin{itemize}
+    \item \textit{Original:} El manual utiliza únicamente el no terminal abstracto \texttt{Name}.
+    \item \textit{Cambio:} El analizador léxico reconoce nombres de funciones del sistema (\texttt{print}, \texttt{warn}, \texttt{pcall}, \texttt{xpcall} y \texttt{error}) como tokens con nombre propio. Como en Lua es válido redefinirlos o utilizarlos como variables y nombres de funciones propias, se definió la producción:
+    \[\texttt{ID\_NAME ::= id | print | warn | pcall | xpcall | error}\]
+    permitiendo su uso en cualquier posición sintáctica donde se espere un identificador.
+  \end{itemize}
+
+  \item \textbf{Adaptación estricta a los tokens del Analizador Léxico y operaciones Bitwise binarias:}
+  \begin{itemize}
+    \item \textit{Cambio:} Se mapearon literales y operadores a los tokens exactos del analizador léxico: literales (\texttt{valor\_numerico}, \texttt{cadena\_de\_\allowbreak caracteres}, \texttt{nil}, \texttt{true}, \texttt{false}) y operadores con prefijo \texttt{tkn\_*} (\texttt{tkn\_assign}, \texttt{tkn\_semicolon}, \texttt{tkn\_plus}, etc.).
+    \item \textit{Operaciones bitwise:} Conforme a las instrucciones del proyecto, las operaciones a nivel de bits se definen exclusivamente como binarias entre dos operandos (\texttt{tkn\_bit\_and}, \texttt{tkn\_bit\_or}, \texttt{tkn\_bitex\_or}, \texttt{tkn\_left\_shift}, \texttt{tkn\_right\_shift}).
+  \end{itemize}
+
+  \item \textbf{Sentencia \texttt{return} permisiva dentro de bloques:}
+  \begin{itemize}
+    \item \textit{Original:} En Lua estándar, \texttt{return} se define típicamente como la última sentencia del bloque (\texttt{laststat}).
+    \item \textit{Cambio:} Se integró \texttt{return RET\_TAIL} como una alternativa regular dentro de \texttt{STAT}, permitiendo retornos en cualquier punto de la secuencia de sentencias (\texttt{STAT\_LIST}) de acuerdo con las pruebas del curso.
+  \end{itemize}
+\end{enumerate}
+
+\end{document}

@@ -1,3 +1,0 @@
-function saludar(texto)
- print(texto)
-end

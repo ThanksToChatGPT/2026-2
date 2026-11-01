@@ -16,8 +16,9 @@ def parsear_gramatica(gramatica_str):
         if not linea or linea.startswith(("#", "//", "```")):
             continue
 
-        if "->" in linea:
-            partes = linea.split("->", 1)
+        sep = "::=" if "::=" in linea else ("->" if "->" in linea else None)
+        if sep:
+            partes = linea.split(sep, 1)
             actual_nt = partes[0].strip()
             gramatica.setdefault(actual_nt, [])
             for alt in partes[1].split("|"):
@@ -34,25 +35,25 @@ def parsear_gramatica(gramatica_str):
 
 
 class AnalizadorSintactico:
-    """Analizador sintáctico que procesa tokens según el conjunto de predicciones."""
+    """Analizador sintáctico que procesa tokens según el conjunto de predicciones LL(1)."""
 
     def __init__(
         self,
         predicciones,
-        primeros=None,
+        primeros,
         simbolo_inicial=None,
-        fin_cadena="$",
+        fin_cadena="final_de_archivo",
         mapa_simbolos=None,
     ):
         self.predicciones = predicciones
+        self.primeros = primeros
         self.no_terminales = set(predicciones.keys())
-        self.simbolo_inicial = simbolo_inicial if simbolo_inicial is not None else next(iter(predicciones))
+        self.simbolo_inicial = simbolo_inicial or next(iter(predicciones))
         self.fin_cadena = fin_cadena
         self.mapa_simbolos = mapa_simbolos or {}
-        self.primeros = primeros
 
     def display(self, simbolo):
-        """Devuelve la representación legible del símbolo según el mapa configurado."""
+        """Devuelve la representación legible del símbolo para el usuario."""
         return self.mapa_simbolos.get(simbolo, simbolo)
 
     def _calcular_esperados(self, cadena):
@@ -66,49 +67,42 @@ class AnalizadorSintactico:
             esperados.update(primeros_s - {"epsilon"})
             if "epsilon" not in primeros_s:
                 break
+        else:
+            if self.fin_cadena:
+                esperados.add(self.fin_cadena)
         return esperados
 
     def _formatear_error(self, token, cadena):
-        """Genera el mensaje de error sintáctico."""
+        """Genera el mensaje de error sintáctico con los tokens esperados."""
         esperados = [self.display(s) for s in sorted(self._calcular_esperados(cadena))]
         lista_esp = ", ".join(f'"{e}"' for e in esperados)
-        tipo = getattr(token, "tipo", str(token))
-        lexema = getattr(token, "lexema", str(token))
-        fila = getattr(token, "fila", 1)
-        columna = getattr(token, "columna", 1)
-
-        encontrado = self.display(tipo) if tipo == self.fin_cadena else lexema
-        return f'<{fila}:{columna}> Error sintactico: se encontro: "{encontrado}"; se esperaba: {lista_esp}.'
+        encontrado = self.display(token.tipo) if token.tipo == self.fin_cadena else token.lexema
+        return f'<{token.fila}:{token.columna}> Error sintactico: se encontro: "{encontrado}"; se esperaba: {lista_esp}.'
 
     def analizar(self, tokens):
-        """Ejecuta el análisis sintáctico sobre una secuencia de tokens."""
+        """Ejecuta el análisis sintáctico sobre la lista de tokens."""
         cadena = [self.simbolo_inicial]
         idx = 0
 
         while cadena:
             simbolo_actual = cadena[0]
             token = tokens[idx]
-            tipo = getattr(token, "tipo", str(token))
+            tipo = token.tipo
 
             if simbolo_actual in self.no_terminales:
                 if tipo in self.predicciones[simbolo_actual]:
                     produccion = self.predicciones[simbolo_actual][tipo]
                     if produccion == "epsilon":
-                        esperados_resto = (
-                            self._calcular_esperados(cadena[1:])
-                            if cadena[1:]
-                            else {self.fin_cadena}
-                        )
+                        esperados_resto = self._calcular_esperados(cadena[1:]) or {self.fin_cadena}
                         if tipo not in esperados_resto:
                             mensaje = self._formatear_error(token, cadena)
-                            print(mensaje, end="")
+                            print(mensaje)
                             return mensaje
                     cadena.pop(0)
-                    simbolos_nuevos = descomponer_produccion(produccion)
-                    cadena = simbolos_nuevos + cadena
+                    cadena = descomponer_produccion(produccion) + cadena
                 else:
                     mensaje = self._formatear_error(token, cadena)
-                    print(mensaje, end="")
+                    print(mensaje)
                     return mensaje
             else:
                 # Terminal: emparejar
@@ -117,7 +111,7 @@ class AnalizadorSintactico:
                     idx += 1
                 else:
                     mensaje = self._formatear_error(token, cadena)
-                    print(mensaje, end="")
+                    print(mensaje)
                     return mensaje
 
         mensaje = "El analisis sintactico ha finalizado exitosamente."

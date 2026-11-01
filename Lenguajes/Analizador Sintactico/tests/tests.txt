@@ -1,0 +1,219 @@
+=== 01 ===
+Entrada:
+n1=125-(2/3)*5+2^2
+n2=50+22 // (14-7) % 2
+-- imprimimos los valores
+print( n1,' ',n2)
+Salida:
+El analisis sintactico ha finalizado exitosamente.
+
+=== 02 ===
+Entrada:
+function my_function[]
+local args = {1,2,3}
+end
+Salida:
+<1:21> Error sintactico: se encontro: "["; se esperaba: ":", "(", ".".
+
+=== 03 ===
+Entrada:
+--[[ I forgot what was the
+main purpose of the commas over there ]]
+local mistake,
+Salida:
+<4:1> Error sintactico: se encontro: "final de archivo"; se esperaba: "error", "id", "pcall", "print", "warn", "xpcall".
+
+=== 04 ===
+Entrada:
+-- not closed function
+function random()
+
+
+
+-- is something missing?
+Salida:
+<7:1> Error sintactico: se encontro: "final de archivo"; se esperaba: "break", "end", "error", "for", "function", "global", "goto", "id", "if", "local", "pcall", "print", "repeat", "return", "::", ";", "warn", "while", "xpcall".
+
+=== 05 ===
+Entrada:
+local mi_funcion = function right_shift_function(a,b) return a>>b end
+--[[ inner functions are not that defined ]]
+Salida:
+<1:29> Error sintactico: se encontro: "right_shift_function"; se esperaba: "(".
+
+=== 06 ===
+Entrada:
+local READ = 1
+local WRITE = 2
+local EXECUTE = 4 
+local function combinarPermisos(...)
+ local resultado = 0
+ resultado = resultado | permiso
+ return resultado
+end
+local permisosUsuario = combinarPermisos(READ, WRITE)
+local tieneEscritura = (permisosUsuario & WRITE) ~= 0
+print("¿Tiene permiso de escritura?", tieneEscritura)
+Salida:
+El analisis sintactico ha finalizado exitosamente.
+
+=== 07 ===
+Entrada:
+miTabla = {10, 20, 30};
+print(miTabla[1]); -- 1
+warn(miTabla[2]); -- 2
+imprimir(miTabla[3]); -- 3
+--[[ :v ]]
+-- (ups, tengo que indicar el comentario :v)
+Salida:
+El analisis sintactico ha finalizado exitosamente.
+
+=== 08 ===
+Entrada:
+-- acceso incorrecto a una clave numérica
+warn(arr.1)
+Salida:
+<2:10> Error sintactico: se encontro: "1"; se esperaba: "error", "id", "pcall", "print", "warn", "xpcall".
+
+=== 12 ===
+Entrada:
+if entrada == nil then
+ print("Valor indefinido")
+else
+ print("Valor definido")
+end
+Salida:
+El analisis sintactico ha finalizado exitosamente.
+
+=== 13 ===
+Entrada:
+for i= for do
+print("i")
+end
+Salida:
+<1:8> Error sintactico: se encontro: "for"; se esperaba: "cadena_de_caracteres", "error", "false", "id", "nil", "not", "pcall", "print", "#", "-", "{", "(", "true", "valor_numerico", "warn", "xpcall".
+
+=== 14 ===
+Entrada:
+local contador = 1
+
+repeat
+    print("El contador va en:", contador)
+    contador = contador + 1
+until do contador > 5
+Salida:
+<6:7> Error sintactico: se encontro: "do"; se esperaba: "cadena_de_caracteres", "error", "false", "id", "nil", "not", "pcall", "print", "#", "-", "{", "(", "true", "valor_numerico", "warn", "xpcall".
+
+=== 17 ===
+Entrada:
+print(54"this")
+Salida:
+<1:9> Error sintactico: se encontro: "this"; se esperaba: "and", "or", "&", "|", "~", ")", ",", "..", "/", "==", "//", ">=", ">", "<<", "<=", "<", "-", "%", "~=", "+", "^", ">>", "*".
+
+=== 18 ===
+Entrada:
+local i = 0;
+
+while (i < 5) do
+    p == [i];3
+    i = i + 1;
+end
+Salida:
+<4:7> Error sintactico: se encontro: "=="; se esperaba: "=", ":", ",", "[", "(", ".".
+
+=== 21 ===
+Entrada:
+local entrada
+if entrada == nil then
+ print("Valor indefinido")
+else
+ print("Valor definido")
+end
+Salida:
+El analisis sintactico ha finalizado exitosamente.
+
+=== 22 ===
+Entrada:
+-- Creamos una tabla que actúa como diccionario de funciones
+local operaciones = {
+ -- Método 1: Usando una función anónima asignada a una clave
+ sumar = function(a, b)
+ return a + b
+ end,
+ 
+ restar = function(a, b)
+ return a - b
+ end
+}
+-- Método 2: Asignando funciones a la tabla después de declararla
+operaciones["multiplicar"] = function(a, b)
+ return a * b
+end
+Salida:
+El analisis sintactico ha finalizado exitosamente.
+
+=== 23 ===
+Entrada:
+global 1;
+Salida:
+<1:8> Error sintactico: se encontro: "1"; se esperaba: "error", "function", "id", "pcall", "print", "warn", "xpcall".
+
+=== 25 ===
+Entrada:
+::my_goto-variable::
+goto my_goto-variable;
+Salida:
+<1:10> Error sintactico: se encontro: "-"; se esperaba: "::".
+
+=== ejemplo1 ===
+Entrada:
+function saludar(texto)
+ print(texto)
+end
+Salida:
+El analisis sintactico ha finalizado exitosamente.
+
+=== ejemplo2 ===
+Entrada:
+local 1;
+Salida:
+<1:7> Error sintactico: se encontro: "1"; se esperaba: "error", "function", "id", "pcall", "print", "warn", "xpcall".
+
+=== campuswire 1 ===
+Entrada:
+if x>5
+ print(x)
+end
+Salida:
+<2:2> Error sintactico: se encontro: "print"; se esperaba: "and", "or", "then", "&", "|", "~", "..", "/", "//", "<<", "-", "%", "+", "^", ">>", "*".
+
+=== campuswire 2 ===
+Entrada:
+x=)
+Salida:
+<1:3> Error sintactico: se encontro: ")"; se esperaba: "cadena_de_caracteres", "error", "false", "function", "id", "nil", "not", "pcall", "print", "#", "-", "{", "(", "true", "valor_numerico", "warn", "xpcall".
+
+=== campuswire 3 ===
+Entrada:
+local t = {1, 2, 3]
+Salida:
+<1:19> Error sintactico: se encontro: "]"; se esperaba: "and", "or", "&", "|", "~", "}", ",", "..", "/", "==", "//", ">=", ">", "<<", "<=", "<", "-", "%", "~=", "+", "^", ">>", ";", "*".
+
+=== campuswire 4 ===
+Entrada:
+function f(a,) end
+Salida:
+<1:14> Error sintactico: se encontro: ")"; se esperaba: "id", "...".
+
+=== campuswire 5 ===
+Entrada:
+local x 1
+Salida:
+<1:9> Error sintactico: se encontro: "1"; se esperaba: "break", "error", "final de archivo", "for", "function", "global", "goto", "id", "if", "local", "pcall", "print", "repeat", "return", "=", ",", "::", "[", ";", "warn", "while", "xpcall".
+
+=== campuswire 6 ===
+Entrada:
+function f() return ) end
+Salida:
+<1:21> Error sintactico: se encontro: ")"; se esperaba: "break", "cadena_de_caracteres", "end", "error", "false", "for", "function", "global", "goto", "id", "if", "local", "nil", "not", "pcall", "print", "repeat", "return", "::", "#", "-", "{", "(", ";", "true", "valor_numerico", "warn", "while", "xpcall".
+

@@ -1,0 +1,269 @@
+CHUNK ::= BLOCK
+
+BLOCK ::= STAT_LIST
+
+STAT_LIST ::= STAT STAT_LIST
+           | epsilon
+
+STAT ::= ID_NAME PRIMARY_STAT_TAIL
+       | local VAR_OR_FUNC_DECL
+       | global VAR_OR_FUNC_DECL
+       | function FUNC_NAME FUNC_BODY
+       | while EXP do BLOCK end
+       | repeat BLOCK until EXP
+       | if EXP then BLOCK ELSEIF_LIST ELSE_OPT end
+       | for ID_NAME FOR_TAIL
+       | goto ID_NAME
+       | tkn_goto ID_NAME tkn_goto
+       | break
+       # Segun el test Campuswire 6, se debe tener return aqui
+       | return RET_TAIL
+       | tkn_semicolon
+
+ID_NAME ::= id
+          | print
+          | warn
+          | pcall
+          | xpcall
+          | error
+
+ELSEIF_LIST ::= elseif EXP then BLOCK ELSEIF_LIST
+             | epsilon
+
+ELSE_OPT ::= else BLOCK
+          | epsilon
+
+RET_TAIL ::= epsilon
+          | VAL_EXP_LIST
+
+VAR_OR_FUNC_DECL ::= function ID_NAME FUNC_BODY
+                  | NAME_DECL_LIST OPT_ASSIGN
+
+NAME_DECL_LIST ::= NAME_DECL NAME_DECL_LIST_TAIL
+
+NAME_DECL_LIST_TAIL ::= tkn_comma NAME_DECL NAME_DECL_LIST_TAIL
+                     | epsilon
+
+NAME_DECL ::= ID_NAME NAME_DECL_TAIL
+
+NAME_DECL_TAIL ::= tkn_opening_bra EXP tkn_closing_bra
+                | epsilon
+
+OPT_ASSIGN ::= tkn_assign VAL_EXP_LIST
+            | epsilon
+
+PRIMARY_STAT_TAIL ::= tkn_assign VAL_EXP_LIST
+                   | tkn_comma VAR_LIST tkn_assign VAL_EXP_LIST
+                   | tkn_colon ID_NAME CALL_TAIL
+                   | tkn_opening_par ARGS_OPT tkn_closing_par CALL_STAT_TAIL
+                   | tkn_period ID_NAME PRIMARY_STAT_TAIL
+                   | tkn_opening_bra EXP tkn_closing_bra PRIMARY_STAT_TAIL
+
+CALL_TAIL ::= tkn_opening_par ARGS_OPT tkn_closing_par CALL_STAT_TAIL
+
+CALL_STAT_TAIL ::= tkn_opening_par ARGS_OPT tkn_closing_par CALL_STAT_TAIL
+                | tkn_colon ID_NAME CALL_TAIL
+                | tkn_period ID_NAME PRIMARY_STAT_TAIL
+                | tkn_opening_bra EXP tkn_closing_bra PRIMARY_STAT_TAIL
+                | epsilon
+
+VAR_LIST ::= VAR_ITEM VAR_LIST_TAIL
+
+VAR_LIST_TAIL ::= tkn_comma VAR_ITEM VAR_LIST_TAIL
+               | epsilon
+
+VAR_ITEM ::= ID_NAME VAR_SUFFIX
+
+VAR_SUFFIX ::= tkn_period ID_NAME VAR_SUFFIX
+            | tkn_opening_bra EXP tkn_closing_bra VAR_SUFFIX
+            | epsilon
+
+FOR_TAIL ::= tkn_assign EXP tkn_comma EXP FOR_STEP_OPT do BLOCK end
+          | tkn_comma ID_NAME FOR_NAME_LIST in EXP_LIST do BLOCK end
+          | in EXP_LIST do BLOCK end
+
+FOR_STEP_OPT ::= tkn_comma EXP
+              | epsilon
+
+FOR_NAME_LIST ::= tkn_comma ID_NAME FOR_NAME_LIST
+               | epsilon
+
+FUNC_NAME ::= ID_NAME FUNC_NAME_TAIL
+
+FUNC_NAME_TAIL ::= tkn_period ID_NAME FUNC_NAME_TAIL
+                | tkn_colon ID_NAME
+                | epsilon
+
+FUNC_BODY ::= tkn_opening_par PAR_LIST_OPT tkn_closing_par BLOCK end
+
+PAR_LIST_OPT ::= PAR_LIST
+              | epsilon
+
+PAR_LIST ::= id PAR_LIST_TAIL
+          | tkn_varargs
+
+PAR_LIST_TAIL ::= tkn_comma PAR_ITEM
+               | epsilon
+
+PAR_ITEM ::= id PAR_LIST_TAIL
+          | tkn_varargs
+
+VAL_EXP ::= function FUNC_BODY
+          | EXP
+
+VAL_EXP_LIST ::= VAL_EXP VAL_EXP_LIST_TAIL
+
+VAL_EXP_LIST_TAIL ::= tkn_comma VAL_EXP VAL_EXP_LIST_TAIL
+                   | epsilon
+
+EXP_LIST ::= EXP EXP_LIST_TAIL
+
+EXP_LIST_TAIL ::= tkn_comma EXP EXP_LIST_TAIL
+               | epsilon
+
+ARGS_OPT ::= VAL_EXP_LIST
+          | epsilon
+
+EXP ::= AND_EXP EXP_TAIL
+
+EXP_TAIL ::= or AND_EXP EXP_TAIL
+          | epsilon
+
+AND_EXP ::= REL_EXP AND_EXP_TAIL
+
+AND_EXP_TAIL ::= and REL_EXP AND_EXP_TAIL
+              | epsilon
+
+REL_EXP ::= BIT_OR_EXP REL_EXP_TAIL
+
+REL_EXP_TAIL ::= REL_OP BIT_OR_EXP
+              | epsilon
+
+REL_OP ::= tkn_less
+        | tkn_greater
+        | tkn_leq
+        | tkn_geq
+        | tkn_neq
+        | tkn_equal
+
+BIT_OR_EXP ::= BIT_XOR_EXP BIT_OR_EXP_TAIL
+
+BIT_OR_EXP_TAIL ::= tkn_bit_or BIT_XOR_EXP BIT_OR_EXP_TAIL
+                 | epsilon
+
+BIT_XOR_EXP ::= BIT_AND_EXP BIT_XOR_EXP_TAIL
+
+BIT_XOR_EXP_TAIL ::= tkn_bitex_or BIT_AND_EXP BIT_XOR_EXP_TAIL
+                  | epsilon
+
+BIT_AND_EXP ::= SHIFT_EXP BIT_AND_EXP_TAIL
+
+BIT_AND_EXP_TAIL ::= tkn_bit_and SHIFT_EXP BIT_AND_EXP_TAIL
+                  | epsilon
+
+SHIFT_EXP ::= CONCAT_EXP SHIFT_EXP_TAIL
+
+SHIFT_EXP_TAIL ::= tkn_left_shift CONCAT_EXP SHIFT_EXP_TAIL
+                | tkn_right_shift CONCAT_EXP SHIFT_EXP_TAIL
+                | epsilon
+
+CONCAT_EXP ::= ADD_EXP CONCAT_EXP_TAIL
+
+CONCAT_EXP_TAIL ::= tkn_concat CONCAT_EXP
+                 | epsilon
+
+ADD_EXP ::= MUL_EXP ADD_EXP_TAIL
+
+ADD_EXP_TAIL ::= tkn_plus MUL_EXP ADD_EXP_TAIL
+              | tkn_minus MUL_EXP ADD_EXP_TAIL
+              | epsilon
+
+MUL_EXP ::= UNARY_EXP MUL_EXP_TAIL
+
+MUL_EXP_TAIL ::= tkn_times UNARY_EXP MUL_EXP_TAIL
+              | tkn_div UNARY_EXP MUL_EXP_TAIL
+              | tkn_floor_div UNARY_EXP MUL_EXP_TAIL
+              | tkn_mod UNARY_EXP MUL_EXP_TAIL
+              | epsilon
+
+UNARY_EXP ::= not UNARY_EXP
+           | tkn_length UNARY_EXP
+           | tkn_minus UNARY_EXP
+           | POW_EXP
+
+POW_EXP ::= ATOM POW_EXP_TAIL
+
+POW_EXP_TAIL ::= tkn_power UNARY_EXP
+              | epsilon
+
+ATOM ::= ID_NAME SUFFIX_EXP
+      | valor_numerico
+      | cadena_de_caracteres
+      | nil
+      | true
+      | false
+      | TABLE_CONSTRUCTOR
+      | tkn_opening_par EXP tkn_closing_par
+
+SUFFIX_EXP ::= tkn_period ID_NAME SUFFIX_EXP
+            | tkn_opening_bra EXP tkn_closing_bra SUFFIX_EXP
+            | tkn_opening_par ARGS_OPT tkn_closing_par SUFFIX_EXP
+            | tkn_colon ID_NAME tkn_opening_par ARGS_OPT tkn_closing_par SUFFIX_EXP
+            | epsilon
+
+TABLE_CONSTRUCTOR ::= tkn_opening_key FIELD_LIST_OPT tkn_closing_key
+
+FIELD_LIST_OPT ::= FIELD FIELD_LIST_TAIL
+                | epsilon
+
+FIELD_LIST_TAIL ::= FIELD_SEP FIELD_OPT
+                 | epsilon
+
+FIELD_OPT ::= FIELD FIELD_LIST_TAIL
+           | epsilon
+
+FIELD_SEP ::= tkn_comma
+           | tkn_semicolon
+
+FIELD ::= tkn_opening_bra EXP tkn_closing_bra tkn_assign VAL_EXP
+       | ID_NAME FIELD_ID_TAIL
+       | function FUNC_BODY
+       | EXP_NON_ID
+
+FIELD_ID_TAIL ::= tkn_assign VAL_EXP
+               | SUFFIX_EXP POW_EXP_TAIL MUL_EXP_TAIL ADD_EXP_TAIL SHIFT_EXP_TAIL BIT_AND_EXP_TAIL BIT_XOR_EXP_TAIL BIT_OR_EXP_TAIL REL_EXP_TAIL AND_EXP_TAIL EXP_TAIL
+
+EXP_NON_ID ::= AND_EXP_NON_ID EXP_TAIL
+
+AND_EXP_NON_ID ::= REL_EXP_NON_ID AND_EXP_TAIL
+
+REL_EXP_NON_ID ::= BIT_OR_EXP_NON_ID REL_EXP_TAIL
+
+BIT_OR_EXP_NON_ID ::= BIT_XOR_EXP_NON_ID BIT_OR_EXP_TAIL
+
+BIT_XOR_EXP_NON_ID ::= BIT_AND_EXP_NON_ID BIT_XOR_EXP_TAIL
+
+BIT_AND_EXP_NON_ID ::= SHIFT_EXP_NON_ID BIT_AND_EXP_TAIL
+
+SHIFT_EXP_NON_ID ::= CONCAT_EXP_NON_ID SHIFT_EXP_TAIL
+
+CONCAT_EXP_NON_ID ::= ADD_EXP_NON_ID CONCAT_EXP_TAIL
+
+ADD_EXP_NON_ID ::= MUL_EXP_NON_ID ADD_EXP_TAIL
+
+MUL_EXP_NON_ID ::= UNARY_EXP_NON_ID MUL_EXP_TAIL
+
+UNARY_EXP_NON_ID ::= not UNARY_EXP
+                  | tkn_length UNARY_EXP
+                  | tkn_minus UNARY_EXP
+                  | POW_EXP_NON_ID
+
+POW_EXP_NON_ID ::= ATOM_NON_ID POW_EXP_TAIL
+
+ATOM_NON_ID ::= valor_numerico
+             | cadena_de_caracteres
+             | nil
+             | true
+             | false
+             | TABLE_CONSTRUCTOR
+             | tkn_opening_par EXP tkn_closing_par

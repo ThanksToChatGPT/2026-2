@@ -1,17 +1,16 @@
 """
 Módulo: conjuntos_de_prediccion.py
-Calcula los conjuntos PRIMEROS, SIGUIENTES y las predicciones
-para cualquier GIC.
+Calcula los conjuntos PRIMEROS, SIGUIENTES y de PREDICCIÓN para gramáticas LL(1).
 """
 
 
 def descomponer_produccion(produccion):
-    """Divide una producción en sus símbolos individuales, omitiendo epsilon."""
+    """Divide una producción en sus símbolos individuales, ignorando epsilon."""
     return [s for s in produccion.strip().split() if s != "epsilon"]
 
 
 def primeros_de_secuencia(secuencia, primeros, no_terminales):
-    """Calcula el conjunto PRIMEROS de una secuencia de símbolos."""
+    """Calcula el conjunto PRIMEROS de una secuencia de símbolos gramaticales."""
     if not secuencia:
         return {"epsilon"}
 
@@ -49,7 +48,7 @@ def calcular_primeros(gramatica):
     return primeros
 
 
-def calcular_siguientes(gramatica, primeros, simbolo_inicial=None, fin_cadena="$"):
+def calcular_siguientes(gramatica, primeros, simbolo_inicial=None, fin_cadena="final_de_archivo"):
     """Calcula los conjuntos SIGUIENTES para cada no terminal de la gramática."""
     no_terminales = set(gramatica.keys())
     if simbolo_inicial is None:
@@ -82,9 +81,9 @@ def calcular_siguientes(gramatica, primeros, simbolo_inicial=None, fin_cadena="$
     return siguientes
 
 
-def conjuntos_de_prediccion(gramatica, simbolo_inicial=None, fin_cadena="$", primeros=None):
+def conjuntos_de_prediccion(gramatica, simbolo_inicial=None, fin_cadena="final_de_archivo", primeros=None):
     """
-    Construye las predicciones LL(1) en formato:
+    Construye la tabla de predicciones LL(1) en formato:
         {no_terminal: {terminal: produccion}}
     """
     if simbolo_inicial is None:
@@ -106,7 +105,7 @@ def conjuntos_de_prediccion(gramatica, simbolo_inicial=None, fin_cadena="$", pri
             if "epsilon" in f:
                 cp = cp | siguientes[nt]
 
-            for terminal in sorted(cp):
+            for terminal in cp:
                 predicciones[nt][terminal] = prod
 
     return predicciones

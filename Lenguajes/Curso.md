@@ -14,7 +14,7 @@ Proyecto final:
 
 
 
-
+presentaciones: 35-40 mins, asistencia a las demas presentaciones
 
 STAT -> tkn_semicolon
       | do BLOCK end
@@ -25,3 +25,6 @@ GLOBAL_TAIL
 
 TERM -> 
       | FUNCTIONDEF
+
+
+Programacion concurrente - RUST
