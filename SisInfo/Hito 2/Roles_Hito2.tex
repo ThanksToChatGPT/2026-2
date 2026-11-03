@@ -1,0 +1,89 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=1.8cm]{geometry}
+\usepackage[skip=0.4em]{parskip}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+
+\definecolor{primary}{HTML}{183653}
+\definecolor{accent}{HTML}{2B5B84}
+\definecolor{boxbg}{HTML}{F8FAFC}
+\definecolor{boxborder}{HTML}{CBD5E1}
+
+\tcbuselibrary{skins}
+\tcbset{
+    enhanced,
+    colback=boxbg,
+    colframe=boxborder,
+    boxrule=0.8pt,
+    arc=3pt,
+    left=8pt, right=8pt, top=5pt, bottom=5pt
+}
+
+\setlist{topsep=1pt,itemsep=1pt,parsep=0pt,leftmargin=1.1em}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+    {\Large\bfseries\color{primary} Elección de Roles --- Hito 2 (Sistemas de Información)}\\[0.4em]
+    {\normalsize Cada integrante escoge un rol para trabajar durante este hito.}
+\end{center}
+
+\vspace{0.1cm}
+\hrule
+\vspace{0.4cm}
+
+\begin{tcolorbox}
+    \textbf{\color{primary}Rol 1: Coordinador del Proyecto y Enlace con la Empresa}
+    \begin{itemize}
+        \item Supervisa que el equipo cumpla con las tareas y fechas de entrega.
+        \item Se comunica con la empresa (Loard) para conseguir información y agendar las pruebas con usuarios.
+        \item Investiga los archivos reales de la empresa (Dropbox y formatos de obra/SST) para sacar los datos reales que se usarán en el sistema.
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}
+    \textbf{\color{primary}Rol 2: Diseñador del Prototipo (UI/UX) y Pruebas con IA}
+    \begin{itemize}
+        \item Diseña las pantallas y el flujo interactivo navegable en Figma (o v0) para el MVP (corte de obra, alertas de seguridad SST, dossier de calidad).
+        \item Documenta el uso de IA en el diseño: qué prompt se usó, qué botó la IA y qué se corrigió a mano para ajustarlo al negocio.
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}
+    \textbf{\color{primary}Rol 3: Componentes de Interfaz y Diseño Responsivo}
+    \begin{itemize}
+        \item Hace la lista de componentes que se repiten (botones, tablas, formularios, tarjetas) y cómo se estructurarían en código (React).
+        \item Demuestra cómo se adapta la pantalla principal en versión Computador (oficina) y Celular (campo).
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}
+    \textbf{\color{primary}Rol 4: Evaluador de Usabilidad y Pruebas con Usuarios}
+    \begin{itemize}
+        \item Revisa reglas básicas de usabilidad (heurísticas de Nielsen) y accesibilidad (contraste de colores y navegación por teclado).
+        \item Con el Rol 1, realiza las pruebas con al menos 2 personas reales y llena la tabla: \emph{Problema encontrado vs. Cambio hecho en el diseño}.
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}
+    \textbf{\color{primary}Rol 5: Base de Datos y Conexiones (APIs)}
+    \begin{itemize}
+        \item Diseña un diagrama simple de base de datos con solo las tablas necesarias para las pantallas (trabajadores, proyectos, insumos, etc.).
+        \item Hace la lista de conexiones (APIs) entre la interfaz y el servidor (ej: consultar proyectos, guardar reporte).
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}
+    \textbf{\color{primary}Rol 6: Calidad de la Entrega y Presentación (Pitch de 10 min)}
+    \begin{itemize}
+        \item Revisa la rúbrica del profesor para asegurarse de que no falte nada y compila el documento/repositorio final.
+        \item Prepara las diapositivas y el guion para la exposición de 10 minutos (enfocada en los problemas que resuelve y no en el login).
+    \end{itemize}
+\end{tcolorbox}
+
+\end{document}

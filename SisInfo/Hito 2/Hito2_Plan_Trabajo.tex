@@ -1,0 +1,336 @@
+\documentclass[11pt,letterpaper]{article}
+
+% --- Paquetes Principales ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage[skip=0.5em plus 0.1em minus 0.1em]{parskip}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{lmodern}
+\usepackage[expansion=false]{microtype}
+\usepackage[table]{xcolor}
+\usepackage{placeins}
+\usepackage[hidelinks,pdfencoding=auto,psdextra]{hyperref}
+\usepackage{enumitem}
+\usepackage{xurl}
+
+% --- Paleta de Colores Institucional ---
+\definecolor{docInk}{HTML}{183653}
+\definecolor{docAccent}{HTML}{496A89}
+\definecolor{docLine}{HTML}{8A9BAA}
+\definecolor{docHead}{HTML}{E7EEF4}
+\definecolor{docFill}{HTML}{F4F7FA}
+\definecolor{docHigh}{HTML}{DCE6EF}
+\colorlet{primary}{docInk}
+\colorlet{secondary}{docAccent}
+
+% --- Configuración de Tablas y Listas ---
+\arrayrulecolor{docLine}
+\setlength{\tabcolsep}{5pt}
+\setlist{topsep=0.25em,itemsep=0.2em,parsep=0pt,leftmargin=1.2em}
+
+% --- Encabezados y Pies de Página ---
+\pagestyle{fancy}
+\setlength{\headheight}{14.5pt}
+\fancyhf{}
+\fancyhead[L]{\small\scshape Sistemas de Información --- Hito 2}
+\fancyhead[R]{\small\scshape Plan de Trabajo y Roles}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.2pt}
+
+% --- Formato de Secciones ---
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{primary}}{\thesection}{0.8em}{}
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries\color{secondary}}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}
+  {\normalfont\small\bfseries\color{docInk}}{\thesubsubsection}{0.6em}{}
+
+\begin{document}
+
+% ==============================================================================
+% ENCABEZADO INSTITUCIONAL / PORTADA COMPACTA
+% ==============================================================================
+\begin{center}
+    \IfFileExists{unal_logo.png}{%
+        \includegraphics[width=0.22\textwidth]{unal_logo.png}\par\vspace{0.4cm}
+    }{%
+        \vspace*{0.2cm}
+    }
+    {\scshape\large Universidad Nacional de Colombia\par}
+    {\scshape\normalsize Facultad de Ingeniería --- Departamento de Ingeniería de Sistemas e Industrial\par}
+    \vspace{0.2cm}
+    {\normalsize\textbf{Asignatura:} Sistemas de Información (Código 2025982)\par}
+    {\normalsize\textbf{Docente:} Jhon Alexander García Camargo, Ph.D.\par}
+    \vspace{0.5cm}
+    {\LARGE\bfseries\color{primary} Plan de Trabajo y Asignación de Roles por Especialidad\par}
+    \vspace{0.2cm}
+    {\large\bfseries\color{secondary} Hito 2: Del Proceso a la Experiencia de Usuario y la Interfaz (UX/UI)\par}
+    {\small\textbf{Caso de Aplicación:} Loard Construcciones S.A.S. (Sector Oil \& Gas)\par}
+    \vspace{0.4cm}
+    \rule{\linewidth}{1pt}
+\end{center}
+
+\vspace{0.2cm}
+\noindent\textbf{Integrantes del Equipo de Trabajo:}
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+    \item Sebastian Fernando Gutiérrez Rojas
+    \item Ronald Arturo Chávez Cabrera
+    \item Camilo Andrés Rojas Silva
+    \item Angel Inyena Pasuy
+    \item Jonathan Felipe López Núñez
+    \item Juan David Peña Lozada
+\end{itemize}
+
+\vspace{0.3cm}
+\rule{\linewidth}{0.5pt}
+
+% ==============================================================================
+% 1. INTRODUCCIÓN Y CONTEXTO
+% ==============================================================================
+\section{Propósito y Marco de Evaluación del Hito 2}
+
+El Hito 2 corresponde al diagnóstico y propuesta de solución tecnológica centrada en la experiencia de usuario (UX/UI) y arquitectura de software para \textbf{Loard Construcciones S.A.S.}, conectando los requerimientos priorizados en el Hito 1 con una solución interactiva de alta fidelidad, componentizada, validada con usuarios reales y soportada en una arquitectura de datos ligera.
+
+\subsection{Criterios de Éxito de la Rúbrica Oficial (15\% de la Nota Final)}
+\begin{itemize}
+    \item \textbf{Fidelidad y Navegación (25\%):} Prototipo interactivo navegable (Figma, v0 o Penpot) que cubra el 100\% de las historias de usuario del MVP de Fase 1 e incluya flujos de excepción (ej. bloqueo por personal sin aptitud médica o certificaciones SST).
+    \item \textbf{Usabilidad y Heurísticas (25\%):} Aplicación estricta de patrones de diseño y cumplimiento demostrable de al menos 5 de las 10 heurísticas de Nielsen.
+    \item \textbf{Validación con Usuarios (30\%):} Metodología RITE (\emph{Rapid Iterative Testing and Evaluation}) con mínimo 2 usuarios reales y tabla comparativa de \emph{Problema detectado} vs. \emph{Cambio aplicado}.
+    \item \textbf{Arquitectura de UI e IA (20\%):} Uso documentado de IA generativa de interfaces (\emph{Prompt inicial $\rightarrow$ Resultado IA $\rightarrow$ Refactorización humana}), componentización en framework moderno (React) y diseño responsivo adaptado a campo y oficina.
+\end{itemize}
+
+% ==============================================================================
+% 2. ESTRUCTURA DE LOS 4 MÓDULOS DE ENTREGA
+% ==============================================================================
+\section{Estructura de Módulos del Entregable}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}l p{4.2cm} X@{}}
+\toprule
+\rowcolor{docHead}
+\textbf{Módulo} & \textbf{Componentes Clave} & \textbf{Objetivo Técnico y de Negocio} \\
+\midrule
+\textbf{Módulo I} & Prototipo Interactivo de Alta Fidelidad & Flujo navegable completo (sin pantallas estáticas). Cobertura total del MVP de Fase 1 (operación de cortes, semáforos SST, dossier de calidad y libro de tubería API 1104). Informe técnico de diseño con IA (Galileo, v0, Uizard) con trazabilidad del prompt a la refactorización humana. \\
+\addlinespace
+\textbf{Módulo II} & Arquitectura Frontend y Componentización & Catálogo de componentes estructurados en React/Next.js. Demostración de diseño responsive en dos dispositivos reales: Desktop (Windows) para oficina/caseta y Mobile (Android) para tareas puntuales de campo. Justificación de 5 heurísticas de Nielsen. \\
+\addlinespace
+\textbf{Módulo III} & QC de Usabilidad y Accesibilidad & Pruebas RITE con al menos 2 usuarios reales de la empresa. Matriz de hallazgos y cambios iterativos aplicados. Auditoría WCAG 2.1 Nivel AA (contraste $\ge 4.5:1$, jerarquía de fuentes y navegación por teclado / ABET Outcome 2). \\
+\addlinespace
+\textbf{Módulo IV} & Persistencia de Soporte Ligero & Diagrama Entidad-Relación simplificado donde la base de datos actúa como soporte directo de las pantallas. Mapa de APIs REST con métodos HTTP, rutas, payloads JSON y códigos de respuesta (incluyendo bloqueos 403). \\
+\bottomrule
+\end{tabularx}
+\caption{Consolidado de los cuatro módulos exigidos en el Hito 2.}
+\end{table}
+
+% ==============================================================================
+% 3. ASIGNACIÓN DETALLADA DE ROLES (6 PERSONAS)
+% ==============================================================================
+\section{Asignación de Roles y Tareas entre las 6 Personas}
+
+Para maximizar la eficiencia y garantizar una ejecución rigurosa, se distribuyen las responsabilidades en seis roles especializados, destacando un rol de liderazgo enfocado en la coordinación con la empresa, la auditoría profunda de archivos y la supervisión del equipo.
+
+\subsection{Rol 1: Product Owner, Coordinador Empresarial y Auditor Documental (Líder)}
+\textbf{Responsable sugerido:} Sebastian Fernando Gutiérrez Rojas
+
+\begin{itemize}
+    \item \textbf{Propósito del Rol:} Actuar como canal de comunicación oficial entre el equipo académico y \textbf{Loard Construcciones S.A.S.}, explorar minuciosamente el archivo histórico de la compañía para alimentar el diseño con parámetros y formatos auténticos, y supervisar el avance global de los módulos.
+    \item \textbf{Investigación e Inmersión en los Archivos de la Empresa (Dropbox):}
+    \begin{itemize}
+        \item Auditar los más de 23.000 archivos del repositorio corporativo, focalizándose en los procesos \texttt{2. Sistema de Gestion}, \texttt{4. Gestion Humana} y \texttt{6. Gestión Técnica}.
+        \item Extraer y sistematizar los formatos oficiales de campo y calidad:
+        \begin{itemize}
+            \item \texttt{GT-FR48 v1}: Formato de Informe Diario de Actividades (base del módulo de corte de obra).
+            \item \texttt{GT-FR46}: Informe Semanal de Actividades.
+            \item \texttt{GT-FR64}: Libro de Tubería (\emph{Weld Book}) bajo estándar API 1104.
+            \item \texttt{GT-FR25}: Protocolo de Prueba Hidrostática.
+            \item Batería de recubrimientos y ensayos: \texttt{GT-FR52} (adherencia), \texttt{GT-FR53} (Holiday detector), \texttt{GT-FR56} (espesores DFT) y \texttt{GT-FR62} (rotura de cilindros de concreto).
+            \item Procedimiento \texttt{SG-PR05 v6} (control de información documentada).
+        \end{itemize}
+        \item Extraer las reglas y vigencias de certificaciones de trabajo seguro en alturas, espacios confinados y conceptos médicos ocupacionales (Resolución 1843 de 2025) para proveer datos reales de prueba (sin textos genéricos).
+    \end{itemize}
+    \item \textbf{Coordinación y Enlace con Loard Construcciones S.A.S.:}
+    \begin{itemize}
+        \item Contactar y gestionar la interlocución con los líderes operativos: Dilan (Ingeniero Residente experto en dossieres), Edward y Johana (Coordinadores de Gestión y SST), Yonny (Director de Proyectos) y Olga (Auxiliar Administrativa).
+        \item Programar y facilitar las sesiones de prueba con los 2 usuarios reales requeridos por la metodología RITE.
+    \end{itemize}
+    \item \textbf{Supervisión General y Aseguramiento del Hito 2:}
+    \begin{itemize}
+        \item Controlar el cumplimiento de fechas del cronograma interno.
+        \item Verificar la coherencia integral entre los formatos extraídos, las pantallas del prototipo y el modelo de persistencia.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Rol 2: UI/UX Lead Designer y Especialista en IA Generativa (Módulo I)}
+\textbf{Responsable sugerido:} Ronald Arturo Chávez Cabrera
+
+\begin{itemize}
+    \item \textbf{Propósito del Rol:} Diseñar el prototipo interactivo navegable de alta fidelidad y liderar la experimentación y documentación del proceso asistido por herramientas de IA.
+    \item \textbf{Tareas Específicas:}
+    \begin{itemize}
+        \item \textbf{Prototipo Interactivo (Figma / v0 / Penpot):} Construir una experiencia de usuario interactiva y fluida que cubra el 100\% de las HUs del MVP de Fase 1:
+        \begin{itemize}
+            \item \emph{Módulo de Operaciones:} Formulario ágil de reporte de corte de obra y balance de avance físico vs. tiempo.
+            \item \emph{Módulo de SST y Control de Aptitud:} Tablero de semaforización preventiva (30 días) y crítica (15 días), incluyendo el \textbf{flujo de excepción} con pantalla/modal de bloqueo estricto cuando un trabajador no cuente con curso de alturas/confinados vigente.
+            \item \emph{Módulo de Dossier de Calidad:} Trazabilidad de juntas soldadas (\texttt{GT-FR64}) y repositorio estructurado de certificados PDF de ensayos no destructivos (END).
+            \item \emph{Módulo de Consumos:} Registro de electrodos, discos y gases con factor de merma presupuestada del 5\%.
+        \end{itemize}
+        \item \textbf{Informe Técnico de Uso de IA en el Diseño:} Documentar formalmente el flujo metodológico exigido por la rúbrica:
+        $$\text{Prompt Inicial} \longrightarrow \text{Resultado Bruto de la IA} \longrightarrow \text{Refactorización Humana de Negocio}$$
+        Explicar las decisiones de diseño aplicadas para corregir las propuestas genéricas de la IA y adaptarlas al contexto técnico de hidrocarburos.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Rol 3: Frontend Architect y Design Systems Engineer (Módulo II)}
+\textbf{Responsable sugerido:} Camilo Andrés Rojas Silva
+
+\begin{itemize}
+    \item \textbf{Propósito del Rol:} Especificar la arquitectura técnica de interfaz, organizar el inventario modular de componentes y asegurar la adaptación responsiva en los dispositivos de Loard.
+    \item \textbf{Tareas Específicas:}
+    \begin{itemize}
+        \item \textbf{Inventario de Componentes y Design System:}
+        \begin{itemize}
+            \item Identificar y catalogar los elementos reutilizables mediante metodología Atomic Design (botones de acción, tablas de datos paginadas, badges de estatus SST, modales de confirmación/bloqueo, selectores y formularios validados).
+            \item Documentar su estructuración en un framework moderno de frontend (\textbf{React / Next.js} con TypeScript y Tailwind CSS), definiendo interfaces de propiedades y estados.
+        \end{itemize}
+        \item \textbf{Diseño Responsivo Demostrado:}
+        \begin{itemize}
+            \item \emph{Desktop (1920$\times$1080 / Windows):} Interfaz optimizada para estaciones de trabajo en oficinas y casetas de obra (tablas densas de juntas de soldadura, revisión de dossieres y validación gerencial).
+            \item \emph{Mobile (360$\times$800 / Android):} Interfaz táctil adaptada para supervisores de campo en tareas de SST e inspecciones técnicas fuera de zonas con restricción ATEX.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection{Rol 4: UX Usability, Heuristics y Accessibility Specialist (Módulos II y III)}
+\textbf{Responsable sugerido:} Angel Inyena Pasuy
+
+\begin{itemize}
+    \item \textbf{Propósito del Rol:} Auditar y respaldar la usabilidad bajo las heurísticas de Nielsen, garantizar la inclusión digital bajo normas WCAG 2.1 (criterio ABET) y co-elaborar el reporte RITE.
+    \item \textbf{Tareas Específicas:}
+    \begin{itemize}
+        \item \textbf{Evaluación de Heurísticas de Nielsen (mínimo 5 documentadas):}
+        \begin{itemize}
+            \item Justificar con capturas del prototipo el cumplimiento de: (1) Visibilidad del estado del sistema, (2) Correspondencia con el mundo real (vocabulario petrolero: juntas, WPS, APC), (3) Prevención de errores (bloqueo automático ante falta de aptitud médica), (4) Consistencia y estándares, y (5) Reconocimiento antes que recuerdo.
+        \end{itemize}
+        \item \textbf{Auditoría de Accesibilidad (WCAG 2.1 Nivel AA / ABET Outcome 2):}
+        \begin{itemize}
+            \item Contrastes de color certificados ($\ge 4.5:1$ en texto y componentes), tamaños tipográficos legibles bajo luz solar directa en obra y soporte completo de navegación por teclado.
+        \end{itemize}
+        \item \textbf{Reporte de Validación RITE (en conjunto con el Rol 1):}
+        \begin{itemize}
+            \item Formular el guion y registrar los resultados de las pruebas con 2 usuarios reales.
+            \item Construir la matriz obligatoria: \textbf{``Problema detectado'' vs. ``Cambio aplicado en el prototipo''}.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection{Rol 5: Backend y Data Architect (Módulo IV)}
+\textbf{Responsable sugerido:} Jonathan Felipe López Núñez
+
+\begin{itemize}
+    \item \textbf{Propósito del Rol:} Modelar la persistencia de soporte mínima y definir los contratos de API requeridos para dar soporte a las pantallas del prototipo (``la base de datos como esclava de la UI'').
+    \item \textbf{Tareas Específicas:}
+    \begin{itemize}
+        \item \textbf{Esquema de Datos Mínimo (Diagrama Entidad-Relación):}
+        \begin{itemize}
+            \item Diseñar el DER simplificado enfocado únicamente en las entidades necesarias para poblar las pantallas del prototipo interactivo:
+            \texttt{Proyecto}, \texttt{FrenteObra}, \texttt{Colaborador}, \texttt{CertificacionSST}, \texttt{ConceptoAptitud}, \texttt{CorteObra}, \texttt{ItemPresupuesto}, \texttt{ConsumoInsumo}, \texttt{JuntaSoldadura}, \texttt{EnsayoNDT}.
+            \item Asegurar que los tipos de datos y restricciones reflejen con exactitud los formatos extraídos por el Rol 1.
+        \end{itemize}
+        \item \textbf{Mapa de APIs REST (API Contract):}
+        \begin{itemize}
+            \item Documentar los puntos de contacto Frontend-Backend: método HTTP (\texttt{GET}, \texttt{POST}, \texttt{PUT}), ruta URI (ej. \texttt{/api/v1/sst/personal/\{id\}/aptitud}), payloads JSON de solicitud y respuestas esperadas con códigos HTTP (200, 201, 400 y 403 para bloqueos de SST).
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection{Rol 6: Technical QA y Pitch Manager (Consolidación, Rúbrica y Sustentación)}
+\textbf{Responsable sugerido:} Juan David Peña Lozada
+
+\begin{itemize}
+    \item \textbf{Propósito del Rol:} Custodiar el cumplimiento estricto de la rúbrica de calificación, verificar la cobertura de requerimientos, integrar el documento final y estructurar la sustentación oral de 10 minutos.
+    \item \textbf{Tareas Específicas:}
+    \begin{itemize}
+        \item \textbf{Aseguramiento de Calidad y Trazabilidad:}
+        \begin{itemize}
+            \item Comprobar que el prototipo no posea flujos rotos, pantallas huérfanas ni botones sin destino.
+            \item Validar la trazabilidad completa entre las historias de usuario del MVP del Hito 1 y las vistas diseñadas.
+            \item Compilar y revisar el documento técnico consolidado (o repositorio de entrega con documentación en Markdown).
+        \end{itemize}
+        \item \textbf{Diseño y Dirección del Pitch Gerencial (10 minutos):}
+        \begin{itemize}
+            \item Elaborar las diapositivas ejecutivas y el guion oral bajo la \textbf{regla 20/80} (evitar gastar tiempo en el inicio de sesión; enfocar el 80\% en la solución a los dolores de obra).
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+% ==============================================================================
+% 4. ESTRUCTURA DE LA PRESENTACIÓN ORAL (PITCH DE 10 MIN)
+% ==============================================================================
+\section{Estructura de la Sustentación Oral (Pitch Gerencial de 10 Minutos)}
+
+Para cumplir con el estándar de consultoría exigido por la cátedra, la sustentación debe seguir rigurosamente los siguientes tiempos:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}l p{4.2cm} X@{}}
+\toprule
+\rowcolor{docHead}
+\textbf{Tiempo} & \textbf{Sección del Pitch} & \textbf{Foco Estratégico y Regla 20/80} \\
+\midrule
+\textbf{1 min} & Contexto y Gancho & \emph{Flashback estratégico:} Conectar con el Hito 1 explicando cómo el prototipo reduce tiempos críticos (ej. de reportes diarios de 5 minutos dispersos en Dropbox a registros de 30 segundos). \\
+\addlinespace
+\textbf{2 min} & El ``Showroom'' (Prototipo) & Demostración en vivo de los flujos de mayor impacto: bloqueo automático ante falta de certificación SST y trazabilidad de juntas de soldadura. \\
+\addlinespace
+\textbf{5 min} & La Voz del Usuario (RITE) & \textbf{Núcleo del Pitch (50\% del tiempo):} Exponer qué se descubrió en las pruebas con usuarios reales de Loard y qué mejoras de navegación y disposición se adoptaron. \\
+\addlinespace
+\textbf{1 min} & Viabilidad y Cierre & Justificación técnica y económica de por qué el proyecto es viable y debe pasar a la etapa de arquitectura e implementación (Hito 3). \\
+\addlinespace
+\textbf{1 min} & Buffer / Pregunta Gerencial & Espacio para la pregunta de impacto del docente/gerente, respondiendo con honestidad de ingeniería sin improvisar. \\
+\bottomrule
+\end{tabularx}
+\caption{Distribución del tiempo para la sustentación oral de consultoría.}
+\end{table}
+
+% ==============================================================================
+% 5. CRONOGRAMA DE EJECUCIÓN
+% ==============================================================================
+\section{Cronograma de Ejecución y Dependencias}
+
+\begin{itemize}
+    \item \textbf{Fase 1 --- Descubrimiento, Extracción Documental y Prototipado Base:}
+    \begin{itemize}
+        \item Rol 1 culmina la auditoría de formatos en Dropbox (\texttt{GT-FR48}, \texttt{GT-FR64}, \texttt{SG-PR05}) y agenda con los usuarios de Loard.
+        \item Rol 2 genera los primeros flujos con herramientas de IA (v0/Galileo) e inicia la refactorización en Figma.
+        \item Rol 3 define el catálogo base de componentes en React y tokens de diseño.
+        \item Rol 5 extrae las entidades primarias del modelo relacional a partir de los formatos reales.
+    \end{itemize}
+    \item \textbf{Fase 2 --- Pruebas RITE, Refactorización, Heurísticas y Persistencia:}
+    \begin{itemize}
+        \item Rol 1 y Rol 4 ejecutan las pruebas de usabilidad con 2 usuarios reales de Loard.
+        \item Rol 2 aplica los cambios en el prototipo derivados del feedback de los usuarios.
+        \item Rol 3 finaliza la adaptación responsive para Desktop (Windows) y Mobile (Android).
+        \item Rol 4 completa la auditoría WCAG 2.1 y la documentación de las 5 heurísticas de Nielsen.
+        \item Rol 5 finaliza el DER simplificado y la especificación de endpoints REST.
+    \end{itemize}
+    \item \textbf{Fase 3 --- Control de Calidad, Integración del Entregable y Ensayo del Pitch:}
+    \begin{itemize}
+        \item Rol 6 audita la lista de chequeo de la rúbrica al 100\% y compila el documento final.
+        \item El equipo realiza el simulacro de la sustentación oral de 10 minutos con cronómetro estricto.
+    \end{itemize}
+\end{itemize}
+
+\end{document}
+

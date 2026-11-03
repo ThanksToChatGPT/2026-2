@@ -1,7 +1,7 @@
 # DES Image Encryption (Cifrado DES de imágenes)
 import os
 import base64
-from pyDes import des, CBC, PAD_PKCS5
+from Entregado.pyDes import des, CBC, PAD_PKCS5
 
 KEY = "133457799BBCDFF1"
 
