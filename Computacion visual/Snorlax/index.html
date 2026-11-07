@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snorlax 3D - Colores Originales (p5.js WebGL)</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at center, #1e1e24 0%, #111115 100%);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #fffffe;
+    }
+    #ui-container {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 320px;
+      pointer-events: none;
+    }
+    .panel {
+      background: rgba(22, 22, 26, 0.90);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 14px 16px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+      pointer-events: auto;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #94b0c2;
+    }
+    .badge {
+      background: #2cb67d;
+      color: #111115;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .btn-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    button {
+      background: #24262f;
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    button:hover {
+      background: #323642;
+      border-color: #7f5af0;
+      color: #fff;
+    }
+    button.active {
+      background: #7f5af0;
+      color: #fff;
+      border-color: #7f5af0;
+      box-shadow: 0 0 10px rgba(127, 90, 240, 0.4);
+    }
+    .control-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #94a1b2;
+    }
+    input[type=range] {
+      accent-color: #7f5af0;
+      cursor: pointer;
+      width: 120px;
+    }
+    .legend {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin-top: 8px;
+      font-size: 11px;
+      color: #cbd5e1;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 6px 8px;
+      border-radius: 6px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .color-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      flex-shrink: 0;
+    }
+    .tips {
+      font-size: 11.5px;
+      color: #94a1b2;
+      margin-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 8px;
+    }
+    .tips span {
+      display: block;
+      margin-bottom: 2px;
+    }
+    #loading-indicator {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      color: #94a1b2;
+      font-weight: 600;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .spinner {
+      width: 38px;
+      height: 38px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top-color: #7f5af0;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loading-indicator">
+    <div class="spinner"></div>
+    <span>Cargando materiales y modelo 3D...</span>
+  </div>
+
+  <div id="ui-container">
+    <div class="panel">
+      <div class="title-row">
+        <span class="title">Snorlax 3D</span>
+        <span class="badge">Multi-Material</span>
+      </div>
+
+      <div style="font-size: 12px; color: #94a1b2; margin-bottom: 4px;">
+        Modo de visualización:
+      </div>
+      <div class="btn-group">
+        <button id="btn-col" class="active" onclick="setModo(0)">🎨 Original</button>
+        <button id="btn-norm" onclick="setModo(1)">🧭 Normales</button>
+        <button id="btn-clay" onclick="setModo(2)">🗿 Arcilla</button>
+        <button id="btn-wire" onclick="setModo(3)">🕸️ Malla</button>
+      </div>
+
+      <div id="material-legend" class="legend">
+        <div class="legend-item"><span class="color-dot" style="background:#2d728d;"></span> Cuerpo / Brazos</div>
+        <div class="legend-item"><span class="color-dot" style="background:#f1e4d6;"></span> Vientre / Rostro</div>
+        <div class="legend-item"><span class="color-dot" style="background:#cdbfb7;"></span> Almohadillas</div>
+        <div class="legend-item"><span class="color-dot" style="background:#f9f7f1;"></span> Garras / Colmillos</div>
+        <div class="legend-item"><span class="color-dot" style="background:#3a3e40;"></span> Banda Ninja</div>
+        <div class="legend-item"><span class="color-dot" style="background:#b8c2cc;"></span> Placa Metálica</div>
+      </div>
+
+      <div class="control-row">
+        <span>Auto-giro:</span>
+        <button id="btn-spin" style="padding: 4px 10px; font-size: 11px;" onclick="toggleAutoSpin()">Pausar</button>
+      </div>
+
+      <div class="control-row">
+        <span>Escala: <b id="val-escala">1.8x</b></span>
+        <input id="slider-escala" type="range" min="0.8" max="3.5" step="0.1" value="1.8" oninput="cambiarEscala(this.value)">
+      </div>
+
+      <div class="control-row" style="margin-top: 10px;">
+        <button style="width: 100%;" onclick="resetearVista()">🎯 Centrar / Resetear Vista</button>
+      </div>
+
+      <div class="tips">
+        <span>🖱️ <b>Clic izq + arrastrar:</b> Orbitar 360°</span>
+        <span>🖱️ <b>Rueda del ratón:</b> Zoom +/-</span>
+        <span>🖱️ <b>Clic der + arrastrar:</b> Desplazar cámara</span>
+        <span>⌨️ <b>M:</b> Cambiar modo | <b>Espacio:</b> Pausar giro</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let rawObjLines = null;
+    let rawMtlLines = null;
+    let snorlaxUnified = null;
+    let snorlaxParts = [];
+    let cargado = false;
+
+    let modoSombreado = 0; // 0: Colores Originales, 1: Normales, 2: Arcilla, 3: Wireframe
+    let autoSpin = true;
+    let spinAngle = 0;
+    let escalaModelo = 1.8;
+    let cam;
+
+    function preload() {
+      // Carga el modelo completo para modos de malla/normales unificados
+      snorlaxUnified = loadModel('3D_Model.obj', true);
+
+      // Carga el archivo .mtl y .obj como texto para separar las partes por material
+      loadStrings('3D_Model.mtl', (lines) => { rawMtlLines = lines; });
+      loadStrings('3D_Model.obj', (lines) => { rawObjLines = lines; });
+    }
+
+    function setup() {
+      createCanvas(windowWidth, windowHeight, WEBGL);
+      cam = createCamera();
+      resetearVista();
+
+      inicializarPartes();
+    }
+
+    function inicializarPartes() {
+      if (rawObjLines && rawMtlLines && snorlaxParts.length === 0) {
+        const materials = parseMTL(rawMtlLines);
+        snorlaxParts = parseOBJMultiMaterial(rawObjLines, materials);
+        cargado = true;
+        const loader = document.getElementById('loading-indicator');
+        if (loader) loader.style.display = 'none';
+      }
+    }
+
+    // Parser de archivo .MTL (difuso, especular, brillo)
+    function parseMTL(lines) {
+      const materials = {};
+      let cur = null;
+      for (let i = 0; i < lines.length; i++) {
+        const l = lines[i].trim();
+        if (l.startsWith('newmtl ')) {
+          cur = l.substring(7).trim();
+          materials[cur] = {
+            name: cur,
+            kd: [200, 200, 200],
+            ks: [120, 120, 120],
+            ns: 25
+          };
+        } else if (cur && l.startsWith('Kd ')) {
+          const c = l.substring(3).trim().split(/\s+/).map(Number);
+          // Conversión de color lineal a sRGB para pantalla
+          materials[cur].kd = c.map(v => Math.min(255, Math.max(0, Math.round(Math.pow(v, 1 / 2.2) * 255))));
+        } else if (cur && l.startsWith('Ks ')) {
+          const c = l.substring(3).trim().split(/\s+/).map(Number);
+          materials[cur].ks = c.map(v => Math.min(255, Math.max(0, Math.round(v * 255))));
+        } else if (cur && l.startsWith('Ns ')) {
+          materials[cur].ns = parseFloat(l.substring(3).trim()) || 25;
+        }
+      }
+
+      // Correcciones estéticas adicionales para mayor fidelidad a Snorlax
+      if (materials['Body']) {
+        materials['Body'].kd = [45, 114, 141]; // Azul verdoso característico
+        materials['Body'].ns = 15;
+      }
+      if (materials['Body.2']) {
+        materials['Body.2'].kd = [245, 235, 218]; // Crema cálido
+        materials['Body.2'].ns = 10;
+      }
+      if (materials['Claws']) {
+        materials['Claws'].kd = [252, 250, 244]; // Blanco marfil para colmillos y garras
+        materials['Claws'].ns = 35;
+      }
+      if (materials['Feet']) {
+        materials['Feet'].kd = [218, 203, 185]; // Almohadillas pies
+      }
+      if (materials['Headband']) {
+        materials['Headband'].kd = [38, 40, 44]; // Tela carbón oscuro
+        materials['Headband'].ns = 5;
+      }
+      if (materials['Metal']) {
+        materials['Metal'].kd = [185, 195, 205]; // Metal plateado
+        materials['Metal'].ks = [240, 245, 255];
+        materials['Metal'].ns = 70; // Alto brillo metálico
+      }
+      if (materials['Black']) {
+        materials['Black'].kd = [16, 16, 20]; // Ojos, boca y grabado
+        materials['Black'].ks = [0, 0, 0];
+        materials['Black'].ns = 1;
+      }
+
+      return materials;
+    }
+
+    // Parser de archivo .OBJ que separa la geometría por material preservando coordenadas normalizadas
+    function parseOBJMultiMaterial(lines, materials) {
+      const allV = [];
+      const allVn = [];
+      const allVt = [];
+
+      // 1. Recolección de vértices, normales y UVs
+      for (let i = 0; i < lines.length; i++) {
+        const l = lines[i].trim();
+        if (l.startsWith('v ')) {
+          const parts = l.split(/\s+/).slice(1).map(Number);
+          allV.push(parts);
+        } else if (l.startsWith('vn ')) {
+          const parts = l.split(/\s+/).slice(1).map(Number);
+          allVn.push(parts);
+        } else if (l.startsWith('vt ')) {
+          const parts = l.split(/\s+/).slice(1).map(Number);
+          allVt.push([parts[0], 1 - parts[1]]);
+        }
+      }
+
+      // Caja envolvente unificada para que todas las partes encajen exactamente en el mismo centro y escala
+      let min = [Infinity, Infinity, Infinity];
+      let max = [-Infinity, -Infinity, -Infinity];
+      for (let i = 0; i < allV.length; i++) {
+        const p = allV[i];
+        for (let j = 0; j < 3; j++) {
+          if (p[j] < min[j]) min[j] = p[j];
+          if (p[j] > max[j]) max[j] = p[j];
+        }
+      }
+      const center = [(min[0] + max[0]) / 2, (min[1] + max[1]) / 2, (min[2] + max[2]) / 2];
+      const longest = Math.max(max[0] - min[0], max[1] - min[1], max[2] - min[2]);
+      const normScale = 200 / longest;
+
+      const normV = allV.map(p => [
+        (p[0] - center[0]) * normScale,
+        (p[1] - center[1]) * normScale,
+        (p[2] - center[2]) * normScale
+      ]);
+
+      // 2. Agrupación de caras por material
+      const partMap = {};
+      let curMtl = 'Body';
+
+      for (let i = 0; i < lines.length; i++) {
+        const l = lines[i].trim();
+        if (l.startsWith('usemtl ')) {
+          curMtl = l.substring(7).trim() || 'Body';
+        } else if (l.startsWith('f ')) {
+          if (!partMap[curMtl]) {
+            partMap[curMtl] = {
+              rawVerts: [],
+              rawNormals: [],
+              rawUVs: [],
+              faces: [],
+              vertMap: {}
+            };
+          }
+          const p = partMap[curMtl];
+          const tokens = l.split(/\s+/).slice(1);
+
+          for (let tri = 2; tri < tokens.length; tri++) {
+            const triTokens = [tokens[0], tokens[tri - 1], tokens[tri]];
+            const faceIndices = [];
+
+            for (let t = 0; t < triTokens.length; t++) {
+              const tok = triTokens[t];
+              if (p.vertMap[tok] !== undefined) {
+                faceIndices.push(p.vertMap[tok]);
+              } else {
+                const comps = tok.split('/');
+                const vIdx = parseInt(comps[0], 10) - 1;
+                const vtIdx = comps[1] ? parseInt(comps[1], 10) - 1 : -1;
+                const vnIdx = comps[2] ? parseInt(comps[2], 10) - 1 : -1;
+
+                const newIdx = p.rawVerts.length;
+                p.vertMap[tok] = newIdx;
+                faceIndices.push(newIdx);
+
+                p.rawVerts.push(normV[vIdx]);
+                if (vnIdx >= 0 && allVn[vnIdx]) {
+                  p.rawNormals.push(allVn[vnIdx]);
+                } else {
+                  p.rawNormals.push([0, 1, 0]);
+                }
+                if (vtIdx >= 0 && allVt[vtIdx]) {
+                  p.rawUVs.push(allVt[vtIdx]);
+                } else {
+                  p.rawUVs.push([0, 0]);
+                }
+              }
+            }
+            if (faceIndices[0] !== faceIndices[1] && faceIndices[0] !== faceIndices[2] && faceIndices[1] !== faceIndices[2]) {
+              p.faces.push(faceIndices);
+            }
+          }
+        }
+      }
+
+      // 3. Creación de geometrías p5.Geometry por material
+      const result = [];
+      for (const mtlName in partMap) {
+        const p = partMap[mtlName];
+        const geom = new p5.Geometry();
+        geom.gid = 'snorlax_part_' + mtlName;
+
+        for (let i = 0; i < p.rawVerts.length; i++) {
+          const v = p.rawVerts[i];
+          geom.vertices.push(createVector(v[0], v[1], v[2]));
+          const n = p.rawNormals[i];
+          geom.vertexNormals.push(createVector(n[0], n[1], n[2]));
+          geom.uvs.push(p.rawUVs[i]);
+        }
+        geom.faces = p.faces;
+        if (geom.vertexNormals.length === 0) {
+          geom.computeNormals();
+        }
+
+        const mat = materials[mtlName] || {
+          name: mtlName,
+          kd: [190, 190, 190],
+          ks: [120, 120, 120],
+          ns: 20
+        };
+
+        result.push({
+          name: mtlName,
+          geom: geom,
+          mat: mat
+        });
+      }
+
+      return result;
+    }
+
+    function draw() {
+      background(20, 20, 25);
+
+      if (!cargado && rawObjLines && rawMtlLines) {
+        inicializarPartes();
+      }
+
+      // Control orbital de cámara
+      orbitControl(1.2, 1.2, 0.1);
+
+      // Iluminación de 3 puntos
+      ambientLight(135);
+      directionalLight(255, 250, 240, 0.85, 1, -0.6); // Luz clave cálida
+      directionalLight(95, 135, 175, -0.85, -0.5, 0.85); // Luz de relleno fría
+      directionalLight(80, 90, 110, 0, -1, -1); // Contraluz
+
+      push();
+      // Orientación: rotateZ(PI) pone a Snorlax de pie y de frente
+      rotateZ(PI);
+
+      // Auto-rotación continua sobre su propio eje vertical (se pausa al arrastrar con el mouse)
+      if (autoSpin && !mouseIsPressed) {
+        spinAngle += 0.008;
+      }
+      rotateY(spinAngle);
+
+      // Escala
+      scale(escalaModelo);
+
+      // Renderizado según el modo seleccionado
+      if (modoSombreado === 0) {
+        // MODO 0: COLORES ORIGINALES (Multi-Material)
+        noStroke();
+        if (snorlaxParts.length > 0) {
+          for (let i = 0; i < snorlaxParts.length; i++) {
+            const part = snorlaxParts[i];
+            const m = part.mat;
+            fill(m.kd[0], m.kd[1], m.kd[2]);
+            if (m.ks) {
+              specularMaterial(m.ks[0], m.ks[1], m.ks[2]);
+            }
+            shininess(m.ns || 20);
+            model(part.geom);
+          }
+        } else if (snorlaxUnified) {
+          fill(45, 114, 141);
+          model(snorlaxUnified);
+        }
+      } else if (modoSombreado === 1) {
+        // MODO 1: NORMALES (Orientación de superficies)
+        noStroke();
+        normalMaterial();
+        if (snorlaxUnified) model(snorlaxUnified);
+      } else if (modoSombreado === 2) {
+        // MODO 2: ARCILLA / ESCULTURA (Studio Clay)
+        noStroke();
+        fill(225, 222, 215);
+        specularMaterial(140, 140, 140);
+        shininess(14);
+        if (snorlaxUnified) model(snorlaxUnified);
+      } else if (modoSombreado === 3) {
+        // MODO 3: MALLA (Wireframe)
+        noFill();
+        stroke(44, 182, 125);
+        strokeWeight(0.6);
+        if (snorlaxUnified) model(snorlaxUnified);
+      }
+
+      pop();
+    }
+
+    function resetearVista() {
+      if (cam) {
+        cam.camera(0, 0, 750, 0, 0, 0, 0, 1, 0);
+      }
+      spinAngle = 0;
+    }
+
+    function setModo(m) {
+      modoSombreado = m;
+      const ids = ['btn-col', 'btn-norm', 'btn-clay', 'btn-wire'];
+      ids.forEach((id, idx) => {
+        const el = document.getElementById(id);
+        if (el) el.className = (idx === m) ? 'active' : '';
+      });
+
+      const leg = document.getElementById('material-legend');
+      if (leg) {
+        leg.style.display = (m === 0) ? 'grid' : 'none';
+      }
+    }
+
+    function toggleAutoSpin() {
+      autoSpin = !autoSpin;
+      const btn = document.getElementById('btn-spin');
+      if (btn) {
+        btn.innerText = autoSpin ? 'Pausar' : 'Reanudar';
+        btn.style.color = autoSpin ? '#e2e8f0' : '#2cb67d';
+      }
+    }
+
+    function cambiarEscala(val) {
+      escalaModelo = parseFloat(val);
+      const label = document.getElementById('val-escala');
+      if (label) label.innerText = escalaModelo.toFixed(1) + 'x';
+    }
+
+    function keyPressed() {
+      if (key === 'm' || key === 'M') {
+        setModo((modoSombreado + 1) % 4);
+      } else if (key === ' ') {
+        toggleAutoSpin();
+      } else if (key === 'r' || key === 'R') {
+        resetearVista();
+      }
+    }
+
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+      resetearVista();
+    }
+  </script>
+
+</body>
+</html>
