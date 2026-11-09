@@ -34,9 +34,15 @@ def registrar_auditoria(datos):
     print(f"   [auditoría] préstamo registrado: {datos}")
 
 
+def enviar_sms(datos):
+    estudiante, titulo = datos
+    print(f"   [sms] {estudiante}: prestaste '{titulo}'")
+
+
 bus = Bus()
 bus.suscribir("libro_prestado", enviar_correo)
 bus.suscribir("libro_prestado", registrar_auditoria)
+bus.suscribir("libro_prestado", enviar_sms)
 
 servicio = ServicioPrestamos(bus)
 servicio.prestar("ana", "Clean Architecture")
