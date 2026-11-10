@@ -1,0 +1,762 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Paquetes de configuración y lenguaje ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{cite}
+
+% --- Configuración de hipervínculos ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    citecolor=blue!70!black,
+    urlcolor=blue!70!black
+}
+
+% --- Configuración de encabezado y pie de página ---
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small Teoría de la Información y Sistemas de Comunicación -- 2026-II}
+\rhead{\small Taller 0: Variable Compleja y Fasores}
+\cfoot{\thepage}
+
+% --- Información de portada / cabecera ---
+\title{\textbf{Universidad Nacional de Colombia}\\[0.2em]
+\large Facultad de Ingeniería -- Departamento de Ingeniería de Sistemas e Industrial\\[0.8em]
+\Large \textbf{Teoría de la Información y Sistemas de Comunicación (2025994)}\\[0.4em]
+\large \textbf{Taller 0: Fundamentos Matemáticos, Variable Compleja y Fasores en Sistemas de Comunicación}}
+\author{\textbf{Jonathan López}}
+\date{Semestre 2026-II}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\vspace{1em}
+\hrule
+\vspace{1.5em}
+
+% =========================================================================
+% 1. FUNDAMENTO TEÓRICO
+% =========================================================================
+\section{Fundamento Teórico}
+
+\subsection{Álgebra de Números Complejos y Representación en el Plano de Argand}
+% Marco conceptual: formas cartesiana y polar, relaciones de Euler, operaciones algebraicas y cálculo de raíces n-ésimas de la unidad.
+\subsubsection{Números complejos y su representación}
+Los números complejos nacen de la necesidad de resolver ecuaciones como $x^2 + 1 = 0$, que no tienen soluciones en los números reales. Para esto, se introduce la unidad imaginaria \( j \) (o \( i \) en algunas notaciones), definida por la propiedad \( j^2 = -1 \). 
+
+Un número complejo puede ser representado de tres maneras principales \cite{oppenheim1997}:
+\begin{itemize}
+    \item \textbf{Forma cartesiana (o binómica):} \( z = x + jy \), donde \( x \) corresponde a la parte real ($\text{Re}\{z\}$) y \( y \) a la parte imaginaria ($\text{Im}\{z\}$). Esta forma es muy útil para realizar operaciones algebraicas como suma y resta. Su representación gráfica en el plano de Argand es directa: el eje horizontal representa la parte real ($x$) y el eje vertical representa la parte imaginaria ($y$).
+    \item \textbf{Forma polar:} \( z = r(\cos\theta + j\sin\theta) \), denotada frecuentemente como \( z = r\angle\theta \). Si partimos de la representación de un número en el plano de Argand, similar a las coordenadas polares en el plano real, podemos representar este mismo número en base a un radio y un ángulo: \( r \) es el módulo (o magnitud) y \( \theta \) es el argumento (o fase). Su representación gráfica en el plano de Argand ubica a \( r \) como la distancia desde el origen y a \( \theta \) como el ángulo medido respecto al eje real positivo.
+    \item \textbf{Forma exponencial:} \( z = r \cdot e^{j\theta} \), es una forma compacta derivada de la forma polar a partir de la identidad de Euler (\( e^{j\theta} = \cos\theta + j\sin\theta \)). Esta forma es extremadamente útil para simplificar operaciones de multiplicación y división. Por ende, es la forma estándar utilizada en el análisis de señales y sistemas.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    % \includegraphics[width=0.65\textwidth]{plano_argand.png}
+    \fbox{\parbox{0.75\textwidth}{\centering \vspace{1.8cm} \textbf{[Placeholder: Imagen del Plano de Argand]} \\[0.5em] \small (Representación gráfica de $z = x + jy = r e^{j\theta}$ en el plano complejo con parte real, imaginaria, módulo $r$ y ángulo $\theta$) \vspace{1.8cm}}}
+    \caption{Representación geométrica de un número complejo en el plano de Argand.}
+    \label{fig:plano_argand}
+\end{figure}
+
+\subsubsection{Módulo, argumento y sus propiedades}
+Para un número complejo $z = x + jy = r e^{j\theta}$:
+\begin{itemize}
+    \item \textbf{Módulo ($r = |z|$):} Representa la distancia euclidiana desde el origen hasta el punto $(x, y)$ en el plano complejo:
+    \[
+    r = |z| = \sqrt{x^2 + y^2}, \quad \text{con } |z| \ge 0
+    \]
+    Propiedades fundamentales del módulo:
+    \begin{itemize}
+        \item Módulo de un producto: $|z_1 \cdot z_2| = |z_1| \cdot |z_2|$
+        \item Módulo de un cociente: $\left|\frac{z_1}{z_2}\right| = \frac{|z_1|}{|z_2|}, \quad (z_2 \neq 0)$
+        \item Módulo de la exponencial imaginaria: $|e^{j\theta}| = \sqrt{\cos^2\theta + \sin^2\theta} = 1$
+        \item Multiplicación por un escalar real $c$: $|c \cdot z| = |c| \cdot |z|$, donde $|c| = c$ si $c \ge 0$.
+    \end{itemize}
+
+    \item \textbf{Argumento ($\theta = \arg(z)$):} Es el ángulo medido en radianes desde el semieje real positivo hacia el vector en sentido antihorario:
+    \[
+    \theta = \arg(z) = \arctan\left(\frac{y}{x}\right) \quad (\text{ajustado al cuadrante correspondiente})
+    \]
+    El argumento principal comúnmente se define en el intervalo $(-\pi, \pi]$ o $[0, 2\pi)$. Propiedades fundamentales del argumento:
+    \begin{itemize}
+        \item Argumento de un producto: $\arg(z_1 \cdot z_2) = \arg(z_1) + \arg(z_2)$
+        \item Argumento de un cociente: $\arg\left(\frac{z_1}{z_2}\right) = \arg(z_1) - \arg(z_2)$
+        \item Argumento de la exponencial imaginaria: $\arg(e^{j\theta}) = \theta \text{ rad}$
+        \item Argumento de un número real positivo: Si $c > 0$, entonces $\arg(c) = 0 \text{ rad}$.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Operaciones entre números complejos}
+En los números complejos, similar a los números reales, se pueden realizar operaciones algebraicas de suma, resta, multiplicación y división. Sean $z_1 = x_1 + jy_1 = r_1 e^{j\theta_1}$ y $z_2 = x_2 + jy_2 = r_2 e^{j\theta_2}$, las operaciones se definen como:
+
+\begin{itemize}
+    \item \textbf{Suma:} Se realiza sumando miembro a miembro sus componentes reales e imaginarias:
+    \begin{equation}
+        z_1 + z_2 = (x_1 + jy_1) + (x_2 + jy_2) = (x_1 + x_2) + j(y_1 + y_2)
+        \label{eq:suma_complejos}
+    \end{equation}
+
+    \item \textbf{Resta:} De forma análoga a la suma, se restan las partes reales y las partes imaginarias de forma independiente:
+    \begin{equation}
+        z_1 - z_2 = (x_1 + jy_1) - (x_2 + jy_2) = (x_1 - x_2) + j(y_1 - y_2)
+        \label{eq:resta_complejos}
+    \end{equation}
+
+    \item \textbf{Multiplicación:}
+    En forma binómica, se aplica la propiedad distributiva recordando que $j^2 = -1$:
+    \begin{align}
+        z_1 \cdot z_2 &= (x_1 + jy_1) \cdot (x_2 + jy_2) \nonumber \\
+        &= x_1 x_2 + jx_1 y_2 + jx_2 y_1 + j^2 y_1 y_2 \nonumber \\
+        &= (x_1 x_2 - y_1 y_2) + j(x_1 y_2 + x_2 y_1)
+        \label{eq:mult_cartesiana}
+    \end{align}
+    En forma exponencial (utilizando la fórmula de Euler), las magnitudes se multiplican y los ángulos se suman:
+    \begin{equation}
+        z_1 \cdot z_2 = (r_1 e^{j\theta_1}) \cdot (r_2 e^{j\theta_2}) = (r_1 r_2) \, e^{j(\theta_1 + \theta_2)}
+        \label{eq:mult_euler}
+    \end{equation}
+
+    \item \textbf{División:}
+    En forma binómica, se multiplica y divide por el conjugado del denominador ($z_2^* = x_2 - jy_2$) para eliminar la parte imaginaria del divisor:
+    \begin{align}
+        \frac{z_1}{z_2} &= \frac{x_1 + jy_1}{x_2 + jy_2} \cdot \frac{x_2 - jy_2}{x_2 - jy_2} \nonumber \\
+        &= \frac{(x_1 x_2 + y_1 y_2) + j(y_1 x_2 - x_1 y_2)}{x_2^2 + y_2^2} \nonumber \\
+        &= \left(\frac{x_1 x_2 + y_1 y_2}{x_2^2 + y_2^2}\right) + j\left(\frac{y_1 x_2 - x_1 y_2}{x_2^2 + y_2^2}\right), \quad \text{con } z_2 \neq 0
+        \label{eq:div_cartesiana}
+    \end{align}
+    En forma exponencial (con la fórmula de Euler), los módulos se dividen y los argumentos se restan:
+    \begin{equation}
+        \frac{z_1}{z_2} = \frac{r_1 e^{j\theta_1}}{r_2 e^{j\theta_2}} = \left(\frac{r_1}{r_2}\right) e^{j(\theta_1 - \theta_2)}, \quad \text{con } r_2 \neq 0
+        \label{eq:div_euler}
+    \end{equation}
+\end{itemize}
+
+\subsubsection{Raíces de números complejos}
+La potenciación y radicación de números complejos se deducen a partir de la identidad de Euler:
+\[
+e^{j\theta} = \cos\theta + j\sin\theta
+\]
+Elevando ambos lados de la igualdad a una potencia entera $n \in \mathbb{Z}$ y aplicando las propiedades básicas de los exponentes:
+\[
+(e^{j\theta})^n = e^{jn\theta}
+\]
+Sustituyendo nuevamente la identidad de Euler en cada lado:
+\[
+(\cos\theta + j\sin\theta)^n = \cos(n\theta) + j\sin(n\theta)
+\]
+Esta relación constituye la \textbf{Fórmula de De Moivre}. Para un número complejo general en forma polar o exponencial $z = r e^{j\theta} = r(\cos\theta + j\sin\theta)$, su potencia enésima se expresa como:
+\[
+z^n = (r e^{j\theta})^n = r^n e^{jn\theta} = r^n \big(\cos(n\theta) + j\sin(n\theta)\big)
+\]
+
+\textbf{Deducción de las raíces $n$-ésimas de un número complejo general}:
+
+A partir de la fórmula de potenciación, se plantea el problema inverso de la radicación: dado un número complejo general $z = r e^{j\theta} \neq 0$, se buscan todos los números complejos $w = \rho e^{j\phi}$ que satisfacen la ecuación:
+\[
+w^n = z \implies (\rho e^{j\phi})^n = r e^{j\theta} \implies \rho^n e^{jn\phi} = r e^{j\theta}
+\]
+Igualando las magnitudes y considerando la periodicidad angular de $2\pi$ en la función exponencial compleja:
+\begin{enumerate}
+    \item \textbf{Para el módulo:} $\rho^n = r \implies \rho = \sqrt[n]{r}$, donde $\sqrt[n]{r}$ representa la única raíz enésima real y positiva del módulo $r$.
+    \item \textbf{Para el argumento:} $n\phi = \theta + 2\pi k \implies \phi_k = \frac{\theta + 2\pi k}{n}$, con $k \in \mathbb{Z}$.
+\end{enumerate}
+
+Al evaluar los $n$ números enteros consecutivos $k \in \{0, 1, 2, \dots, n-1\}$, se obtienen $n$ argumentos distintos $\phi_k$ contenidos en el intervalo $[0, 2\pi)$. Si se evalúa $k = n$, se tiene $\phi_n = \frac{\theta + 2\pi n}{n} = \frac{\theta}{n} + 2\pi$, el cual coincide angularmente con la solución de $k = 0$, produciéndose una repetición periódica de las mismas raíces.
+
+Por lo tanto, todo número complejo no nulo $z = r e^{j\theta}$ posee exactamente $n$ raíces $n$-ésimas distintas en $\mathbb{C}$, dadas por:
+\[
+w_k = \sqrt[n]{r} \, e^{j\left(\frac{\theta + 2\pi k}{n}\right)} = \sqrt[n]{r} \left[\cos\left(\frac{\theta + 2\pi k}{n}\right) + j\sin\left(\frac{\theta + 2\pi k}{n}\right)\right], \quad \text{para } k = 0, 1, \dots, n-1
+\]
+
+\textbf{Propiedades geométricas:}
+\begin{itemize}
+    \item Todas las raíces $w_k$ comparten el mismo módulo constante $\rho = \sqrt[n]{r}$, lo que sitúa a las $n$ soluciones sobre una circunferencia de radio $\sqrt[n]{r}$ centrada en el origen del plano complejo.
+    \item El ángulo entre raíces consecutivas es uniforme e igual a $\Delta\phi = \frac{2\pi}{n}$ radianes.
+    \item Geométricamente, las $n$ raíces corresponden a los vértices de un \textbf{polígono regular de $n$ lados} centrado en el origen e inscrito en la circunferencia de radio $\sqrt[n]{r}$.
+\end{itemize}
+
+\subsection{Funciones de Variable Compleja Parametrizadas y Trayectorias Temporales}
+
+\subsubsection{Definición de función compleja paramétrica}
+Es util crear funciones de variable real a variable compleja, comunmente dependientes del tiempo $t \in \mathbb{R}$. Una función de variable compleja parametrizada en el tiempo asigna a cada instante $t$ un número complejo $z(t)$ \cite{oppenheim1997}:
+\[
+z(t) = x(t) + jy(t)
+\]
+donde $x(t) = \text{Re}\{z(t)\}$ y $y(t) = \text{Im}\{z(t)\}$ son funciones continuas de valor real.
+
+De forma equivalente, empleando la identidad de Euler, la función puede expresarse en forma polar o exponencial:
+\[
+z(t) = r(t) \, e^{j\theta(t)}
+\]
+donde:
+\begin{itemize}
+    \item $r(t) = |z(t)| = \sqrt{x(t)^2 + y(t)^2} \ge 0$ es la \textbf{magnitud o envolvente instantánea} de la señal.
+    \item $\theta(t) = \angle z(t) = \arctan\left(\frac{y(t)}{x(t)}\right)$ es la \textbf{fase instantánea}, cuya derivada respecto al tiempo define la frecuencia angular instantánea: $\omega(t) = \frac{d\theta(t)}{dt}$.
+\end{itemize}
+
+\subsubsection{Métodos de graficación y visualización}
+Debido a que una función compleja dependiente del tiempo mapea una dimensión temporal hacia un plano bidimensional ($\mathbb{R} \to \mathbb{C}$), se emplean tres métodos principales para su representación gráfica:
+
+\begin{enumerate}
+    \item \textbf{Trayectoria en el plano complejo ($\text{Re}\{z\}$ vs. $\text{Im}\{z\}$):}
+    Se grafica de manera paramétrica la componente real en el eje de abscisas frente a la parte imaginaria en el eje de ordenadas, eliminando visualmente el tiempo. A medida que $t$ avanza, el punto $(x(t), y(t))$ traza una curva continua o trayectoria en el plano de Argand. La distancia radial al origen en cada instante corresponde a $r(t)$ y la dirección angular corresponde a $\theta(t)$.
+    
+    \item \textbf{Proyecciones en el dominio del tiempo:}
+    Consiste en graficar por separado cada componente cartesiana en función del tiempo $t$:
+    \begin{itemize}
+        \item $\text{Re}\{z(t)\}$ frente a $t$: Representa la componente en fase de la señal física.
+        \item $\text{Im}\{z(t)\}$ frente a $t$: Representa la componente en cuadratura (desfasada $90^\circ$).
+    \end{itemize}
+    
+    \item \textbf{Curvas de magnitud y fase:}
+    Permite visualizar la evolución temporal del módulo $r(t) = |z(t)|$  y de la fase instantánea $\theta = \angle z(t)$.
+\end{enumerate}
+
+
+\subsection{Teoría Fasorial y Superposición de Componentes Armónicas}
+\subsubsection{Definición de fasor rotatorio}
+En ingeniería de comunicaciones y procesamiento de señales, un fasor es una herramienta analítica para representar señales armónicas en el plano complejo \cite{oppenheim1997, lathi2009}. Para una señal sinusoidal de amplitud $A$, frecuencia angular $\omega_0$ y fase $\phi$:
+\[
+u(t) = A\sin(\omega_0 t + \phi)
+\]
+se define el \textbf{fasor rotatorio} como la función exponencial compleja:
+\[
+U(t) = A \, e^{j(\omega_0 t + \phi)}
+\]
+Por la identidad de Euler ($e^{j\theta} = \cos\theta + j\sin\theta$), este vector posee longitud constante $|U(t)| = A$ y rota en sentido antihorario a una velocidad angular constante $\omega_0$. La señal física real en el tiempo corresponde a la proyección ortogonal del vector rotatorio:
+\begin{itemize}
+    \item Proyección sobre el eje horizontal (eje real): $\text{Re}\{U(t)\} = A\cos(\omega_0 t + \phi)$.
+    \item Proyección sobre el eje vertical (eje imaginario): $\text{Im}\{U(t)\} = A\sin(\omega_0 t + \phi) = u(t)$ (la altura del vector en cada instante).
+\end{itemize}
+
+\subsubsection{Superposición armónica y cadena fasorial}
+Cuando una señal periódica compleja está formada por la superposición de múltiples componentes armónicas de frecuencias $\omega_k$:
+\[
+u(t) = \sum_{k=1}^M u_k(t) = \sum_{k=1}^M A_k \sin(\omega_k t + \phi_k)
+\]
+en el plano complejo dicha superposición se modela mediante la suma vectorial de sus fasores rotatorios:
+\[
+U(t) = \sum_{k=1}^M U_k(t) = \sum_{k=1}^M A_k \, e^{j(\omega_k t + \phi_k)}
+\]
+
+\textbf{Representación como articulación robótica (epiciclos):}
+Geométricamente, esta suma vectorial acumulada se visualiza encadenando los vectores sucesivamente de cabeza a cola:
+\begin{enumerate}
+    \item El primer fasor $U_1(t)$ rota anclado en el origen $(0,0)$.
+    \item El segundo fasor $U_2(t)$ tiene su punto de apoyo en la punta de $U_1(t)$ y gira con su propia velocidad angular $\omega_2$.
+    \item De forma general, el $k$-ésimo vector se sitúa en la punta del anterior y rota a velocidad $\omega_k$.
+\end{enumerate}
+A medida que el tiempo transcurre, cada vector gira con su frecuencia respectiva; la punta del último vector describe una trayectoria en el plano complejo y su altura instantánea ($\text{Im}\{U(t)\}$) proyecta en sincronía continua el valor de la onda resultante $u(t)$ en el dominio del tiempo.
+
+
+% =========================================================================
+% 2. DESARROLLO DEL TALLER
+% =========================================================================
+\section{Desarrollo del Taller}
+
+\subsection{Problema 1}
+\noindent\textbf{Enunciado:} Dados los números complejos $z_1 = 2 - j$ y $z_2 = 3 + 6j$, determine analíticamente el valor exacto de la variable compleja $x$ que satisface la ecuación:
+\[
+z_2^2 + x = -z_1^2
+\]
+
+\noindent\textbf{Desarrollo analítico:}
+
+\begin{enumerate}
+    \item \textbf{Despeje de la variable incógnita $x$:}
+    Restando $z_2^2$ a ambos miembros de la ecuación, se obtiene la expresión para $x$:
+    \[
+    x = -z_1^2 - z_2^2 = -\left(z_1^2 + z_2^2\right)
+    \]
+
+    \item \textbf{Cálculo de las potencias cuadradas ($z_1^2$ y $z_2^2$):}
+    Utilizando la definición de multiplicación en forma binómica establecida en \eqref{eq:mult_cartesiana}, donde $(x + jy)^2 = (x^2 - y^2) + j(2xy)$:
+    \begin{itemize}
+        \item Para $z_1 = 2 - j$ ($x_1 = 2$, $y_1 = -1$):
+        \begin{align*}
+            z_1^2 &= (2 - j)^2 \\
+            &= 2^2 + 2(2)(-j) + (-j)^2 \\
+            &= 4 - 4j + j^2 \\
+            &= 4 - 4j - 1 = 3 - 4j
+        \end{align*}
+        
+        \item Para $z_2 = 3 + 6j$ ($x_2 = 3$, $y_2 = 6$):
+        \begin{align*}
+            z_2^2 &= (3 + 6j)^2 \\
+            &= 3^2 + 2(3)(6j) + (6j)^2 \\
+            &= 9 + 36j + 36j^2 \\
+            &= 9 + 36j - 36 = -27 + 36j
+        \end{align*}
+    \end{itemize}
+
+    \item \textbf{Suma de los términos al cuadrado ($z_1^2 + z_2^2$):}
+    Aplicando la fórmula de la suma en forma binómica dada en \eqref{eq:suma_complejos}, se suman por separado las partes reales y las partes imaginarias:
+    \begin{align*}
+        z_1^2 + z_2^2 &= (3 - 4j) + (-27 + 36j) \\
+        &= (3 - 27) + j(-4 + 36) \\
+        &= -24 + 32j
+    \end{align*}
+
+    \item \textbf{Determinación final del valor exacto de $x$:}
+    Sustituyendo el resultado en la expresión despejada:
+    \[
+    x = -(z_1^2 + z_2^2) = -(-24 + 32j) = 24 - 32j
+    \]
+\end{enumerate}
+
+\noindent\textbf{Comprobación analítica:}
+Sustituyendo $x = 24 - 32j$ en la ecuación original $z_2^2 + x = -z_1^2$:
+\begin{align*}
+    z_2^2 + x &= (-27 + 36j) + (24 - 32j) = (-27 + 24) + j(36 - 32) = -3 + 4j \\
+    -z_1^2 &= -(3 - 4j) = -3 + 4j
+\end{align*}
+Ambos miembros coinciden exactamente, verificando la validez del resultado.
+
+\begin{figure}[htbp]
+    \centering
+    % \includegraphics[width=0.8\textwidth]{verificacion_p1_matlab.png}
+    \fbox{\parbox{0.8\textwidth}{\centering \vspace{1.8cm} \textbf{[Placeholder: Captura de pantalla de la verificación del Problema 1 en MATLAB]} \\[0.5em] \small (Salida en la consola de comandos de MATLAB con la solución de la ecuación) \vspace{1.8cm}}}
+    \caption{Verificación computacional del Problema 1 en MATLAB.}
+    \label{fig:verificacion_p1_matlab}
+\end{figure}
+
+\subsection{Problema 2}
+
+\noindent\textbf{Enunciado:} Dada la función de variable compleja $Z(t) = f(t) = t \cdot e^{jt}$, parametrizada para el intervalo temporal $t \in [0, 4\pi]$:
+\begin{enumerate}
+    \item Realice la deducción matemática de su magnitud $|Z(t)|$ y fase $\angle Z(t)$.
+    \item Genere la gráfica en el plano complejo ($\text{Re}\{Z\}$ vs. $\text{Im}\{Z\}$).
+\end{enumerate}
+
+\noindent\textbf{1. Deducción matemática de magnitud y fase (paso a paso):}
+
+\begin{itemize}
+    \item \textbf{Deducción de la magnitud $|Z(t)|$:}
+    Aplicando la propiedad del módulo del producto de variables complejas ($|z_1 \cdot z_2| = |z_1| \cdot |z_2|$):
+    \[
+    |Z(t)| = |t \cdot e^{jt}| = |t| \cdot |e^{jt}|
+    \]
+    Evaluando cada factor:
+    \begin{enumerate}
+        \item Dado que el intervalo temporal es $t \in [0, 4\pi]$, se cumple que $t \ge 0$, por lo que el valor absoluto de $t$ es simplemente:
+        \[
+        |t| = t
+        \]
+        \item Para el término exponencial complejo $e^{jt}$, utilizando la identidad de Euler ($e^{jt} = \cos(t) + j\sin(t)$):
+        \[
+        |e^{jt}| = \sqrt{\cos^2(t) + \sin^2(t)} = \sqrt{1} = 1
+        \]
+    \end{enumerate}
+    Multiplicando ambos resultados:
+    \[
+    |Z(t)| = t \cdot 1 = t
+    \]
+    La magnitud de la función crece linealmente con el tiempo.
+
+    \item \textbf{Deducción de la fase $\angle Z(t)$:}
+    Aplicando la propiedad del argumento del producto ($\arg(z_1 \cdot z_2) = \arg(z_1) + \arg(z_2)$):
+    \[
+    \angle Z(t) = \arg(t) + \arg(e^{jt})
+    \]
+    Evaluando cada término:
+    \begin{enumerate}
+        \item Para $t > 0$, al tratarse de un escalar real positivo ubicado sobre el semieje real positivo, su ángulo es:
+        \[
+        \arg(t) = 0 \text{ rad}
+        \]
+        *(en $t = 0$ la función está en el origen con magnitud nula, por lo que la fase tiende a $0$ por continuidad).*
+        \item Para la exponencial compleja $e^{jt}$, por definición directa de la forma exponencial:
+        \[
+        \arg(e^{jt}) = t \text{ rad}
+        \]
+    \end{enumerate}
+    Sumando las fases:
+    \[
+    \angle Z(t) = 0 + t = t \text{ rad}
+    \]
+    La fase evoluciona de manera lineal a razón de $1 \text{ rad/s}$. Para el intervalo $t \in [0, 4\pi]$, el vector completa dos revoluciones completas ($4\pi \text{ rad} = 720^\circ$).
+\end{itemize}
+
+\noindent\textbf{2. Gráfica de la función:}
+
+Con el siguiente código en MATLAB:
+
+\begin{lstlisting}[language=Matlab, frame=single, basicstyle=\small\ttfamily, keywordstyle=\color{blue}, commentstyle=\color{green!50!black}]
+% Intervalo de tiempo t en [0, 4*pi]
+t = linspace(0, 4*pi, 1000);
+
+% Funcion compleja Z(t) = t * e^(j*t)
+Z = t .* exp(1j * t);
+
+% Grafica en el plano complejo (Re{Z} vs. Im{Z})
+figure;
+plot(real(Z), imag(Z), 'b', 'LineWidth', 1.5);
+grid on;
+axis equal;
+xlabel('Re\{Z(t)\}');
+ylabel('Im\{Z(t)\}');
+title('Problema 2: Trayectoria de Z(t) = t \cdot e^{jt}');
+\end{lstlisting}
+
+\noindent se graficó la función dando la siguiente gráfica:
+
+\begin{figure}[htbp]
+    \centering
+    % \includegraphics[width=0.75\textwidth]{problema2_trayectoria.png}
+    \fbox{\parbox{0.8\textwidth}{\centering \vspace{2cm} \textbf{[Placeholder: Gráfica de la trayectoria de $Z(t)$ en el plano complejo]} \\[0.5em] \small (Gráfica generada en MATLAB para $\text{Re}\{Z(t)\}$ vs. $\text{Im}\{Z(t)\}$) \vspace{2cm}}}
+    \caption{Trayectoria de la función compleja $Z(t) = t \cdot e^{jt}$ en el plano complejo.}
+    \label{fig:problema2_trayectoria}
+\end{figure}
+
+La gráfica muestra un tipo de espiral, la cual parte desde el origen $(0,0)$ en $t = 0$ y se expande radialmente de manera uniforme a medida que rota en sentido antihorario, completando dos vueltas ($4\pi\text{ rad}$) hasta alcanzar el punto $(4\pi, 0) \approx (12.57, 0)$.
+
+Al revisar sus componentes mediante la identidad de Euler ($Z(t) = t\cos(t) + j\, t\sin(t)$), vemos que:
+\begin{itemize}
+    \item La componente imaginaria ($\text{Im}\{Z(t)\} = t\sin(t)$) es una onda senoidal cuya amplitud crece linealmente con el tiempo según la envolvente $\pm t$, oscilando a una frecuencia angular de $\omega = 1\text{ rad/s}$.
+    \item La componente real ($\text{Re}\{Z(t)\} = t\cos(t)$) es una onda cosenoidal con la misma envolvente lineal de amplitud creciente $\pm t$ y la misma frecuencia, encontrándose en cuadratura (desfasada $90^\circ$ o $\pi/2\text{ rad}$) respecto a la componente imaginaria.
+\end{itemize}
+Esto evidencia que la espiral observada en el plano de Argand es el resultado de la superposición ortogonal de dos ondas armónicas cuya amplitud aumenta linealmente con el tiempo.
+
+\subsection{Problema 3}
+
+\noindent\textbf{Enunciado:} Considere la función compleja dada por:
+\[
+z(t) = e^{(\alpha + j\omega)t}
+\]
+Para $\alpha = -0.5$ y $\omega = 2\pi$, grafique la trayectoria de $z(t)$ para el intervalo temporal $t \in [0, 5]$ segundos.
+
+\noindent\textbf{1. Separación de la función en magnitud y fase:}
+
+Sustituyendo los parámetros $\alpha = -0.5$ y $\omega = 2\pi$ en la función dada:
+\[
+z(t) = e^{(-0.5 + j2\pi)t}
+\]
+Por propiedades de la función exponencial, podemos descomponer el exponente como el producto de dos factores:
+\[
+z(t) = e^{-0.5t} \, e^{j2\pi t}
+\]
+Comparando directamente con la representación de euler de una función de variable compleja ($z(t) = r(t) \, e^{j\theta(t)}$), separamos sus componentes:
+\begin{itemize}
+    \item \textbf{Magnitud ($r(t) = |z(t)|$):}
+    Aplicando el módulo del producto:
+    \[
+    r(t) = |z(t)| = |e^{-0.5t} \cdot e^{j2\pi t}| = |e^{-0.5t}| \cdot |e^{j2\pi t}|
+    \]
+    Como $e^{-0.5t} > 0$ para todo $t \in \mathbb{R}$, su valor absoluto es $|e^{-0.5t}| = e^{-0.5t}$. Asimismo, por la identidad de Euler, $|e^{j2\pi t}| = 1$. Por lo tanto:
+    \[
+    r(t) = e^{-0.5t}
+    \]
+
+    \item \textbf{Fase o ángulo ($\theta(t) = \angle z(t)$):}
+    Aplicando la propiedad del argumento del producto:
+    \[
+    \theta(t) = \angle z(t) = \arg(e^{-0.5t}) + \arg(e^{j2\pi t}) = 0 + 2\pi t = 2\pi t \text{ rad}
+    \]
+\end{itemize}
+
+\noindent\textbf{2. Análisis del comportamiento de cada parte:}
+
+\begin{enumerate}
+    \item \textbf{Comportamiento de la magnitud/radio ($r(t) = e^{-0.5t}$):}
+    Debido a que el coeficiente de amortiguamiento es negativo ($\alpha = -0.5 < 0$), el radio no permanece constante sino que decae exponencialmente hacia cero a medida que el tiempo avanza ($\lim_{t \to \infty} r(t) = 0$).
+    \begin{itemize}
+        \item En $t = 0\text{ s}$, inicia en su radio máximo: $r(0) = e^0 = 1$.
+        \item En $t = 5\text{ s}$, el radio final se ha contraído a: $r(5) = e^{-0.5(5)} = e^{-2.5} \approx 0.0821$.
+    \end{itemize}
+    Esto implica que la distancia entre el punto y el origen se reduce monótonamente en el tiempo.
+
+    \item \textbf{Comportamiento de la fase ($\theta(t) = 2\pi t$):}
+    El ángulo incrementa de manera continua y lineal a una velocidad angular constante de $\omega = 2\pi\text{ rad/s}$.
+    \begin{itemize}
+        \item La frecuencia de rotación es $f = \frac{\omega}{2\pi} = \frac{2\pi}{2\pi} = 1\text{ Hz}$, lo que equivale a un periodo de giro de $T = \frac{1}{f} = 1\text{ s}$ por vuelta.
+        \item En el intervalo de $t \in [0, 5]\text{ s}$, el vector efectúa exactamente:
+        \[
+        N = \frac{5\text{ s}}{1\text{ s/vuelta}} = 5 \text{ revoluciones completas}
+        \]
+        alcanzando un desplazamiento angular total de $\Delta\theta = 2\pi(5) = 10\pi\text{ rad} = 1800^\circ$ en sentido antihorario.
+    \end{itemize}
+\end{enumerate}
+
+\noindent\textbf{3. Determinación de la trayectoria en el plano complejo:}
+
+Al combinar una rotación angular a velocidad uniforme ($\theta = 2\pi t$) con una reducción exponencial del radio ($r = e^{-0.5t}$), la ecuación polar de la curva es $r(\theta) = e^{-\frac{\theta}{4\pi}}$.
+
+Geométricamente, esta relación describe una espiral amortiguada. La trayectoria inicia sobre el eje real positivo en el punto $(1, 0)$ en $t = 0\text{ s}$ y se enrolla progresivamente hacia el origen describiendo $5$ vueltas completas, terminando en el punto $(e^{-2.5}, 0) \approx (0.0821, 0)$ en $t = 5\text{ s}$.
+
+\noindent\textbf{4. Implementación y gráfica en MATLAB:}
+
+Con el siguiente código en MATLAB se realizó la simulación y graficación de la trayectoria:
+
+\begin{lstlisting}[language=Matlab, frame=single, basicstyle=\small\ttfamily, keywordstyle=\color{blue}, commentstyle=\color{green!50!black}]
+% Parametros de la funcion compleja
+alpha = -0.5;
+omega = 2*pi;
+
+% Intervalo de tiempo t en [0, 5] segundos
+t = linspace(0, 5, 2000);
+
+% Funcion compleja z(t) = exp((alpha + j*omega)*t)
+z = exp((alpha + 1j*omega) * t);
+
+% Grafica de la trayectoria en el plano complejo (Re{z} vs. Im{z})
+figure;
+plot(real(z), imag(z), 'r', 'LineWidth', 1.5);
+grid on;
+axis equal;
+xlabel('Re\{z(t)\}');
+ylabel('Im\{z(t)\}');
+title('Problema 3: Trayectoria de z(t) = e^{(-0.5 + j2\pi)t}');
+\end{lstlisting}
+
+\noindent se obtuvo la siguiente gráfica:
+
+\begin{figure}[htbp]
+    \centering
+    % \includegraphics[width=0.75\textwidth]{problema3_trayectoria.png}
+    \fbox{\parbox{0.8\textwidth}{\centering \vspace{2cm} \textbf{[Placeholder: Gráfica de la trayectoria de $z(t)$ en el plano complejo]} \\[0.5em] \small (Espiral logarítmica convergente generada en MATLAB para $t \in [0, 5]$ s) \vspace{2cm}}}
+    \caption{Trayectoria de la función compleja amortiguada $z(t) = e^{(-0.5 + j2\pi)t}$ en el plano complejo.}
+    \label{fig:problema3_trayectoria}
+\end{figure}
+
+\subsection{Problema 4: Raíces \texorpdfstring{$n$}{n}-ésimas de la Unidad}
+
+\noindent\textbf{Enunciado:} Determine analíticamente las soluciones complejas de la ecuación:
+\[
+z^6 = 1
+\]
+Represente gráficamente las soluciones en el plano complejo.
+
+\noindent\textbf{1. Solución analítica:}
+
+Para resolver $z^6 = 1$, expresamos el número 1 en forma polar ($r = 1$, $\theta = 0\text{ rad}$). Aplicando la fórmula de las raíces $n$-ésimas de la unidad para $n = 6$:
+\[
+z_k = e^{j\frac{2\pi k}{6}} = e^{j\frac{\pi k}{3}}, \quad \text{para } k = 0, 1, 2, 3, 4, 5
+\]
+
+Evaluando cada valor de $k$ para obtener sus formas exponencial y cartesiana (utilizando los valores de ángulos notables):
+\begin{itemize}
+    \item Para $k = 0$:
+    \[
+    z_0 = e^{j0} = \cos(0) + j\sin(0) = 1
+    \]
+    
+    \item Para $k = 1$:
+    \[
+    z_1 = e^{j\pi/3} = \cos\left(\frac{\pi}{3}\right) + j\sin\left(\frac{\pi}{3}\right) = \frac{1}{2} + j\frac{\sqrt{3}}{2}
+    \]
+    
+    \item Para $k = 2$:
+    \[
+    z_2 = e^{j2\pi/3} = \cos\left(\frac{2\pi}{3}\right) + j\sin\left(\frac{2\pi}{3}\right) = -\frac{1}{2} + j\frac{\sqrt{3}}{2}
+    \]
+    
+    \item Para $k = 3$:
+    \[
+    z_3 = e^{j\pi} = \cos(\pi) + j\sin(\pi) = -1
+    \]
+    
+    \item Para $k = 4$:
+    \[
+    z_4 = e^{j4\pi/3} = \cos\left(\frac{4\pi}{3}\right) + j\sin\left(\frac{4\pi}{3}\right) = -\frac{1}{2} - j\frac{\sqrt{3}}{2}
+    \]
+    
+    \item Para $k = 5$:
+    \[
+    z_5 = e^{j5\pi/3} = \cos\left(\frac{5\pi}{3}\right) + j\sin\left(\frac{5\pi}{3}\right) = \frac{1}{2} - j\frac{\sqrt{3}}{2}
+    \]
+\end{itemize}
+
+\noindent\textbf{2. Interpretación geométrica:}
+
+Todas las raíces poseen módulo unitario ($|z_k| = 1$), lo que sitúa a las 6 soluciones sobre la circunferencia unitaria. Están separadas angularmente de manera uniforme a intervalos de $\Delta\theta = \frac{\pi}{3}\text{ rad} = 60^\circ$. Al unirse de forma consecutiva, forman los vértices de un \textbf{hexágono regular} centrado en el origen con simetría tanto en el eje real como en el eje imaginario.
+
+\noindent\textbf{3. Implementación y gráfica en MATLAB:}
+
+Con el siguiente código en MATLAB se calcularon las raíces y se generó la representación geométrica:
+
+\begin{lstlisting}[language=Matlab, frame=single, basicstyle=\small\ttfamily, breaklines=true, keywordstyle=\color{blue}, commentstyle=\color{green!50!black}]
+% Calculo de las raices sextas de la unidad: z^6 = 1
+n = 6;
+k = 0:(n-1);
+raices = exp(1j * 2 * pi * k / n);
+
+% Grafica en el plano complejo
+figure;
+theta_circ = linspace(0, 2*pi, 300);
+% Circunferencia unitaria
+plot(cos(theta_circ), sin(theta_circ), 'k--', 'LineWidth', 1);
+hold on;
+% Poligono regular (Hexagono)
+plot([real(raices) real(raices(1))], ...
+     [imag(raices) imag(raices(1))], 'b-', 'LineWidth', 1.2);
+% Raices
+plot(real(raices), imag(raices), 'ro', ...
+     'MarkerFaceColor', 'r', 'MarkerSize', 8);
+grid on;
+axis equal;
+xlabel('Re\{z\}');
+ylabel('Im\{z\}');
+title('Problema 4: Raices sextas de la unidad (z^6 = 1)');
+legend('Circunferencia unitaria', 'Poligono regular (Hexagono)', ...
+       'Raices z_k', 'Location', 'best');
+hold off;
+\end{lstlisting}
+
+\noindent se obtuvo la siguiente gráfica que confirma lo calculado:
+
+\begin{figure}[htbp]
+    \centering
+    % \includegraphics[width=0.75\textwidth]{problema4_raices.png}
+    \fbox{\parbox{0.8\textwidth}{\centering \vspace{2cm} \textbf{[Placeholder: Gráfica de las raíces de $z^6 = 1$ en el plano complejo]} \\[0.5em] \small (Hexágono regular inscrito en la circunferencia unitaria generado en MATLAB) \vspace{2cm}}}
+    \caption{Representación geométrica de las raíces sextas de la unidad en el plano de Argand.}
+    \label{fig:problema4_raices}
+\end{figure}
+
+\subsection{Problema 5: Rotación y Superposición de Fasores}
+
+\[
+u_1(t) \approx \frac{4}{\pi}\sin(2\pi t), \quad u_2(t) \approx \frac{4}{3\pi}\sin(6\pi t), \quad u_3(t) \approx \frac{4}{5\pi}\sin(10\pi t)
+\]
+Represente cada señal como un vector rotatorio individual en el plano complejo. Efectúe la suma fasorial $u(t) = u_1(t) + u_2(t) + u_3(t)$ y proyecte la suma de los tres fasores en el tiempo para obtener la onda resultante.
+
+\noindent\textbf{1. Modelado fasorial y articulación robótica (epiciclos):}
+
+Cada señal sinusoidal pura $u_k(t)$ corresponde a la proyección vertical (parte imaginaria) de un vector rotatorio o fasor complejo:
+\[
+U_1(t) = \frac{4}{\pi} e^{j2\pi t}, \quad U_2(t) = \frac{4}{3\pi} e^{j6\pi t}, \quad U_3(t) = \frac{4}{5\pi} e^{j10\pi t}
+\]
+donde $\text{Im}\{U_k(t)\} = u_k(t)$. Cada vector rota a una velocidad distinta:
+\begin{itemize}
+    \item $U_1(t)$ tiene amplitud $A_1 = \frac{4}{\pi} \approx 1.273$ y frecuencia fundamental $f_1 = 1\text{ Hz}$ ($\omega_1 = 2\pi\text{ rad/s}$).
+    \item $U_2(t)$ tiene amplitud $A_2 = \frac{4}{3\pi} \approx 0.424$ y gira al triple de velocidad: $f_2 = 3\text{ Hz}$ ($\omega_2 = 6\pi\text{ rad/s}$).
+    \item $U_3(t)$ tiene amplitud $A_3 = \frac{4}{5\pi} \approx 0.255$ y gira a cinco veces la velocidad: $f_3 = 5\text{ Hz}$ ($\omega_3 = 10\pi\text{ rad/s}$).
+\end{itemize}
+
+La suma fasorial $U(t) = U_1(t) + U_2(t) + U_3(t)$ se construye geométricamente como una \textbf{cadena cinemática articulada} (epiciclos cabeza con cola):
+\begin{itemize}
+    \item El primer vector $U_1(t)$ parte del origen $(0,0)$ y gira describiendo una circunferencia de radio $A_1$.
+    \item El segundo vector $U_2(t)$ se ancla en el extremo de $U_1(t)$ y describe una circunferencia de radio $A_2$ alrededor de dicho extremo.
+    \item El tercer vector $U_3(t)$ se ancla en el extremo de $U_2(t)$ y describe una circunferencia de radio $A_3$.
+\end{itemize}
+
+\noindent\textbf{2. Proyección de la altura y síntesis armónica en el tiempo:}
+
+La coordenada vertical (altura imaginaria) del extremo final de la cadena de vectores en cualquier instante $t$ es:
+\[
+y(t) = \text{Im}\{U(t)\} = \text{Im}\{U_1(t)\} + \text{Im}\{U_2(t)\} + \text{Im}\{U_3(t)\} = u_1(t) + u_2(t) + u_3(t) = u(t)
+\]
+Al proyectar horizontalmente la altura de la punta del tercer fasor hacia el panel contiguo en el dominio del tiempo a medida que el sistema rota sincronizadamente, se va dibujando la señal resultante $u(t)$. Esta onda corresponde exactamente a la síntesis de Fourier de una \textbf{onda cuadrada periódica} truncada a sus tres primeros armónicos impares, evidenciando las oscilaciones características del fenómeno de Gibbs en las cercanías de las transiciones.
+
+\noindent\textbf{3. Implementación y gráfica en MATLAB:}
+
+Con el siguiente código en MATLAB se modeló la articulación fasorial y la proyección simultánea hacia el dominio del tiempo:
+
+\begin{lstlisting}[language=Matlab, frame=single, basicstyle=\small\ttfamily, breaklines=true, keywordstyle=\color{blue}, commentstyle=\color{green!50!black}]
+% Parametros de las senales armonicas
+t = linspace(0, 2, 2000); % Tiempo para 2 periodos
+u1 = (4/pi) * sin(2*pi*t);
+u2 = (4/(3*pi)) * sin(6*pi*t);
+u3 = (4/(5*pi)) * sin(10*pi*t);
+u = u1 + u2 + u3; % Onda resultante
+
+% Instante de observacion para el brazo articulado
+t0 = 0.12; % segundos
+v1 = (4/pi) * exp(1j * 2*pi * t0);
+v2 = v1 + (4/(3*pi)) * exp(1j * 6*pi * t0);
+v3 = v2 + (4/(5*pi)) * exp(1j * 10*pi * t0);
+
+figure('Position', [100, 100, 1000, 450]);
+
+% Panel 1: Rotacion y superposicion fasorial en el plano complejo
+subplot(1, 2, 1);
+theta = linspace(0, 2*pi, 300);
+% Circunferencias de giro (epiciclos)
+plot(real(v1) + (4/(3*pi))*cos(theta), imag(v1) + (4/(3*pi))*sin(theta), 'r:', 'LineWidth', 1);
+hold on;
+plot(real(v2) + (4/(5*pi))*cos(theta), imag(v2) + (4/(5*pi))*sin(theta), 'k:', 'LineWidth', 1);
+% Trayectoria de la punta U(t)
+Ut = (4/pi)*exp(1j*2*pi*t) + (4/(3*pi))*exp(1j*6*pi*t) + (4/(5*pi))*exp(1j*10*pi*t);
+plot(real(Ut), imag(Ut), 'Color', [0.85 0.85 0.85], 'LineWidth', 1);
+% Vectores del brazo articulado en t0
+plot([0 real(v1)], [0 imag(v1)], 'b-', 'LineWidth', 2);
+plot([real(v1) real(v2)], [imag(v1) imag(v2)], 'r-', 'LineWidth', 2);
+plot([real(v2) real(v3)], [imag(v2) imag(v3)], 'k-', 'LineWidth', 2);
+plot(real(v3), imag(v3), 'mo', 'MarkerFaceColor', 'm', 'MarkerSize', 6);
+% Linea horizontal de proyeccion hacia el dominio temporal
+plot([real(v3) 2.2], [imag(v3) imag(v3)], 'm--', 'LineWidth', 1.5);
+grid on; axis equal; xlim([-2 2.2]); ylim([-1.8 1.8]);
+xlabel('Re\{U(t)\}'); ylabel('Im\{U(t)\} (Altura)');
+title('Plano Complejo: Articulacion Fasorial');
+legend('Epiciclo 2', 'Epiciclo 3', 'Trayectoria punta', ...
+       'Fasor 1', 'Fasor 2', 'Fasor 3', 'Location', 'southwest');
+
+% Panel 2: Proyeccion de la onda en el dominio del tiempo
+subplot(1, 2, 2);
+plot(t, u, 'b-', 'LineWidth', 2); hold on;
+plot(t, u1, 'b--', 'LineWidth', 0.8);
+plot(t0, imag(v3), 'mo', 'MarkerFaceColor', 'm', 'MarkerSize', 6);
+plot([0 t0], [imag(v3) imag(v3)], 'm--', 'LineWidth', 1.5);
+grid on; xlim([0 2]); ylim([-1.8 1.8]);
+xlabel('Tiempo t (s)'); ylabel('u(t) = \Sigma u_k(t)');
+title('Dominio del Tiempo: Onda Cuadrada Reconstruida');
+legend('u(t) Resultante (3 armonicos)', 'u_1(t) Fundamental', ...
+       'Punto proyectado', 'Location', 'northeast');
+\end{lstlisting}
+
+\noindent se obtuvo la siguiente gráfica:
+
+\begin{figure}[htbp]
+    \centering
+    % \includegraphics[width=0.9\textwidth]{problema5_fasores.png}
+    \fbox{\parbox{0.85\textwidth}{\centering \vspace{2.2cm} \textbf{[Placeholder: Superposición fasorial en articulación robótica y proyección temporal]} \\[0.5em] \small (Panel izquierdo: fasores encadenados y epiciclos. Panel derecho: onda temporal y línea de proyección) \vspace{2.2cm}}}
+    \caption{Superposición de fasores rotatorios encadenados y proyección en el dominio del tiempo para la reconstrucción armónica de la onda.}
+    \label{fig:problema5_fasores}
+\end{figure}
+
+
+% =========================================================================
+% 3. ANÁLISIS DE RESULTADOS
+% =========================================================================
+\section{Análisis de Resultados}
+
+\subsection{Comportamiento Algebraico y Geométrico en el Plano Complejo}
+Al trabajar en este taller se nota que el mundo de la variable compleja es bastante amplio y muy interesante. Tiene propiedades tanto algebraicas como geométricas que parecen casi mágicas de lo limpias y ordenadas que son. Permite abstraer y simplificar muchas cosas que con números reales requerirían procedimientos mucho más largos, ya que con solo multiplicar o elevar a una potencia se pueden representar giros, cambios de tamaño y figuras en el plano sin complicaciones.
+
+Al revisar los resultados obtenidos, las gráficas dieron exactamente lo que se esperaba de los cálculos que se realizaron:
+\begin{itemize}
+    \item \textbf{Problema 1:} La solución de la ecuación dio $x = 24 - 32j$, y al comprobarla en MATLAB arrojó exactamente el mismo valor, confirmando que el despeje y las operaciones se realizaron de manera correcta.
+    \item \textbf{Problema 2:} Al graficar la función $Z(t) = t \cdot e^{jt}$, la curva describe una espiral cuya distancia al centro va aumentando poco a poco porque está multiplicada por el tiempo $t$. Esto hace que se forme una espiral que se va abriendo hacia afuera, y al mirar sus componentes por separado, se ve que la parte real y la imaginaria son ondas seno y coseno que escalan con el tiempo.
+    \item \textbf{Problema 3:} En la función $z(t) = e^{(-0.5 + j2\pi)t}$, ocurrió lo contrario al punto anterior: como el exponente tiene un $-0.5$, la magnitud se va reduciendo cada vez más a medida que pasa el tiempo. Por eso, en vez de agrandarse, la espiral se va cerrando hacia el centro hasta casi llegar a cero después de dar 5 vueltas completas.
+    \item \textbf{Problema 4:} Al buscar las 6 soluciones de $z^6 = 1$, todas quedaron a una distancia de 1 respecto al centro y separadas a la misma distancia angular una de otra ($60^\circ$). Al conectarlas se forma un hexágono regular común y corriente, mostrando cómo las raíces se reparten de manera totalmente simétrica alrededor del círculo.
+\end{itemize}
+
+\subsection{Dinámica Fasorial, Proyección Temporal y Utilidad de MATLAB}
+El Problema 5 ayudó a entender de forma muy visual la idea de los fasores. La idea de tener un fasor girando, y en la punta de ese fasor poner a girar otro, y luego otro más como si fuera un brazo robótico, es una manera muy clara de ver cómo se van sumando señales. Al fijarse únicamente en la altura de la punta del último vector y proyectarla hacia el lado a lo largo del tiempo, se evidencia cómo la suma de esos tres giros va dibujando poco a poco la forma de una onda cuadrada, con las pequeñas ondulaciones que se forman en las partes planas.
+
+Por último, respecto a la herramienta utilizada, aunque MATLAB a veces se siente algo pesado o lento para abrir y cargar figuras en comparación con programas más ligeros, es una herramienta muy útil y confiable para trabajar y entender estos conceptos matemáticos y geométricos. Permite ver de forma rápida si lo calculado en el papel tiene sentido visualmente, comprobando que todas las gráficas salieron tal como se esperaba.
+
+% =========================================================================
+% 5. BIBLIOGRAFÍA
+% =========================================================================
+\begin{thebibliography}{2}
+
+\bibitem{oppenheim1997}
+A.~V.~Oppenheim, A.~S.~Willsky y S.~H.~Nawab, \emph{Señales y Sistemas}, 2.ª~ed. México: Pearson Educación / Prentice Hall, 1998.
+
+\bibitem{lathi2009}
+B.~P.~Lathi y Z.~Ding, \emph{Modern Digital and Analog Communication Systems}, 4.ª~ed. Nueva York: Oxford University Press, 2009.
+
+\end{thebibliography}
+
+\end{document}
